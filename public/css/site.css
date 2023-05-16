@@ -1,0 +1,123 @@
+.t-2 {
+    top: 2px;
+}
+
+.form-control {
+    height: 35px !important;
+    padding: 10px;
+    -webkit-appearance: auto !important;
+}
+
+.select2 {
+    height: 35px !important;
+    color: #32325c;
+    padding: 10px;
+}
+
+select.form-control,
+.select2-container--default select.select2-selection--single,
+.select2-container--default
+    .select2-selection--single
+    select.select2-search__field,
+select.typeahead,
+select.tt-query,
+select.tt-hint {
+    color: #32325c;
+}
+
+.form-control-sm {
+    min-height: 30px !important;
+}
+
+.table-responsive {
+    padding: 2px;
+    font-size: 14px;
+}
+
+.form-group label {
+    margin-bottom: 0px !important;
+}
+.col-form-label {
+    padding-top: calc(0.7rem + 1px);
+    padding-bottom: calc(0.7rem + 1px);
+}
+.i-req {
+    color: red;
+}
+
+.mt50 {
+    margin-top: 50px !important;
+}
+.navbar .navbar-menu-wrapper .navbar-toggler {
+    border-radius: 0 !important;
+    border-bottom-left-radius: 50px !important;
+    border-top-left-radius: 50px !important;
+    background: #41dea3 !important;
+}
+
+.invalid-feedback {
+    display: block !important;
+}
+
+.no-sort:before,
+.no-sort:after {
+    content: none !important;
+}
+
+#driver_mobile::-webkit-outer-spin-button,
+#driver_mobile::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+#driver_mobile {
+    -moz-appearance: textfield !important;
+}
+
+.colored-toast.swal2-icon-success {
+    background-color: #28a745 !important;
+}
+
+.colored-toast.swal2-icon-error {
+    background-color: #dc3545 !important;
+}
+
+.colored-toast.swal2-icon-warning {
+    background-color: #ffa500 !important;
+}
+
+.colored-toast.swal2-icon-info {
+    background-color: #17a2b8 !important;
+}
+
+.colored-toast.swal2-icon-question {
+    background-color: #87adbd !important;
+}
+
+.colored-toast .swal2-title {
+    color: white;
+}
+
+.colored-toast .swal2-close {
+    color: white;
+}
+
+.colored-toast .swal2-html-container {
+    color: white;
+}
+
+#footer-p{
+    text-align: center;font-size: 12px;
+}
+
+.f-12{
+    font-size: 12px
+}
+
+.bg-black{
+    background-color: #000;
+}
+
+.text-white{
+    color:#fff !important;
+}

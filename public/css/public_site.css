@@ -1,0 +1,53 @@
+@font-face {
+	font-family: "Custom Yu Gothic";
+	src: local("Yu Gothic");  
+}
+
+.f20{
+	font-size: 20px;
+}
+
+.f18{
+	font-size: 18px;
+}
+.vh-100{
+	height: calc(100vh - 80px) !important;
+}
+
+body{
+	background-image: url('../img/login-bg.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.login-card {
+	opacity: 95%;
+}
+
+.btn-car{
+	color: #fff;
+    background-color: #38bfc3;
+    border-color: #38bfc3;	
+}
+
+.btn-car:not(:disabled):not(.disabled).active, .btn-car:not(:disabled):not(.disabled):active, .show>.btn-car.dropdown-toggle {
+    color: #fff;
+    background-color: #2ba4a8;
+    border-color: #38bfc3;
+}
+
+.btn-car:hover {
+    color: #fff;
+    background-color: #22acb1;
+    border-color: #38bfc3;
+}
+
+.text-car{
+	color: #38bfc3;
+}
+.nav-bg{
+	background-color: #000;
+}
+.color-white{
+	color:#fff !important;
+}

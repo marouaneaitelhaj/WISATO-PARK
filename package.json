@@ -1,0 +1,26 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production",
+        "compile:sass": "node-sass --recursive --source-map true public/theme/assets/css --output public/theme/assets/css",
+        "watch:sass": "node-sass --recursive --watch --source-map true public/theme/assets/css --output public/theme/assets/css"
+    },
+    "devDependencies": {
+        "axios": "^0.24.0",
+        "cross-env": "^5.1",
+        "laravel-mix": "^6.0.39",
+        "lodash": "^4.17.13",
+        "popper.js": "^1.12",
+        "resolve-url-loader": "^4.0.0",
+        "sass": "^1.20.1",
+        "sass-loader": "^12.4.0",
+        "vue": "^2.5.17",
+        "vue-template-compiler": "^2.6.10"
+    }
+}
