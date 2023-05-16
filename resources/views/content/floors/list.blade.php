@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    {{ __('Floor List') }}
+                    {{ __('ParkZone List') }}
                     <a class="btn btn-sm btn-primary pull-right" href="{{ route('floors.create') }}">Create
                         new</a>
                 </div>

@@ -35,7 +35,7 @@
                             </div>
                            <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="floor_id" class="text-md-right">{{ __('Floor') }} <span class="tcr text-danger">*</span></label>
+                                    <label for="floor_id" class="text-md-right">{{ __('ParkZone') }} <span class="tcr text-danger">*</span></label>
                                     <select name="floor_id" id="floor_id" required
                                         class="form-control{{ $errors->has('floor_id') ? ' is-invalid' : '' }}" required>
                                         @foreach ($floors as $floor)

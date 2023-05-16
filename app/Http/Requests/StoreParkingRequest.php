@@ -36,8 +36,8 @@ class StoreParkingRequest extends FormRequest
 	}
 
 	public function withValidator(Validator $validator){        
-		$validator->after(function(Validator $validator){            
-			if(Tariff::getCurrent($this->input('category_id')) == null){
+		$validator->after(function(Validator $validator){    
+			if($this->input('category_id') == null){
 				$validator->errors()->add('category_id','No tariff found');
 			}
 

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', ' - Edit Floor')
+@section('title', ' - Edit ParkZone')
 @section('content')
 <div class="container-fluid mb100">
 
@@ -7,8 +7,8 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    {{ __('Edit Floor') }}
-                    <a class="btn btn-sm btn-primary pull-right" href="{{ route('floors.index') }}">Floor List</a>
+                    {{ __('Edit ParkZone') }}
+                    <a class="btn btn-sm btn-primary pull-right" href="{{ route('floors.index') }}">ParkZone List</a>
                 </div>
 
                 <div class="card-body">
