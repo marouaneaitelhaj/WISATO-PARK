@@ -35,7 +35,7 @@
                                 <td class="w50">{{$parking->driver_mobile}}</td>                                
                             </tr>
                             <tr>
-                                <td class="w40">Floor</td>
+                                <td class="w40">ParkZone</td>
                                 <td class="w10">:</td>
                                 <td class="w50">{{$parking->slot->floor->name ?? ''}}</td>
                             </tr>

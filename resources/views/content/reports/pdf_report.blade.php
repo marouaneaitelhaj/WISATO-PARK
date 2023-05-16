@@ -26,7 +26,7 @@ ini_set('pcre.backtrack_limit', 10000000);
 					<th>SL</th>
 					<th>Vehicle No</th>					
 					<th>Type</th>
-					<th>Floor</th>
+					<th>ParkZone</th>
 					<th>Slot</th>
 					<th>In Time</th>
 					<th>Out Time</th>
