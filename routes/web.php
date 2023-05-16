@@ -46,8 +46,6 @@ Route::middleware(['installed','auth','xss_clean'])->group(function () {
 		Route::get('general-settings', 'SiteController@generalSettings')->name('settings.create');
 		Route::post('general-settings', 'SiteController@storeGeneralSettings')->name('settings.store');
 		Route::resource('floors', 'FloorController')->except(['show']);
-		// Route::get('floors', 'FloorController@index')->name('floors.list');
-
 		Route::get('floors/change-status/{floor}', 'FloorController@statusChange')->name('floors.status_changes');
 		Route::resource('parking-settings', 'CategoryWiseFloorSlotController', ['names' => 'parking_settings']);
 		Route::get('parking-settings/change-status/{parking_setting}', 'CategoryWiseFloorSlotController@statusChange')->name('parking_settings.status_changes');

@@ -38,6 +38,7 @@ class FloorController extends Controller
             if ($request->input('start')) {
                 $offset = $request->input('start');
             }
+            
 
             if ($request->input('search') && $request->input('search')['value'] != "") {
                 $search['name'] = $request->input('search')['value'];
