@@ -12,7 +12,7 @@
             buttons: [],
             columns: [
                 {
-                    title: "#SL",
+                    title: "id",
                     data: "id",
                     class: "no-sort",
                     width: "50px",
@@ -22,47 +22,7 @@
                     },
                 },
                 { title: "Name", name: "name", data: "name" },
-                { title: "Level", name: "level", data: "level" },
                 { title: "Remarks", name: "remarks", data: "remarks" },
-                {
-                    title: "Status",
-                    name: "status",
-                    data: "status",
-                    render: function (data, type, row) {
-                        return data == 1 ? "Active" : "Inactive";
-                    },
-                },
-                {
-                    title: "Option",
-                    data: "id",
-                    class: "text-end width-5-per",
-                    render: function (data, type, row, col) {
-                        var editURL = route("floors.edit", { floor: data });
-                        var delURL = route("floors.destroy", { floor: data });
-                        var statusURL = route("floors.status_changes", {
-                            floor: data,
-                        });
-                        if (row.status == 1) {
-                            $return =
-                                '<a href="' +
-                                statusURL +
-                                '"><i class="fa fa-window-close-o text-danger" aria-hidden="true" title="Deactivate"></i></a> | ';
-                        } else {
-                            $return =
-                                '<a href="' +
-                                statusURL +
-                                '"><i class="fa fa-check text-info" aria-hidden="true" title="Active"></i></a> | ';
-                        }
-                        $return +=
-                            '<a href="' +
-                            editURL +
-                            '"><i class="fa fa-pencil-square-o text-info" aria-hidden="true" title="Edit Floor"></i></a>';
-
-                        $return += '| <button class="btn btn-link p-0" onclick="deleteData(\'' + delURL +'\', \'#floorDatatable\')"><i class="fs-6 fa fa-trash-o text-danger" aria-hidden="true" title="Delete Floor"></i></button>';
-
-                        return $return;
-                    },
-                },
             ],
 
             ajax: {

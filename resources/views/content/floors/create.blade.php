@@ -7,8 +7,8 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    {{ __('Create Floor') }}
-                    <a class="btn btn-sm btn-info pull-right" href="{{ route('floors.index') }}">Floor List</a>
+                    {{ __('Create ParkZone') }}
+                    <a class="btn btn-sm btn-info pull-right" href="{{ route('floors.index') }}">ParkZone List</a>
                 </div>
 
                 <div class="card-body">
@@ -29,7 +29,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <!-- <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="level" class="text-md-right">{{ __('Floor Level') }}</label>
                                     <select name="level" id="level" class="form-control{{ $errors->has('level') ? ' is-invalid' : '' }}" required>
@@ -44,7 +44,7 @@
                                     </span>
                                     @endif
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name" class="text-md-right">{{ __('Remarks') }}</label>

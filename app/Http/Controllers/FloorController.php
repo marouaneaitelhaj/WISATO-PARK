@@ -41,7 +41,6 @@ class FloorController extends Controller
 
             if ($request->input('search') && $request->input('search')['value'] != "") {
                 $search['name'] = $request->input('search')['value'];
-                $search['level'] = $request->input('search')['value'];
             }
 
             if ($request->input('where')) {
@@ -74,11 +73,10 @@ class FloorController extends Controller
     public function store(Request $request)
     {
 
-        $validated = $request->validate(['name' => 'bail|required|unique:floors', 'level' => 'required', 'remarks' => 'bail|nullable|min:3']);
+        $validated = $request->validate(['name' => 'bail|required|unique:floors', 'remarks' => 'bail|nullable|min:3']);
 
         $floor = Floor::create([
             'name'     => $validated['name'],
-            'level'     => $validated['level'],
             'remarks'     => $validated['remarks'],
         ]);
 
@@ -122,11 +120,10 @@ class FloorController extends Controller
      */
     public function update(Request $request, Floor $floor)
     {
-        $validated = $request->validate(['name' => 'bail|required|unique:floors,name,' . $floor->id, 'level' => 'required', 'remarks' => 'bail|nullable|min:3']);
+        $validated = $request->validate(['name' => 'bail|required|unique:floors,name,' . $floor->id,  'remarks' => 'bail|nullable|min:3']);
 
         $floor->update([
             'name'     => $validated['name'],
-            'level'    => $validated['level'],
             'remarks'  => $validated['remarks'],
         ]);
 

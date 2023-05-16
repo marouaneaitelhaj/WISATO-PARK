@@ -99,16 +99,16 @@
 					<a class="nav-link" data-bs-toggle="collapse" href="#ui-floor" aria-expanded="false"
 						aria-controls="ui-floor">
 						<i class="mdi mdi-layers menu-icon"></i>
-						<span class="menu-title">Floor</span>
+						<span class="menu-title">ParkZone</span>
 						<i class="menu-arrow"></i>
 					</a>
 					<div class="collapse" id="ui-floor">
 						<ul class="nav flex-column sub-menu">
 							<li class="nav-item">
-								<a class="nav-link" href="{{route('floors.create')}}">Add Floor</a>
+								<a class="nav-link" href="{{route('floors.create')}}">Add ParkZone</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="{{route('floors.index')}}">Floor List</a>
+								<a class="nav-link" href="{{route('floors.index')}}">ParkZone List</a>
 							</li>
 						</ul>
 					</div>
