@@ -24,7 +24,6 @@
 </div>
 @endsection
 
-
 @push('scripts')
 <script src="{{ asset('js/custom/settings/floor.js') }}"></script>
 @endpush
