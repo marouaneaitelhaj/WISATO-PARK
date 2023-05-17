@@ -134,7 +134,6 @@
         }
         const marker = generateMarker(data, markers.length);
         marker.addTo(map);
-        map._layers = {}
         document.getElementById('lat').value = $event.latlng.lat;
         document.getElementById('lng').value = $event.latlng.lng;
     }
