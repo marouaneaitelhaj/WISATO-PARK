@@ -79,6 +79,8 @@ class FloorController extends Controller
         $floor = Floor::create([
             'name'     => $validated['name'],
             'remarks'     => $validated['remarks'],
+            'lat'    => $request->lat,
+            'lng'    => $request->lng,
         ]);
 
         return redirect()
