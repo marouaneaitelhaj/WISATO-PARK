@@ -1,7 +1,19 @@
 @extends('layouts.guest')
 
-@section('content')
-<div id="login-page">
+
+<style>
+    #register-page {
+        background-image: url('https://images.unsplash.com/photo-1604063155785-ee4488b8ad15?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2069&q=80');
+        background-size: cover;
+        background-position: center;
+        /* object-fit: cover; */
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+
+<div id="register-page">
     <div class="container-fluid vh-100">
         <div class="align-content-center h-100 justify-content-center row">
             <div class="col-lg-3 col-sm-12 py-4">
@@ -13,9 +25,8 @@
                             @csrf
 
                             <div class="form-group">
-                                <label for="name" class="col-form-label text-md-right">{{ __('Name') }}</label>
+                                <label for="name" class="text-md-right">{{ __('Name') }}</label>
 
-                                <div class="col-md-6">
                                     <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" required autofocus>
 
                                     @if ($errors->has('name'))
@@ -23,11 +34,10 @@
                                             <strong>{{ $errors->first('name') }}</strong>
                                         </span>
                                     @endif
-                                </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="email" class="col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                                <label for="email" class="text-md-right">{{ __('E-Mail Address') }}</label>
                                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required>
 
                                 @if ($errors->has('email'))
@@ -65,4 +75,3 @@
         </div>
     </div>
 </div>
-@endsection
