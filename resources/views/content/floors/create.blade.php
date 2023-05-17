@@ -138,6 +138,7 @@
     if (markers.length > 0) {
         markers.forEach(marker => marker.remove());
     }
+    
     const marker = generateMarker(data, markers.length);
     marker.addTo(map);
     markers.push(marker);
