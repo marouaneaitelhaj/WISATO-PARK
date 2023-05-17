@@ -1,144 +1,94 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <base target="_top">
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>Quick Start - Leaflet</title>
-
-    <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
-=======
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<base target="_top">
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
-	<title>Quick Start - Leaflet</title>
-	
-	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
->>>>>>> 9b644a96824af7aef72a4e05df793a3117a34863
-
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
-
-<<<<<<< HEAD
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
     <style>
-        html, body {
-            height: 100%;
-            margin: 0;
+        .text-center {
+            text-align: center;
         }
-        .leaflet-container {
-            height: 400px;
-            width: 600px;
-            max-width: 100%;
-            max-height: 100%;
+        #map {
+            width: '100%';
+            height: 100vh;
         }
     </style>
-
-
-=======
-	<style>
-		html, body {
-			height: 100%;
-			margin: 0;
-		}
-		.leaflet-container {
-			height: 400px;
-			width: 600px;
-			max-width: 100%;
-			max-height: 100%;
-		}
-	</style>
-
-	
->>>>>>> 9b644a96824af7aef72a4e05df793a3117a34863
+    <link rel='stylesheet' href='https://unpkg.com/leaflet@1.8.0/dist/leaflet.css' crossorigin='' />
 </head>
+
 <body>
+    <h1 class='text-center'>Laravel Leaflet Maps</h1>
+    <div id='map'></div>
 
+    <script src='https://unpkg.com/leaflet@1.8.0/dist/leaflet.js' crossorigin=''></script>
+    <script>
+        let map, markers = [];
+        /* ----------------------------- Initialize Map ----------------------------- */
+        function initMap() {
+            map = L.map('map', {
+                center: {
+                    lat: 28.626137,
+                    lng: 79.821603,
+                },
+                zoom: 15
+            });
 
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap'
+            }).addTo(map);
 
-<div id="map" style="width: 600px; height: 400px;"></div>
-<script>
+            map.on('click', mapClicked);
+            initMarkers();
+        }
+        initMap();
 
-<<<<<<< HEAD
-    const map = L.map('map').setView([51.505, -0.09], 13);
+        /* --------------------------- Initialize Markers --------------------------- */
+        function initMarkers() {
+            const initialMarkers = <?php echo json_encode($initialMarkers); ?>;
 
-    const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
+            for (let index = 0; index < initialMarkers.length; index++) {
 
-    const marker = L.marker([51.5, -0.09]).addTo(map);
+                const data = initialMarkers[index];
+                const marker = generateMarker(data, index);
+                marker.addTo(map).bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);
+                map.panTo(data.position);
+                markers.push(marker)
+            }
+        }
 
-    marker.on('click', function() {
-        alert('Marker clicked!');
-    });
+        function generateMarker(data, index) {
+            return L.marker(data.position, {
+                    draggable: data.draggable
+                })
+                .on('click', (event) => markerClicked(event, index))
+                .on('dragend', (event) => markerDragEnd(event, index));
+        }
 
-    const circle = L.circle([51.508, -0.11], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.5,
-        radius: 500
-    }).addTo(map);
+        /* ------------------------- Handle Map Click Event ------------------------- */
+        function mapClicked($event) {
+            console.log(map);
+            console.log($event.latlng.lat, $event.latlng.lng);
+        }
 
-    const polygon = L.polygon([
-        [51.509, -0.08],
-        [51.503, -0.06],
-        [51.51, -0.047]
-    ]).addTo(map);
+        /* ------------------------ Handle Marker Click Event ----------------------- */
+        function markerClicked($event, index) {
+            console.log(map);
+            console.log($event.latlng.lat, $event.latlng.lng);
+        }
 
-=======
-	const map = L.map('map').setView([51.505, -0.09], 13);
-
-	const tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-		maxZoom: 19,
-		attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-	}).addTo(map);
-
-	const marker = L.marker([51.5, -0.09]).addTo(map)
-		.bindPopup('<b>Hello world!</b><br />I am a popup.').openPopup();
-
-	const circle = L.circle([51.508, -0.11], {
-		color: 'red',
-		fillColor: '#f03',
-		fillOpacity: 0.5,
-		radius: 500
-	}).addTo(map).bindPopup('I am a circle.');
-
-	const polygon = L.polygon([
-		[51.509, -0.08],
-		[51.503, -0.06],
-		[51.51, -0.047]
-	]).addTo(map).bindPopup('I am a polygon.');
-
-
-	const popup = L.popup()
-		.setLatLng([51.513, -0.09])
-		.setContent('I am a standalone popup.')
-		.openOn(map);
-
-	function onMapClick(e) {
-		popup
-			.setLatLng(e.latlng)
-			.setContent(`You clicked the map at ${e.latlng.toString()}`)
-			.openOn(map);
-	}
-
-	map.on('click', onMapClick);
->>>>>>> 9b644a96824af7aef72a4e05df793a3117a34863
-
-</script>
-
-
-
+        /* ----------------------- Handle Marker DragEnd Event ---------------------- */
+        function markerDragEnd($event, index) {
+            console.log(map);
+            console.log($event.target.getLatLng());
+        }
+		const data = {
+        position: { lat: 28.625043, lng: 79.810135 },
+        draggable: true
+    }
+    const marker = generateMarker(data, markers.length - 1);
+    marker.addTo(map).bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);
+    markers.push(marker);
+    </script>
 </body>
-<<<<<<< HEAD
+
 </html>
-=======
-</html>
->>>>>>> 9b644a96824af7aef72a4e05df793a3117a34863
