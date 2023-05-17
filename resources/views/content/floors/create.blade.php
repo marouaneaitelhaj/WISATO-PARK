@@ -141,7 +141,6 @@
         marker.addTo(map).bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);
         markers = marker;
         document.getElementById('lat').value = $event.latlng.lat;
-        
         document.getElementById('lng').value = $event.latlng.lng;
     }
 
