@@ -62,7 +62,7 @@
                                     </div>
                                     <div>
                                         <label for="name" class="text-md-right">{{ __('lat') }}</label>
-                                        <input type="number"  id="lat" class="form-control" />
+                                        <input type="number" id="lat" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -116,7 +116,6 @@
         }).addTo(map);
 
         map.on('click', mapClicked);
-        initMarkers();
     }
     initMap();
 
@@ -124,11 +123,7 @@
 
 
     function generateMarker(data, index) {
-        return L.marker(data.position, {
-                draggable: data.draggable
-            })
-            .on('click', (event) => markerClicked(event, index))
-            .on('dragend', (event) => markerDragEnd(event, index));
+        return L.marker(data.position)
     }
 
     /* ------------------------- Handle Map Click Event ------------------------- */
@@ -137,36 +132,12 @@
             position: $event.latlng,
             draggable: true
         }
-        const marker = generateMarker(data, markers.length - 1);
-        marker.addTo(map).bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);
-        markers = marker;
+        console.log(L)
+        const marker = generateMarker(data, markers.length);
+        marker.addTo(map);
         document.getElementById('lat').value = $event.latlng.lat;
         document.getElementById('lng').value = $event.latlng.lng;
     }
-
-    /* ------------------------ Handle Marker Click Event ----------------------- */
-    function markerClicked($event, index) {
-        // console.log(map);
-        // console.log($event.latlng.lat, $event.latlng.lng);
-        console.log("slajdaskljdklj");
-        
-    }
-
-    /* ----------------------- Handle Marker DragEnd Event ---------------------- */
-    function markerDragEnd($event, index) {
-        console.log(map);
-        console.log($event.target.getLatLng());
-    }
-    const data = {
-        position: {
-            lat: 28.625043,
-            lng: 79.810135
-        },
-        draggable: true
-    }
-    const marker = generateMarker(data, markers.length - 1);
-    marker.addTo(map).bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);
-    markers.push(marker);
 </script>
 
 
