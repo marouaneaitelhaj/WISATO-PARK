@@ -62,6 +62,10 @@ Route::middleware(['installed','auth','xss_clean'])->group(function () {
 		Route::post('parking/quick-end', 'ParkingController@quick_end')->name('parking.quick_end');
 		Route::get('parking/slot/{category_id}', 'ParkingController@parkingSlot')->name('parking.slot');
 	});
+	Route::middleware('roles:client')->group(function () {
+		Route::get('/maps' , 'ParkingController@maps');
+		Route::GET('addMarker', 'ParkingController@addMarker');
+	});
 });
 
 Route::fallback(function () {
@@ -70,11 +74,11 @@ Route::fallback(function () {
 
 
 
-Route::get('/maps' , 'ParkingController@maps');
-Route::GET('addMarker', 'ParkingController@addMarker');
+// Route::get('/maps' , 'ParkingController@maps');
+// Route::GET('addMarker', 'ParkingController@addMarker');
 
 
-use App\Http\Controllers\Auth\RegisterController;
+// use App\Http\Controllers\Auth\RegisterController;
 
 Route::get('/register', function () {
     return view('auth.register');
