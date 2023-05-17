@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/client', function () {
-    return view('client.nearby');
-});
 Auth::routes(['verify' => true, 'register' => false]);
 
 Route::get('/', 'HomeController@welcome')->name('site.home')->middleware(['install', 'update']);
@@ -69,11 +66,10 @@ Route::middleware(['installed','auth','xss_clean'])->group(function () {
 Route::fallback(function () {
 	return response()->view('errors.404', ['error' => "Sorry! This page doesn't exist."], 404);
 });
-Route::get('maps', function () {
-	return view('client.nearby');
-});
 
 
+
+Route::get('/maps' , 'ParkingController@maps');
 
 
 

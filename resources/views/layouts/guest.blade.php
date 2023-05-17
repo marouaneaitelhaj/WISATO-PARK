@@ -20,7 +20,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="bg-black">
+        {{-- <nav class="bg-black">
             <div class="container">
                 <a class="m-0 navbar-brand p-0 text-white" href="{{ url('/') }}">
                 </a>
@@ -61,7 +61,7 @@
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> --}}
 
         <main class="">
             @yield('content')
