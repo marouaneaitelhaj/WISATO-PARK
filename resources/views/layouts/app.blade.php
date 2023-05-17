@@ -56,7 +56,7 @@
 					</a>
 				</li>
 
-				@if(Auth::user()->hasRole('admin'))
+				@if(Auth::user()->hasRole('admin' , 'agent'))
 				<li class="nav-item">
 					<a class="nav-link" data-bs-toggle="collapse" href="#ui-user-management" aria-expanded="false"
 						aria-controls="ui-user-management">
@@ -153,7 +153,7 @@
 				</li>
 
 				@endif
-				@if(Auth::user()->hasRole(['admin','operator']))
+				@if(Auth::user()->hasRole(['admin','operator','agent']))
 
 				<li class="nav-item">
 					<a class="nav-link" data-bs-toggle="collapse" href="#ui-parking" aria-expanded="false"
@@ -181,7 +181,7 @@
 				</li>
 
 				@endif
-				@if(Auth::user()->hasRole('admin'))
+				@if(Auth::user()->hasRole('admin', 'agent'))
 				<li class="nav-item">
 					<a class="nav-link" href="{{ route('reports.index') }}">
 						<i class="mdi mdi-file-document menu-icon"></i>
