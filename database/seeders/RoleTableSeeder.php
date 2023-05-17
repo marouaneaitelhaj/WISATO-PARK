@@ -23,5 +23,15 @@ class RoleTableSeeder extends Seeder
 	    $role_reviewer->name = 'operator';
 	    $role_reviewer->description = 'Operator';
 	    $role_reviewer->save();
+
+        $role_reviewer = new Role();
+	    $role_reviewer->name = 'agent';
+	    $role_reviewer->description = 'Agent';
+	    $role_reviewer->save();
+
+        $role_reviewer = new Role();
+	    $role_reviewer->name = 'client';
+	    $role_reviewer->description = 'Client';
+	    $role_reviewer->save();
     }
 }
