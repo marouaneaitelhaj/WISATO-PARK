@@ -15,10 +15,19 @@ class RedirectIfAuthenticated
      * @param  string|null  $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = null)
+   
+        public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+        $guards = empty($guards) ? [null] : $guards;
+
+        foreach ($guards as $guard) {
+            if (Auth::guard($guard)->check()) {
+                if (auth()->user()->hasRole('client')) {
+                    return redirect('/maps');
+                } else {
+                    return redirect('/home');
+                }
+            }
         }
 
         return $next($request);

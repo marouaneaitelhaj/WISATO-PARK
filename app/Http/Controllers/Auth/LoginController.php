@@ -47,16 +47,16 @@ class LoginController extends Controller
      * @return mixed
      */
     protected function authenticated(Request $request, User $user)
-    {
-        if ($user->status) 
-            return redirect()->intended($this->redirectTo);
-
-
+{
+    if ($user->hasRole('client')) {
+        return redirect('/maps');
+    } elseif ($user->status) {
+        return redirect()->intended($this->redirectTo);
+    } else {
         $this->guard()->logout();
-
         return redirect()
                     ->route('login')
                     ->with(['flashMsg' => ['msg' => 'Your account is deactivated.', 'type' => 'danger']]);
-        
     }
+}
 }
