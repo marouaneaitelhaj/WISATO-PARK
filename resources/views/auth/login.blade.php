@@ -59,13 +59,23 @@
                                     <div class="btn btn-outline-twitter btn-xs btn-credential" data-email="{{ env('OPERATOR_EMAIL', NULL) }}" data-password="{{ env('OPERATOR_PASSWORD', NULL) }}">Operator Credential</div>
                                 </div>
                                 @endif
+                                
+                                <div class="pt-3 d-flex align-items-center justify-content-between">
 
-                                @if (Route::has('password.request'))
-                                <a class="btn btn-link text-car pl-0 pt-3" href="{{ route('password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                                @endif
+                               
+
+                                    @if (Route::has('password.request'))
+                                    <a class="btn btn-link text-car pl-0 pt-3" href="{{ route('password.request') }}">
+                                        {{ __('Forgot Your Password?') }}
+                                    </a>
+                                    @endif
+
+                                    <a class="btn btn-link text-car pl-0 pt-3" href="{{ route('register') }}">
+                                        {{ __('Register?') }}
+                                    </a>
+                                </div>
                             </div>
+                            
                         </form>
                     </div>
                 </div>
