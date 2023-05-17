@@ -127,17 +127,23 @@
     }
 
     /* ------------------------- Handle Map Click Event ------------------------- */
+
+
+
     function mapClicked($event) {
-        const data = {
-            position: $event.latlng,
-            draggable: true
-        }
-        const marker = generateMarker(data, markers.length);
-        marker.addTo(map);
-        map._layers = {}
-        document.getElementById('lat').value = $event.latlng.lat;
-        document.getElementById('lng').value = $event.latlng.lng;
+    const data = {
+        position: $event.latlng,
+        draggable: true
     }
+    if (markers.length > 0) {
+        markers.forEach(marker => marker.remove());
+    }
+    const marker = generateMarker(data, markers.length);
+    marker.addTo(map);
+    markers.push(marker);
+    document.getElementById('lat').value = $event.latlng.lat;
+    document.getElementById('lng').value = $event.latlng.lng;
+}
 </script>
 
 
