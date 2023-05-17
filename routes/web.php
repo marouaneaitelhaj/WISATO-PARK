@@ -11,7 +11,9 @@
 |
 */
 
-
+Route::get('/client', function () {
+    return view('client.nearby');
+});
 Auth::routes(['verify' => true, 'register' => false]);
 
 Route::get('/', 'HomeController@welcome')->name('site.home')->middleware(['install', 'update']);
