@@ -12,6 +12,7 @@ use App\Http\Requests\PayParkingRequest;
 use App\Models\CategoryWiseFloorSlot;
 use Exception;
 use Illuminate\Support\Facades\Session;
+use phpDocumentor\Reflection\Types\This;
 
 class ParkingController extends Controller
 {
@@ -514,8 +515,9 @@ class ParkingController extends Controller
 				->with(['flashMsg' => ['msg' => $this->getMessage($e), 'type' => 'error']]);
 		}
 	}
+	public $initialMarkers = [];
 	public function maps(){
-		$initialMarkers = [
+		$this->initialMarkers = [
             [
                 'position' => [
                     'lat' => 28.625485,
@@ -538,6 +540,10 @@ class ParkingController extends Controller
                 'draggable' => true
             ]
         ];
+		$initialMarkers = $this->initialMarkers;
         return view('client.nearby', compact('initialMarkers'));
+	}
+	public function addMarker(){
+		
 	}
 }

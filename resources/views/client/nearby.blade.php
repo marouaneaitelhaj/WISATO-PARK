@@ -17,8 +17,8 @@
 </head>
 
 <body>
-    <h1 class='text-center'>Laravel Leaflet Maps</h1>
     <div id='map'></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script src='https://unpkg.com/leaflet@1.8.0/dist/leaflet.js' crossorigin=''></script>
     <script>
@@ -45,7 +45,6 @@
         /* --------------------------- Initialize Markers --------------------------- */
         function initMarkers() {
             const initialMarkers = <?php echo json_encode($initialMarkers); ?>;
-
             for (let index = 0; index < initialMarkers.length; index++) {
 
                 const data = initialMarkers[index];
@@ -66,8 +65,21 @@
 
         /* ------------------------- Handle Map Click Event ------------------------- */
         function mapClicked($event) {
-            console.log(map);
-            console.log($event.latlng.lat, $event.latlng.lng);
+            const data = {
+                position: $event.latlng,
+                draggable: true
+            }
+            const marker = generateMarker(data, markers.length - 1);
+            marker.addTo(map).bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);
+            markers.push(marker);
+            $.ajax({
+                url: '/addMarker?lat=' + data.position.lat + '&lng=' + data.position.lng,
+                type: 'GET',
+                success: function(response) {
+                    console.log(response);
+                }
+            });
+
         }
 
         /* ------------------------ Handle Marker Click Event ----------------------- */

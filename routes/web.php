@@ -11,6 +11,7 @@
 |
 */
 
+
 Auth::routes(['verify' => true, 'register' => false]);
 
 Route::get('/', 'HomeController@welcome')->name('site.home')->middleware(['install', 'update']);
@@ -70,7 +71,7 @@ Route::fallback(function () {
 
 
 Route::get('/maps' , 'ParkingController@maps');
-
+Route::GET('addMarker', 'ParkingController@addMarker');
 
 
 use App\Http\Controllers\Auth\RegisterController;
