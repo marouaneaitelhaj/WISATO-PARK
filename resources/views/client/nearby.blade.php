@@ -46,8 +46,8 @@
         /* --------------------------- Initialize Markers --------------------------- */
         function initMarkers() {
             const initialMarkers = <?php echo json_encode($initialMarkers); ?>;
+            console.log(initialMarkers);
             for (let index = 0; index < initialMarkers.length; index++) {
-
                 const data = initialMarkers[index];
                 const marker = generateMarker(data, index);
                 marker.addTo(map).bindPopup(`<b>${data.position.lat},  ${data.position.lng}</b>`);

@@ -10,6 +10,7 @@ use App\Http\Requests\StoreParkingRequest;
 use App\Http\Requests\UpdateParkingRequest;
 use App\Http\Requests\PayParkingRequest;
 use App\Models\CategoryWiseFloorSlot;
+use App\Models\Floor;
 use Exception;
 use Illuminate\Support\Facades\Session;
 use phpDocumentor\Reflection\Types\This;
@@ -517,29 +518,17 @@ class ParkingController extends Controller
 	}
 	public $initialMarkers = [];
 	public function maps(){
-		$this->initialMarkers = [
-            [
-                'position' => [
-                    'lat' => 28.625485,
-                    'lng' => 79.821091
-                ],
-                'draggable' => true
-            ],
-            [
-                'position' => [
-                    'lat' => 28.625293,
-                    'lng' => 79.817926
-                ],
-                'draggable' => false
-            ],
-            [
-                'position' => [
-                    'lat' => 28.625182,
-                    'lng' => 79.81464
-                ],
-                'draggable' => true
-            ]
-        ];
+		$markers = Floor::get();
+		foreach($markers as $marker){
+			$newMarker = [
+				'position' => [
+					'lat' => $marker->lat,
+					'lng' => $marker->lng
+				],
+				'draggable' => true
+			];
+			array_push($this->initialMarkers, $newMarker);
+		}
 		$initialMarkers = $this->initialMarkers;
         return view('client.nearby', compact('initialMarkers'));
 	}
