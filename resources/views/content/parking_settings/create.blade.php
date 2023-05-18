@@ -75,19 +75,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="identity" class="text-md-right">{{ __('Operator') }}</label>
-                                    <select  class="form-control{{ $errors->has('identity') ? ' is-invalid' : '' }} w-100"  name="operator">
-                                        <option value="0">Select Operator</option>
-                                        <option value="1">Operator 1</option>
-                                        <option value="2">Operator 2</option>
-                                    </select>
-                                    @if ($errors->has('operator'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('operator') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
+                            <livewire:searsh-operator /> 
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
