@@ -20,10 +20,9 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="category_id" class="text-md-right">{{ __('Category') }} <span class="tcr text-danger">*</span></label>
-                                    <select name="category_id" required id="category_id" class="form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}"
-                                        required>
+                                    <select name="category_id" required id="category_id" class="form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}" required>
                                         @foreach ($categories as $category)
-                                            <option value="{{ $category->id }}" {{ (old('category_id') == $category->id ) ? ' selected' : '' }}>{{ $category->type }}</option>
+                                        <option value="{{ $category->id }}" {{ (old('category_id') == $category->id ) ? ' selected' : '' }}>{{ $category->type }}</option>
                                         @endforeach
                                     </select>
 
@@ -34,17 +33,16 @@
                                     @endif
                                 </div>
                             </div>
-                           <div class="col-md-6">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="floor_id" class="text-md-right">{{ __('ParkZone') }} <span class="tcr text-danger">*</span></label>
-                                    <select name="floor_id" id="floor_id" required
-                                        class="form-control{{ $errors->has('floor_id') ? ' is-invalid' : '' }}" required>
+                                    <select name="floor_id" id="floor_id" required class="form-control{{ $errors->has('floor_id') ? ' is-invalid' : '' }}" required>
                                         @foreach ($floors as $floor)
                                         <option value="{{ $floor->id }}" {{ (old('floor_id') == $floor->id ) ? ' selected' : '' }}>{{ $floor->name
                                             }}</option>
                                         @endforeach
                                     </select>
-                            
+
                                     @if ($errors->has('floor_id'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('floor_id') }}</strong>
@@ -74,8 +72,8 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                            <livewire:searsh-operator /> 
+                            <div class="col-md-6 w-100">
+                                @livewire('searsh-operator')
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">

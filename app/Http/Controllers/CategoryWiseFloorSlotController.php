@@ -50,7 +50,6 @@ class CategoryWiseFloorSlotController extends Controller
             if ($request->input('where')) {
                 $where = $request->input('where');
             }
-
             $parkingSlot = $parkingSlot->getDataForDataTable($limit, $offset, $search, $where, $with, $join, $orderBy,  $request->all());
             return response()->json($parkingSlot);
         }
@@ -81,7 +80,8 @@ class CategoryWiseFloorSlotController extends Controller
         $validator = Validator::make($request->all(), [
             'slot_name' => 'bail|required|min:1|max:5',
             'identity' => 'bail|nullable|min:5',
-            'remarks' => 'bail|nullable|min:5'
+            'remarks' => 'bail|nullable|min:5',
+            'operator' => 'bail|required',
         ]);
 
         $validator->after(function ($validator) use ($request) {
@@ -94,7 +94,6 @@ class CategoryWiseFloorSlotController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();;
         }
-
         $data = [
             'identity' => $request->identity,
             'remarks' => $request->remarks,
@@ -103,8 +102,11 @@ class CategoryWiseFloorSlotController extends Controller
             'slot_name' => $request->slot_name,
             'slotId' => random_int(10000, 99999),
             'created_by' => auth()->id(),
+            'operator' => $request->operator,
         ];
-
+        // echo "<pre>";
+        // print_r($data);
+        // echo "</pre>";
         CategoryWiseFloorSlot::create($data);
 
         return redirect()

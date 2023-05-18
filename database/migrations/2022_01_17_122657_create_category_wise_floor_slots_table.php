@@ -23,10 +23,13 @@ class CreateCategoryWiseFloorSlotsTable extends Migration
             $table->string('remarks')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('operator');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('operator')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->unique(["floor_id", "category_id", "slot_name"]);
+
             $table->timestamps();
         });
     }

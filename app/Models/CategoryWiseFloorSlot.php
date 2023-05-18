@@ -9,6 +9,7 @@ class CategoryWiseFloorSlot extends Model
     use ModelCommonMethodTrait;
     protected $fillable = [
         'id',
+        'operator',
         'floor_id',
         'category_id',
         'slot_name',
@@ -28,6 +29,11 @@ class CategoryWiseFloorSlot extends Model
     public function floor()
     {
         return $this->belongsTo('App\Models\Floor');
+    }
+
+    public function operator()
+    {
+        return $this->belongsTo('App\User', 'operator');
     }
    
     public function createBy()
