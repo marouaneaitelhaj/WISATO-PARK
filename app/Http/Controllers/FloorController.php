@@ -38,7 +38,7 @@ class FloorController extends Controller
             if ($request->input('start')) {
                 $offset = $request->input('start');
             }
-            
+
 
             if ($request->input('search') && $request->input('search')['value'] != "") {
                 $search['name'] = $request->input('search')['value'];
@@ -73,16 +73,13 @@ class FloorController extends Controller
      */
     public function store(Request $request)
     {
-
-        $validated = $request->validate(['name' => 'bail|required|unique:floors', 'remarks' => 'bail|nullable|min:3']);
-
-        $floor = Floor::create([
-            'name'     => $validated['name'],
-            'remarks'     => $validated['remarks'],
-            'lat'    => $request->lat,
-            'lng'    => $request->lng,
-        ]);
-
+        $validated = $request->validate(['name' => 'bail|required|unique:floors', 'remarks' => 'bail|nullable|min:3', 'lat' => 'bail|required', 'lng' => 'bail|required']);
+        $floor = new Floor();
+        $floor->name = $request->name;
+        $floor->remarks = $request->remarks;
+        $floor->lat = $request->lat;
+        $floor->lng = $request->lng;
+        $floor->save();
         return redirect()
             ->route('floors.index')
             ->with(['flashMsg' => ['msg' => 'Floor successfully added.', 'type' => 'success']]);
@@ -96,7 +93,6 @@ class FloorController extends Controller
      */
     public function show(Floor $floor)
     {
-        
     }
 
     /**
@@ -134,8 +130,8 @@ class FloorController extends Controller
             ->route('floors.index')
             ->with(['flashMsg' => ['msg' => 'Floor successfully updated.', 'type' => 'success']]);
     }
-   
-   
+
+
     /**
      * Update the status
      *
@@ -147,12 +143,10 @@ class FloorController extends Controller
     {
         if ($floor->active_parking) {
             return back()->with(['flashMsg' => ['msg' => 'This floor has already been used in an active parking.', 'type' => 'warning']]);
-        }
-        else{
-            if($floor->status == 1){
+        } else {
+            if ($floor->status == 1) {
                 $floor->update(['status' => 0]);
-            }
-            else{
+            } else {
                 $floor->update(['status' => 1]);
             }
 
@@ -168,6 +162,6 @@ class FloorController extends Controller
      */
     public function destroy(Floor $floor)
     {
-       $floor->delete();
+        $floor->delete();
     }
 }

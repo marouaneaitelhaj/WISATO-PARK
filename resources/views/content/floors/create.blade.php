@@ -58,11 +58,11 @@
                                 <div class="form-group d-flex justify-content-around ">
                                     <div>
                                         <label for="name" class="text-md-right">{{ __('lng') }}</label>
-                                        <input type="number" id="lng" class="form-control" />
+                                        <input  id="lng" name="lng" class="form-control" />
                                     </div>
                                     <div>
                                         <label for="name" class="text-md-right">{{ __('lat') }}</label>
-                                        <input type="number" id="lat" class="form-control" />
+                                        <input  id="lat" name="lat" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -135,12 +135,18 @@
             position: $event.latlng,
             draggable: true
         }
+
+        if (markers.length > 0) {
+            markers.forEach(marker => marker.remove());
+        }
+
         const marker = generateMarker(data, markers.length);
         marker.addTo(map);
-        map._layers = {}
+        markers.push(marker);
         document.getElementById('lat').value = $event.latlng.lat;
         document.getElementById('lng').value = $event.latlng.lng;
     }
+
 </script>
 
 

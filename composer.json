@@ -16,7 +16,8 @@
         "milon/barcode": "^8.0",
         "mpdf/mpdf": "^8.0",
         "rachidlaasri/laravel-installer": "^4.1",
-        "tightenco/ziggy": "^1.4"
+        "tightenco/ziggy": "^1.4",
+        "livewire/livewire": "^2.5"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
