@@ -105,7 +105,6 @@
     let circle;
     let isSatelliteView = false;
     
-
     /* ----------------------------- Initialize Map ----------------------------- */
     function initMap() {
         map = L.map('map', {
