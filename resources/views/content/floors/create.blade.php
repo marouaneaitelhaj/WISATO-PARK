@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('floors.store') }}">
+                   <form method="POST" action="{{ route('floors.store') }}">
                         @csrf
 
                         <div class="row">
@@ -27,22 +27,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <!-- <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="level" class="text-md-right">{{ __('Floor Level') }}</label>
-                                    <select name="level" id="level" class="form-control{{ $errors->has('level') ? ' is-invalid' : '' }}" required>
-                                        @for ($i = 0; $i <= 12; $i++ )
-                                            <option value="{{ $i }}" {{ (old('level')== $i ) ? ' selected' : '' }}>{{ $i }}</option>
-                                        @endfor
-                                    </select>
-                                    
-                                    @if ($errors->has('level'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('level') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div> -->
+
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name" class="text-md-right">{{ __('Remarks') }}</label>
@@ -57,12 +42,12 @@
                             <div class="col-md-12">
                                 <div class="form-group d-flex justify-content-around ">
                                     <div>
-                                        <label for="name" class="text-md-right">{{ __('lng') }}</label>
-                                        <input  id="lng" name="lng" class="form-control" />
+                                        {{-- <label for="name" class="text-md-right">{{ __('lng') }}</label> --}}
+                                        <input type="hidden"  id="lng" name="lng" class="form-control" />
                                     </div>
                                     <div>
-                                        <label for="name" class="text-md-right">{{ __('lat') }}</label>
-                                        <input  id="lat" name="lat" class="form-control" />
+                                        {{-- <label for="name" class="text-md-right">{{ __('lat') }}</label> --}}
+                                        <input type="hidden"  id="lat" name="lat" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -83,24 +68,43 @@
         </div>
     </div>
 </div>
+
 <style>
     .text-center {
         text-align: center;
     }
 
     #map {
-        width: '100%';
-        height: 100vh;
+        width: 100%;
+        height: 500px;
     }
 </style>
 
-<div id='map'></div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel='stylesheet' href='https://unpkg.com/leaflet@1.8.0/dist/leaflet.css' crossorigin='' />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script src='https://unpkg.com/leaflet@1.8.0/dist/leaflet.js' crossorigin=''></script>
+<script src='https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js' crossorigin=''></script>
+<link rel='stylesheet' href='https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css' crossorigin='' /> --}}
+
+<div id='map'></div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel='stylesheet' href='https://unpkg.com/leaflet@1.8.0/dist/leaflet.css' crossorigin='' />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<script src='https://unpkg.com/leaflet@1.8.0/dist/leaflet.js' crossorigin=''></script>
+<script src='https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js' crossorigin=''></script>
+<link rel='stylesheet' href='https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css' crossorigin='' />
+
 <script>
     let map, markers = [];
+    let circle;
+
     /* ----------------------------- Initialize Map ----------------------------- */
     function initMap() {
         map = L.map('map', {
@@ -116,19 +120,45 @@
         }).addTo(map);
 
         map.on('click', mapClicked);
+
+        // Add geocoder control for search functionality
+        L.Control.geocoder().addTo(map);
+
+        // Create the "Find My Location" icon and position it in the middle of the map
+        const findLocationIcon = L.control({
+            position: 'topright'
+        });
+
+        findLocationIcon.onAdd = function (map) {
+            const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+            div.innerHTML = '<a href="#" title="Find My Location" onclick="findMyLocation(); return false;"><i class="fa fa-location-arrow"></i></a>';
+            return div;
+        };
+
+        findLocationIcon.addTo(map);
+
+        // Create the "Satellite View" icon and position it in the middle of the map
+        const satelliteViewIcon = L.control({
+            position: 'bottomright'
+        });
+
+        satelliteViewIcon.onAdd = function (map) {
+            const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
+            div.innerHTML = '<a href="#" title="Satellite View" onclick="toggleSatelliteView(); return false;"><i class="fa fa-map"></i></a>';
+            return div;
+        };
+
+        satelliteViewIcon.addTo(map);
     }
     initMap();
 
     /* --------------------------- Initialize Markers --------------------------- */
-
 
     function generateMarker(data, index) {
         return L.marker(data.position)
     }
 
     /* ------------------------- Handle Map Click Event ------------------------- */
-
-
 
     function mapClicked($event) {
         const data = {
@@ -145,9 +175,79 @@
         markers.push(marker);
         document.getElementById('lat').value = $event.latlng.lat;
         document.getElementById('lng').value = $event.latlng.lng;
+
+        // Remove previous circle if it exists
+        if (circle) {
+            circle.remove();
+        }
+
+        // Create a circle with a radius of 50 meters around the clicked location
+        circle = L.circle($event.latlng, {
+            color: 'blue',
+            fillColor: 'blue',
+            fillOpacity: 0.3,
+            radius: 50
+        }).addTo(map);
     }
 
+    /* ------------------------ Find My Location ----------------------- */
+
+    function findMyLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    document.getElementById('lat').value = latitude;
+                    document.getElementById('lng').value = longitude;
+
+                    // Center the map to the current location
+                    map.setView([latitude, longitude], 15);
+
+                    // Remove previous circle if it exists
+                    if (circle) {
+                        circle.remove();
+                    }
+
+                    // Create a circle with a radius of 50 meters around the current location
+                    circle = L.circle([latitude, longitude], {
+                        color: 'blue',
+                        fillColor: 'blue',
+                        fillOpacity: 0.3,
+                        radius: 50
+                    }).addTo(map);
+                },
+                error => {
+                    console.error('Error getting location:', error.message);
+                }
+            );
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    }
+
+    /* ------------------------ Toggle Satellite View ----------------------- */
+
+    function toggleSatelliteView() {
+        const tileLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+            attribution: '© Google'
+        });
+
+        if (map.hasLayer(tileLayer)) {
+            map.removeLayer(tileLayer);
+            document.getElementById('satellite-icon').classList.remove('fa-globe');
+            document.getElementById('satellite-icon').classList.add('fa-map');
+        } else {
+            map.addLayer(tileLayer);
+            document.getElementById('satellite-icon').classList.remove('fa-map');
+            document.getElementById('satellite-icon').classList.add('fa-globe');
+        }
+    }
 </script>
+
+
+
 
 
 @endsection

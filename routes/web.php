@@ -78,7 +78,7 @@ Route::fallback(function () {
 // Route::GET('addMarker', 'ParkingController@addMarker');
 
 
-// use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\RegisterController;
 
 Route::get('/register', function () {
     return view('auth.register');
