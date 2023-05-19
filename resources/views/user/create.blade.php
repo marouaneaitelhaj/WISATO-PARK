@@ -97,9 +97,9 @@
                             <div class="col-md-9">
                                 <input id="Phone" type="text" class="form-control" name="Phone">
                             </div>
-                            @if ($errors->has('numberPhone'))
+                            @if ($errors->has('Phone'))
                             <span class="invalid-feedback" role="alert">
-                                <strong>{{ $errors->first('numberPhone') }}</strong>
+                                <strong>{{ $errors->first('Phone') }}</strong>
                             </span>
                             @endif
                         </div>
