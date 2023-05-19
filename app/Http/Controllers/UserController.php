@@ -72,7 +72,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create')->with(['roles' => Role::get()]);
+        return view('user.create')->with(['roles' => Role::where('selfmade', 0)->get()]);
     }
 
     /**

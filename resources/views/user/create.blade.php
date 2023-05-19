@@ -91,6 +91,14 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="password-confirm" class="col-md-3 col-form-label text-md-right">{{ __('Phone Number') }}<span class="tcr i-req">*</span></label>
+
+                            <div class="col-md-9">
+                                <input id="" type="number" class="form-control" name="password_confirmation" required>
+                            </div>
+                        </div>
+
                         <div class="form-group row mb-0 d-flex justify-content-end">
                             <div class="col-md-7 offset-md-3 d-flex justify-content-end">
                                 <button type="reset" class="btn btn-secondary me-2" id="frmClear">
