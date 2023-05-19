@@ -193,7 +193,6 @@
     }
 
     /* ------------------------ Find My Location ----------------------- */
-
     function findMyLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
