@@ -92,10 +92,10 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="numberPhone" class="col-md-3 col-form-label text-md-right">{{ __('Phone Number') }}<span class="tcr i-req">*</span></label>
+                            <label for="Phone" class="col-md-3 col-form-label text-md-right">{{ __('Phone Number') }}<span class="tcr i-req">*</span></label>
 
                             <div class="col-md-9">
-                                <input id="numberPhone" type="text" class="form-control" name="numberPhone">
+                                <input id="Phone" type="text" class="form-control" name="Phone">
                             </div>
                             @if ($errors->has('numberPhone'))
                             <span class="invalid-feedback" role="alert">

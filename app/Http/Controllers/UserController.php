@@ -88,7 +88,7 @@ class UserController extends Controller
         
         try {
             $user = User::create([
-                "numberPhone" => $validated['numberPhone'],
+                "Phone" => $validated['numberPhone'],
                 'name'     => $validated['name'],
                 'email'    => $validated['email'],
                 'password' => Hash::make($validated['password']),

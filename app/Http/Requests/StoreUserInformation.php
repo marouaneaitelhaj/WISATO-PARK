@@ -34,7 +34,7 @@ class StoreUserInformation extends FormRequest
                 'max:191',
                 Rule::unique('users', 'name')->ignore($this->route('user'))
             ],
-            'numberPhone'     => [
+            'Phone'     => [
                 'bail',
                 'required',
                 'string',
