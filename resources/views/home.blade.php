@@ -72,75 +72,77 @@
 
         </div>
 
-        <div class="row">
-            <div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between flex-wrap mb-3">
-                        <div>
-                            <div class="card-title mb-0">Month Wise Collection</div>
-                            <span
-                                class="font-10 font-weight-semibold text-muted">{{ $data['lineChart']['dateFrom'] . ' - ' . $data['lineChart']['dateTo'] }}</span>
-                        </div>
-                        <div>
-                            <div class="d-flex flex-wrap pt-2 justify-content-between sales-header-right">
-                                <div class="d-flex me-3 mt-2 mt-sm-0">
-                                    <button type="button" class="btn btn-social-icon btn-outline-sales profit">
-                                        <i class="mdi mdi-cash text-info"></i>
-                                    </button>
-                                    <div class="ps-2">
-                                        <h4 class="mb-0 font-weight-semibold head-count">
-                                            {{ $data['lineChart']['totalAmount'] }} </h4>
-                                        <span class="font-10 font-weight-semibold text-muted">Total
-                                            {{ $data['lineChart']['dateFrom'] . ' - ' . $data['lineChart']['dateTo'] }}</span>
+        <div class="row" style="margin-top: 50px">
+            <div class="col-md-6">
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between flex-wrap mb-3">
+                            <div>
+                                <div class="card-title mb-0">Month Wise Collection</div>
+                                <span
+                                    class="font-10 font-weight-semibold text-muted">{{ $data['lineChart']['dateFrom'] . ' - ' . $data['lineChart']['dateTo'] }}</span>
+                            </div>
+                            <div>
+                                <div class="d-flex flex-wrap pt-2 justify-content-between sales-header-right">
+                                    <div class="d-flex me-3 mt-2 mt-sm-0">
+                                        <button type="button" class="btn btn-social-icon btn-outline-sales profit">
+                                            <i class="mdi mdi-cash text-info"></i>
+                                        </button>
+                                        <div class="ps-2">
+                                            <h4 class="mb-0 font-weight-semibold head-count">
+                                                {{ $data['lineChart']['totalAmount'] }} </h4>
+                                            <span class="font-10 font-weight-semibold text-muted">Total
+                                                {{ $data['lineChart']['dateFrom'] . ' - ' . $data['lineChart']['dateTo'] }}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="line-chart-wrapper">
-                        <canvas id="linechart" height="80"></canvas>
+                        <div class="line-chart-wrapper">
+                            <canvas id="linechart" height="80"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
+            <div class="col-md-6">
 
-			<div class="card">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between flex-wrap mb-3">
-                        <div>
-                            <div class="card-title mb-0">Slots</div>
-                            <span class="font-10 font-weight-semibold text-muted">Total allocation
-                                {{ $data['total_slots'] }}</span>
-                        </div>
-                        <div>
-                            <div class="d-flex flex-wrap pt-2 justify-content-between sales-header-right">
-                                <div class="d-flex me-5">
-                                    <div class="ps-2">
-                                        <h4 class="mb-0 font-weight-semibold head-count free-box bg-available"></h4>
-                                        <span class="font-10 font-weight-semibold text-muted">Available</span>
+                <div class="card">
+
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between flex-wrap mb-3">
+                            <div>
+                                <div class="card-title mb-0">Slots</div>
+                                <span class="font-10 font-weight-semibold text-muted">Total allocation
+                                    {{ $data['total_slots'] }}</span>
+                            </div>
+                            <div>
+                                <div class="d-flex flex-wrap pt-2 justify-content-between sales-header-right">
+                                    <div class="d-flex me-5">
+                                        <div class="ps-2">
+                                            <h4 class="mb-0 font-weight-semibold head-count free-box bg-available"></h4>
+                                            <span class="font-10 font-weight-semibold text-muted">Available</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="d-flex me-3 mt-2 mt-sm-0">
-                                    <div class="ps-2">
-                                        <h4 class="mb-0 font-weight-semibold head-count free-box bg-booked"></h4>
-                                        <span class="font-10 font-weight-semibold text-muted">Booked</span>
+                                    <div class="d-flex me-3 mt-2 mt-sm-0">
+                                        <div class="ps-2">
+                                            <h4 class="mb-0 font-weight-semibold head-count free-box bg-booked"></h4>
+                                            <span class="font-10 font-weight-semibold text-muted">Booked</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="bar-chart-wrapper">
-                        <canvas id="barchart" height="80"></canvas>
+                        <div class="bar-chart-wrapper">
+                            <canvas id="barchart" height="80"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        </div>
-
-
-
-
+    </div>
 @endsection
 @push('scripts')
     <script>
