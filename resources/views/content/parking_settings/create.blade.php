@@ -75,6 +75,7 @@
                             <div class="col-md-6 w-100">
                                 @livewire('searsh-operator')
                             </div>
+                            <!-- <p>heloo</p> -->
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="remarks" class="text-md-right">{{ __('Remarks') }}</label>

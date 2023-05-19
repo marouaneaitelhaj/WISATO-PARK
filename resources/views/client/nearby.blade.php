@@ -38,7 +38,7 @@
                 attribution: '© OpenStreetMap'
             }).addTo(map);
 
-            map.on('click', mapClicked);
+            // map.on('click', mapClicked);
             initMarkers();
         }
         initMap();

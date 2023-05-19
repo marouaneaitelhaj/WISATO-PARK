@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="card-body">
-                   <form method="POST" action="{{ route('floors.store') }}">
+                    <form method="POST" action="{{ route('floors.store') }}">
                         @csrf
 
                         <div class="row">
@@ -27,7 +27,9 @@
                                     @endif
                                 </div>
                             </div>
-
+                            <div class="col-md-12 w-100">
+                                @livewire('searsh-agent')
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name" class="text-md-right">{{ __('Remarks') }}</label>
@@ -43,11 +45,11 @@
                                 <div class="form-group d-flex justify-content-around ">
                                     <div>
                                         {{-- <label for="name" class="text-md-right">{{ __('lng') }}</label> --}}
-                                        <input type="hidden"  id="lng" name="lng" class="form-control" />
+                                        <input type="hidden" id="lng" name="lng" class="form-control" />
                                     </div>
                                     <div>
                                         {{-- <label for="name" class="text-md-right">{{ __('lat') }}</label> --}}
-                                        <input type="hidden"  id="lat" name="lat" class="form-control" />
+                                        <input type="hidden" id="lat" name="lat" class="form-control" />
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +131,7 @@
             position: 'topright'
         });
 
-        findLocationIcon.onAdd = function (map) {
+        findLocationIcon.onAdd = function(map) {
             const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
             div.innerHTML = '<a href="#" title="Find My Location" onclick="findMyLocation(); return false;"><i class="fa fa-location-arrow"></i></a>';
             return div;
@@ -142,7 +144,7 @@
             position: 'bottomright'
         });
 
-        satelliteViewIcon.onAdd = function (map) {
+        satelliteViewIcon.onAdd = function(map) {
             const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
             div.innerHTML = '<a href="#" title="Satellite View" onclick="toggleSatelliteView(); return false;"><i class="fa fa-map"></i></a>';
             return div;
