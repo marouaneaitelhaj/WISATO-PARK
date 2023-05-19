@@ -85,10 +85,10 @@ class UserController extends Controller
     {
 
         $validated = $request->validated();
-
+        
         try {
-
             $user = User::create([
+                "numberPhone" => $validated['numberPhone'],
                 'name'     => $validated['name'],
                 'email'    => $validated['email'],
                 'password' => Hash::make($validated['password']),
