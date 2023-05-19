@@ -73,7 +73,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 w-100">
-                                @livewire('searsh-operator')
+                                @livewire('search-operator')
                             </div>
                             <!-- <p>heloo</p> -->
                             <div class="col-md-12">
@@ -87,6 +87,16 @@
                                     @endif
                                 </div>
                             </div>
+                            @if ($errors->has('lng'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('lng') }}</strong>
+                            </span>
+                            @endif
+                            @if ($errors->has('lat'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('lat') }}</strong>
+                            </span>
+                            @endif
                             <div class="col-12">
                                 <div class="pull-right d-flex justify-content-end">
                                     <button type="reset" class="btn btn-secondary me-2" id="frmClear">

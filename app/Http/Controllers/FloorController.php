@@ -73,11 +73,12 @@ class FloorController extends Controller
      */
     public function store(Request $request)
     {
-        $validated = $request->validate(['name' => 'bail|required|unique:floors', 'remarks' => 'bail|nullable|min:3', 'lat' => 'bail|required', 'lng' => 'bail|required']);
+        $validated = $request->validate(['name' => 'bail|required|unique:floors', 'remarks' => 'bail|nullable|min:3', 'lat' => 'bail|required', 'lng' => 'bail|required', 'agent_id' => 'bail|required']);
         $floor = new Floor();
         $floor->name = $request->name;
         $floor->remarks = $request->remarks;
         $floor->lat = $request->lat;
+        $floor->agent_id = $request->agent_id;
         $floor->lng = $request->lng;
         $floor->save();
         return redirect()

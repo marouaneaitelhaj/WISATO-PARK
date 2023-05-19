@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use App\User;
 use Livewire\Component;
 
-class SearshOperator extends Component
+class searchOperator extends Component
 {
     public $search = '';
     public $operators = [];
@@ -24,6 +24,6 @@ class SearshOperator extends Component
     }
     public function render()
     {
-        return view('livewire.searsh-operator', ['search' => $this->search, 'operators' => $this->operators]);
+        return view('livewire.search-operator', ['search' => $this->search, 'operators' => $this->operators]);
     }
 }
