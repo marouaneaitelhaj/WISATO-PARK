@@ -7,7 +7,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ $settings->site_title ? $settings->site_title : config('app.name', 'Demo Parking') }} @yield('title')
+        <title>SmartParking
         </title>
         <!-- plugins:js -->
         <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
@@ -32,7 +32,9 @@
         <link rel="stylesheet" href="{{ asset('assets/css/main/style.css') }}" />
         <link rel="stylesheet" href="{{ asset('css/site.css') }}" />
         <!-- End layout styles -->
-        <link rel="shortcut icon" href="{{ asset($settings->favicon) }}" />
+        <link rel="icon" type="image/png" href="{{ asset('img/park.png') }}">
+
+
         @stack('css')
     </head>
 
