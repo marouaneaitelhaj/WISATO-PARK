@@ -92,7 +92,6 @@
 <script src='https://unpkg.com/leaflet@1.8.0/dist/leaflet.js' crossorigin=''></script>
 <script src='https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js' crossorigin=''></script>
 <link rel='stylesheet' href='https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css' crossorigin='' /> --}}
-
 <div id='map'></div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -106,7 +105,8 @@
 <script>
     let map, markers = [];
     let circle;
-
+    let isSatelliteView = false;
+    
     /* ----------------------------- Initialize Map ----------------------------- */
     function initMap() {
         map = L.map('map', {
@@ -139,18 +139,18 @@
 
         findLocationIcon.addTo(map);
 
-        // Create the "Satellite View" icon and position it in the middle of the map
-        const satelliteViewIcon = L.control({
+        // Create the "Toggle View" icon and position it in the bottom right corner of the map
+        const toggleViewIcon = L.control({
             position: 'bottomright'
         });
 
-        satelliteViewIcon.onAdd = function(map) {
+        satelliteViewIcon.onAdd = function (map) {
             const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
-            div.innerHTML = '<a href="#" title="Satellite View" onclick="toggleSatelliteView(); return false;"><i class="fa fa-map"></i></a>';
+            div.innerHTML = '<a href="#" title="Toggle View" onclick="toggleView(); return false;"><i id="toggle-icon" class="fa fa-globe"></i></a>';
             return div;
         };
 
-        satelliteViewIcon.addTo(map);
+        toggleViewIcon.addTo(map);
     }
     initMap();
 
@@ -228,23 +228,43 @@
         }
     }
 
-    /* ------------------------ Toggle Satellite View ----------------------- */
+    /* ------------------------ Toggle View ----------------------- */
 
-    function toggleSatelliteView() {
+    function toggleView() {
+        if (isSatelliteView) {
+            switchToNormalMap();
+        } else {
+            switchToSatelliteView();
+        }
+    }
+
+    function switchToSatelliteView() {
         const tileLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
             subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
             attribution: '© Google'
         });
 
-        if (map.hasLayer(tileLayer)) {
-            map.removeLayer(tileLayer);
-            document.getElementById('satellite-icon').classList.remove('fa-globe');
-            document.getElementById('satellite-icon').classList.add('fa-map');
-        } else {
+        if (!map.hasLayer(tileLayer)) {
             map.addLayer(tileLayer);
-            document.getElementById('satellite-icon').classList.remove('fa-map');
-            document.getElementById('satellite-icon').classList.add('fa-globe');
+            document.getElementById('toggle-icon').classList.remove('fa-globe');
+            document.getElementById('toggle-icon').classList.add('fa-map');
         }
+
+        isSatelliteView = true;
+    }
+
+    function switchToNormalMap() {
+        const tileLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        });
+
+        if (!map.hasLayer(tileLayer)) {
+            map.addLayer(tileLayer);
+            document.getElementById('toggle-icon').classList.remove('fa-map');
+            document.getElementById('toggle-icon').classList.add('fa-globe');
+        }
+
+        isSatelliteView = false;
     }
 </script>
 
