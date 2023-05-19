@@ -45,11 +45,11 @@
                                 <div class="form-group d-flex justify-content-around ">
                                     <div>
                                         {{-- <label for="name" class="text-md-right">{{ __('lng') }}</label> --}}
-                                        <input type="hidden" id="lng" name="lng" class="form-control" />
+                                        <input type="text" id="lng" name="lng" class="form-control" />
                                     </div>
                                     <div>
                                         {{-- <label for="name" class="text-md-right">{{ __('lat') }}</label> --}}
-                                        <input type="hidden" id="lat" name="lat" class="form-control" />
+                                        <input type="text" id="lat" name="lat" class="form-control" />
                                     </div>
                                 </div>
                             </div>
