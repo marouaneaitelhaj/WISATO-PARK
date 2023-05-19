@@ -117,7 +117,7 @@
                 {
                     searchable: false,
                     orderable: false,
-                    targets: [0, 3, 4, 5],
+                    targets: [6],
                 },
             ],
             responsive: true,
