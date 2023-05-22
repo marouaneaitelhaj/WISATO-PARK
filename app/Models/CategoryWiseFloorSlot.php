@@ -9,7 +9,7 @@ class CategoryWiseFloorSlot extends Model
     use ModelCommonMethodTrait;
     protected $fillable = [
         'id',
-        'operator',
+        // 'operator',
         'floor_id',
         'category_id',
         'slot_name',

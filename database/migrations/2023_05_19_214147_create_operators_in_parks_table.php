@@ -16,8 +16,7 @@ class CreateOperatorsInParksTable extends Migration
         Schema::create('operators_in_parks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('category_wise_floor_slot_id');
-            $table->unsignedBigInteger('user_id');
-            $table->integer('stock');
+            $table->unsignedBigInteger('operator_id');
 
             // Define foreign key constraints
             $table->foreign('category_wise_floor_slot_id')
@@ -25,7 +24,7 @@ class CreateOperatorsInParksTable extends Migration
                 ->on('category_wise_floor_slots')
                 ->onDelete('cascade');
 
-            $table->foreign('user_id')
+            $table->foreign('operator_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');

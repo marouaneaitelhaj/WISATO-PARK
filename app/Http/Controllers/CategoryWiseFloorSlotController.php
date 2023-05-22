@@ -8,6 +8,7 @@ use App\Models\Floor;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Models\OperatorsInPark;
 
 class CategoryWiseFloorSlotController extends Controller
 {
@@ -92,23 +93,28 @@ class CategoryWiseFloorSlotController extends Controller
         });
 
         if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();;
+            return back()->withErrors($validator)->withInput();
         }
-        $data = [
-            'identity' => $request->identity,
-            'remarks' => $request->remarks,
-            'category_id' => $request->category_id,
-            'floor_id' => $request->floor_id,
-            'slot_name' => $request->slot_name,
-            'slotId' => random_int(10000, 99999),
-            'created_by' => auth()->id(),
-            'operator' => $request->operator,
-        ];
-        // echo "<pre>";
-        // print_r($data);
-        // echo "</pre>";
-        CategoryWiseFloorSlot::create($data);
-
+    
+        // Create a new record in category_wise_floor_slots
+        $categoryWiseFloorSlot = new CategoryWiseFloorSlot();
+        $categoryWiseFloorSlot->identity = $request->identity;
+        $categoryWiseFloorSlot->remarks = $request->remarks;
+        $categoryWiseFloorSlot->category_id = $request->category_id;
+        $categoryWiseFloorSlot->floor_id = $request->floor_id;
+        $categoryWiseFloorSlot->slot_name = $request->slot_name;
+        $categoryWiseFloorSlot->slotId = random_int(10000, 99999);
+        $categoryWiseFloorSlot->created_by = auth()->id();
+        $categoryWiseFloorSlot->save();
+    
+        // Create a new record in operators_in_parks
+        foreach ($request->operator as $operatorId) {
+        $operatorInPark = new OperatorsInPark();
+        $operatorInPark->category_wise_floor_slot_id = $categoryWiseFloorSlot->id;
+        $operatorInPark->operator_id = $operatorId;
+        $operatorInPark->save();
+    }
+    
         return redirect()
             ->route('parking_settings.index')
             ->with(['flashMsg' => ['msg' => 'Parking slot successfully added.', 'type' => 'success']]);
