@@ -46,6 +46,14 @@
                     },
                 },
                 {
+                    data: "Phone",
+                    name: "Phone",
+                    title: "Phone Number",
+                    render: function (data, type, row, index) {
+                        return data;
+                    },
+                },
+                {
                     data: "roles",
                     name: "roles",
                     title: "Roles",
@@ -109,7 +117,7 @@
                 {
                     searchable: false,
                     orderable: false,
-                    targets: [0, 3, 4, 5],
+                    targets: [6],
                 },
             ],
             responsive: true,

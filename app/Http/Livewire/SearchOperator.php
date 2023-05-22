@@ -5,7 +5,7 @@ namespace App\Http\Livewire;
 use App\User;
 use Livewire\Component;
 
-class SearshOperator extends Component
+class searchOperator extends Component
 {
     public $search = '';
     public $operators = [];
@@ -13,17 +13,17 @@ class SearshOperator extends Component
     public function mount()
     {
         $this->operators = User::whereHas('roles', function ($query) {
-            $query->where('name', 'operator');
+            $query->where('name', 'gardien');
         })->where('name', 'like', '%' . $this->search . '%')->get();
     }
     public function updatedSearch()
     {
         $this->operators = User::whereHas('roles', function ($query) {
-            $query->where('name', 'operator');
+            $query->where('name', 'gardien');
         })->where('name', 'like', '%' . $this->search . '%')->get();
     }
     public function render()
     {
-        return view('livewire.searsh-operator', ['search' => $this->search, 'operators' => $this->operators]);
+        return view('livewire.search-operator', ['search' => $this->search, 'operators' => $this->operators]);
     }
 }

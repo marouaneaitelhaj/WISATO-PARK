@@ -23,7 +23,7 @@ class CategoryWiseFloorSlot extends Model
 
     public function category()
     {
-        return $this->belongsTo('App\Models\Category');
+        return $this->hasMany('App\Models\Category');
     }
 
     public function floor()
@@ -33,7 +33,7 @@ class CategoryWiseFloorSlot extends Model
 
     public function operator()
     {
-        return $this->belongsTo('App\User', 'operator');
+        return $this->hasMany('App\User', 'operator');
     }
    
     public function createBy()

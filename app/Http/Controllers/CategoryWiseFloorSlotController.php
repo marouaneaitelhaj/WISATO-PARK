@@ -65,6 +65,7 @@ class CategoryWiseFloorSlotController extends Controller
      */
     public function create()
     {
+
         $categories = Category::where('status', 1)->get();
         $floors = Floor::where('status', 1)->get();
         return view('content.parking_settings.create')->with(['categories' => $categories, 'floors' => $floors]);
@@ -78,6 +79,7 @@ class CategoryWiseFloorSlotController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         $validator = Validator::make($request->all(), [
             'slot_name' => 'bail|required|min:1|max:5',
             'identity' => 'bail|nullable|min:5',

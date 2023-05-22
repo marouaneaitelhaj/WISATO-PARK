@@ -16,16 +16,20 @@
                     <form method="POST" action="{{ route('parking_settings.store') }}">
                         @csrf
 
-                        <div class="row">
-                            <div class="col-md-6">
+                        <div class="column">
+                            <div class="">
                                 <div class="form-group">
                                     <label for="category_id" class="text-md-right">{{ __('Category') }} <span class="tcr text-danger">*</span></label>
-                                    <select name="category_id" required id="category_id" class="form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}" required>
+                                    <div class="d-flex justify-content-around">
                                         @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" {{ (old('category_id') == $category->id ) ? ' selected' : '' }}>{{ $category->type }}</option>
+                                        <div class="d-flex align-items-end">
+                                            <input class="form-check-input" type="checkbox" name="category_id[]" value="{{$category->id}}" id="flexCheckDefault">
+                                            <label class="form-check-label" for="flexCheckDefault">
+                                                {{ $category->type }}
+                                            </label>
+                                        </div>
                                         @endforeach
-                                    </select>
-
+                                    </div>
                                     @if ($errors->has('category_id'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('category_id') }}</strong>
@@ -33,7 +37,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="w-100">
                                 <div class="form-group">
                                     <label for="floor_id" class="text-md-right">{{ __('ParkZone') }} <span class="tcr text-danger">*</span></label>
                                     <select name="floor_id" id="floor_id" required class="form-control{{ $errors->has('floor_id') ? ' is-invalid' : '' }}" required>
@@ -50,7 +54,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="W-100">
                                 <div class="form-group">
                                     <label for="slot_name" class="text-md-right">{{ __('Slot Name') }} <span class="tcr text-danger">*</span></label>
                                     <input type="text" required class="form-control{{ $errors->has('slot_name') ? ' is-invalid' : '' }}" value="{{ old('slot_name') }}" name="slot_name">
@@ -61,7 +65,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="w-100">
                                 <div class="form-group">
                                     <label for="identity" class="text-md-right">{{ __('Identity') }}</label>
                                     <input type="text" class="form-control{{ $errors->has('identity') ? ' is-invalid' : '' }}" value="{{ old('identity') }}" name="identity">
@@ -73,7 +77,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 w-100">
-                                @livewire('searsh-operator')
+                                @livewire('search-operator')
                             </div>
                             <!-- <p>heloo</p> -->
                             <div class="col-md-12">
@@ -87,6 +91,16 @@
                                     @endif
                                 </div>
                             </div>
+                            @if ($errors->has('lng'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('lng') }}</strong>
+                            </span>
+                            @endif
+                            @if ($errors->has('lat'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('lat') }}</strong>
+                            </span>
+                            @endif
                             <div class="col-12">
                                 <div class="pull-right d-flex justify-content-end">
                                     <button type="reset" class="btn btn-secondary me-2" id="frmClear">

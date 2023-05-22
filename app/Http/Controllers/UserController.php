@@ -72,7 +72,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create')->with(['roles' => Role::get()]);
+        return view('user.create')->with(['roles' => Role::where('selfmade', 0)->get()]);
     }
 
     /**
@@ -85,10 +85,11 @@ class UserController extends Controller
     {
 
         $validated = $request->validated();
-
+        
         try {
-
+            // dd($validated);
             $user = User::create([
+                "Phone" => $validated['Phone'],
                 'name'     => $validated['name'],
                 'email'    => $validated['email'],
                 'password' => Hash::make($validated['password']),

@@ -28,7 +28,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12 w-100">
-                                @livewire('searsh-agent')
+                                @livewire('search-agent')
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
@@ -193,7 +193,6 @@
     }
 
     /* ------------------------ Find My Location ----------------------- */
-
     function findMyLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -269,6 +268,7 @@
 </script>
 
 
+@livewireScripts
 
 
 

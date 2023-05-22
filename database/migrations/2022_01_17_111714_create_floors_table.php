@@ -18,6 +18,8 @@ class CreateFloorsTable extends Migration
             $table->string('name')->unique();
             $table->string('lng');
             $table->string('lat');
+            $table->unsignedBigInteger('agent_id');
+            $table->foreign('agent_id')->references('id')->on('users')->onDelete('cascade');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
