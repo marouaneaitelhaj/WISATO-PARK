@@ -13,13 +13,13 @@ class SearchAgent extends Component
     public function mount()
     {
         $this->agents = User::whereHas('roles', function ($query) {
-            $query->where('name', 'agent');
+            $query->where('name', 'chef zone');
         })->where('name', 'like', '%' . $this->search . '%')->get();
     }
     public function updatedSearch()
     {
         $this->agents = User::whereHas('roles', function ($query) {
-            $query->where('name', 'agent');
+            $query->where('name', 'chef zone');
         })->where('name', 'like', '%' . $this->search . '%')->get();
     }
     public function render()

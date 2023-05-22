@@ -8,7 +8,6 @@ class Category extends Model
 {
     use ModelCommonMethodTrait;
     protected $fillable = [
-        'id',
         'type',
         'description',
         'status',

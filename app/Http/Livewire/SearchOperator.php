@@ -13,13 +13,13 @@ class searchOperator extends Component
     public function mount()
     {
         $this->operators = User::whereHas('roles', function ($query) {
-            $query->where('name', 'operator');
+            $query->where('name', 'gardien');
         })->where('name', 'like', '%' . $this->search . '%')->get();
     }
     public function updatedSearch()
     {
         $this->operators = User::whereHas('roles', function ($query) {
-            $query->where('name', 'operator');
+            $query->where('name', 'gardien');
         })->where('name', 'like', '%' . $this->search . '%')->get();
     }
     public function render()
