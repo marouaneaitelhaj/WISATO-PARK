@@ -21,6 +21,10 @@ class Category extends Model
     {
         return $this->hasMany('App\Models\Parking');
     }
+    public function CategoryWiseFloorSlot()
+    {
+        return $this->belongsToMany('App\Models\CategoryWiseFloorSlot', 'category_category_wise_floor_slot', 'category_id', 'category_slot_id');
+    }
 
     public function tariff()
     {

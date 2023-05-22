@@ -23,7 +23,7 @@ class CategoryWiseFloorSlot extends Model
 
     public function category()
     {
-        return $this->belongsTo('App\Models\Category');
+        return $this->belongsToMany('App\Models\Category', 'category_category_wise_floor_slot', 'category_id', 'category_slot_id');
     }
 
     public function floor()
