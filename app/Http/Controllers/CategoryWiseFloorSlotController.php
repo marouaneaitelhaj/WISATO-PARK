@@ -82,7 +82,7 @@ class CategoryWiseFloorSlotController extends Controller
             'slot_name' => 'bail|required|min:1|max:5',
             'identity' => 'bail|nullable|min:5',
             'remarks' => 'bail|nullable|min:5',
-            // 'operator' => 'bail|required',
+            'operator' => 'bail|required',
         ]);
 
         $validator->after(function ($validator) use ($request) {
@@ -109,11 +109,11 @@ class CategoryWiseFloorSlotController extends Controller
     
         // Create a new record in operators_in_parks
         foreach ($request->operator as $operatorId) {
-            $operatorInPark = new OperatorsInPark();
-            $operatorInPark->category_wise_floor_slot_id = $categoryWiseFloorSlot->id;
-            $operatorInPark->operator_id = $operatorId;
-            $operatorInPark->save();
-        }
+        $operatorInPark = new OperatorsInPark();
+        $operatorInPark->category_wise_floor_slot_id = $categoryWiseFloorSlot->id;
+        $operatorInPark->operator_id = $operatorId;
+        $operatorInPark->save();
+    }
     
         return redirect()
             ->route('parking_settings.index')
