@@ -23,7 +23,7 @@
                                     <div class="d-flex justify-content-around">
                                         @foreach ($categories as $category)
                                         <div class="d-flex align-items-end">
-                                            <input class="form-check-input" type="checkbox" name="category_id[]" value="{{$category->id}}" id="flexCheckDefault">
+                                            <input class="form-check-input" type="checkbox" name="category_id" value="{{$category->id}}" id="flexCheckDefault">
                                             <label class="form-check-label" for="flexCheckDefault">
                                                 {{ $category->type }}
                                             </label>
