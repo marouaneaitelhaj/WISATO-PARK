@@ -6,11 +6,13 @@
     <div class="form-group w-100 mx-4">
         <label for="identity" class="text-md-right">{{ __('Select Operator') }}</label>
 
-        <select name="operator" class="form-select">
-            <option  hidden selected>Select Operator</option>
-            @foreach ($operators as $operator)
-            <option value="{{ $operator->id }}">{{ $operator->name }}</option>
-            @endforeach
-        </select>
+        @foreach ($operators as $operator)
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="operator" value="{{ $operator->id }}" id="{{ $operator->id }}">
+            <label class="form-check-label" for="{{ $operator->id }}">
+                {{ $operator->name }}
+            </label>
+        </div>
+        @endforeach
     </div>
 </div>
