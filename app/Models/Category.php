@@ -23,20 +23,21 @@ class Category extends Model
     }
     public function CategoryWiseFloorSlot()
     {
-        return $this->belongsToMany('App\Models\CategoryWiseFloorSlot', 'category_category_wise_floor_slot', 'category_id', 'category_slot_id');
+        return $this->hasMany('App\Models\CategoryWiseFloorSlot', 'category_category_wise_floor_slot', 'category_id', 'slot_id');
     }
 
     public function tariff()
     {
         return $this->hasMany('App\Models\Tariff');
     }
-   
+
     public function slots()
     {
         return $this->hasMany('App\Models\CategoryWiseFloorSlot');
     }
 
-    public function active_parking(){
+    public function active_parking()
+    {
         return $this->hasOneThrough('App\Models\Parking', 'App\Models\CategoryWiseFloorSlot', 'category_id', 'slot_id')->whereNull('out_time');
     }
 }

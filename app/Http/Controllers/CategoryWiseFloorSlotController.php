@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\CategoryWiseFloorSlot;
+use App\Models\category_category_wise_floor_slot;
+
 use App\Models\Floor;
 use Exception;
 use Illuminate\Http\Request;
@@ -17,6 +19,7 @@ class CategoryWiseFloorSlotController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index(Request $request)
     {
         if ($request->wantsJson()) {
@@ -25,7 +28,7 @@ class CategoryWiseFloorSlotController extends Controller
             $offset = 0;
             $search = [];
             $where = [];
-            $with = ['category', 'createBy', 'floor'];
+            $with = ['category','createBy', 'floor'];
             $join = [];
             $orderBy = [];
 
@@ -88,7 +91,7 @@ class CategoryWiseFloorSlotController extends Controller
         ]);
 
         $validator->after(function ($validator) use ($request) {
-            $oldSlot =  CategoryWiseFloorSlot::where(['category_id' => $request->category_id, 'floor_id' => $request->floor_id, 'slot_name' => $request->slot_name])->count();
+            $oldSlot =  CategoryWiseFloorSlot::where(['floor_id' => $request->floor_id, 'slot_name' => $request->slot_name])->count();
             if ($oldSlot) {
                 $validator->errors()->add('slot_name', 'This slot name has been used.');
             }
@@ -97,26 +100,30 @@ class CategoryWiseFloorSlotController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
-    
+
         // Create a new record in category_wise_floor_slots
         $categoryWiseFloorSlot = new CategoryWiseFloorSlot();
         $categoryWiseFloorSlot->identity = $request->identity;
         $categoryWiseFloorSlot->remarks = $request->remarks;
-        $categoryWiseFloorSlot->category_id = $request->category_id;
         $categoryWiseFloorSlot->floor_id = $request->floor_id;
         $categoryWiseFloorSlot->slot_name = $request->slot_name;
         $categoryWiseFloorSlot->slotId = random_int(10000, 99999);
         $categoryWiseFloorSlot->created_by = auth()->id();
         $categoryWiseFloorSlot->save();
-    
         // Create a new record in operators_in_parks
         foreach ($request->operator as $operatorId) {
-        $operatorInPark = new OperatorsInPark();
-        $operatorInPark->category_wise_floor_slot_id = $categoryWiseFloorSlot->id;
-        $operatorInPark->operator_id = $operatorId;
-        $operatorInPark->save();
-    }
-    
+            $operatorInPark = new OperatorsInPark();
+            $operatorInPark->category_wise_floor_slot_id = $categoryWiseFloorSlot->id;
+            $operatorInPark->operator_id = $operatorId;
+            $operatorInPark->save();
+        }
+        foreach ($request->category_id as $category) {
+            $category_category_wise_floor_slot = new category_category_wise_floor_slot();
+            $category_category_wise_floor_slot->category_id = $category;
+            $category_category_wise_floor_slot->slot_id = $categoryWiseFloorSlot->id;
+            $category_category_wise_floor_slot->save();
+        }
+
         return redirect()
             ->route('parking_settings.index')
             ->with(['flashMsg' => ['msg' => 'Parking slot successfully added.', 'type' => 'success']]);
@@ -219,5 +226,9 @@ class CategoryWiseFloorSlotController extends Controller
     public function destroy(CategoryWiseFloorSlot $parking_setting)
     {
         $parking_setting->delete();
+    }
+    public function readwise()
+    {
+        return CategoryWiseFloorSlot::with('category')->get();
     }
 }

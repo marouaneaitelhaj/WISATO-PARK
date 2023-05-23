@@ -9,9 +9,7 @@ class CategoryWiseFloorSlot extends Model
     use ModelCommonMethodTrait;
     protected $fillable = [
         'id',
-        // 'operator',
         'floor_id',
-        'category_id',
         'slot_name',
         'slotId',
         'identity',
@@ -23,7 +21,7 @@ class CategoryWiseFloorSlot extends Model
 
     public function category()
     {
-        return $this->belongsToMany('App\Models\Category', 'category_category_wise_floor_slot', 'category_id', 'category_slot_id');
+        return $this->belongsToMany('App\Models\Category', 'category_category_wise_floor_slot', 'slot_id', 'category_id');
     }
 
     public function floor()
@@ -35,7 +33,7 @@ class CategoryWiseFloorSlot extends Model
     {
         return $this->hasMany('App\User', 'operator');
     }
-   
+
     public function createBy()
     {
         return $this->belongsTo('App\User', 'created_by');
@@ -43,58 +41,56 @@ class CategoryWiseFloorSlot extends Model
 
     public function parkings()
     {
-        return $this->hasMany('App\Models\Parking','slot_id');
+        return $this->hasMany('App\Models\Parking', 'slot_id');
     }
-    
+
     public function active_parking()
     {
         return $this->hasOne('App\Models\Parking', 'slot_id')->whereNull('out_time');
     }
 
-    public function getDataForDataTable($limit = 20, $offset = 0, $search = [], $where = [], $with = [], $join = [], $order_by = [], $table_col_name = '', $select = null){
+    public function getDataForDataTable($limit = 20, $offset = 0, $search = [], $where = [], $with = [], $join = [], $order_by = [], $table_col_name = '', $select = null)
+    {
 
         $totalData = $this::query();
         $filterData = $this::query();
         $totalCount = $this::query();
 
-        if(count($where) > 0){
+        if (count($where) > 0) {
             foreach ($where as $keyW => $valueW) {
-                if(strpos($keyW, ' IN') !== false){
+                if (strpos($keyW, ' IN') !== false) {
                     $keyW = str_replace(' IN', '', $keyW);
                     $totalData->whereIn($keyW, $valueW);
                     $filterData->whereIn($keyW, $valueW);
                     $totalCount->whereIn($keyW, $valueW);
-                }else if(strpos($keyW, ' NOTIN') !== false){
+                } else if (strpos($keyW, ' NOTIN') !== false) {
                     $keyW = str_replace(' NOTIN', '', $keyW);
                     $totalData->whereNotIn($keyW, $valueW);
                     $filterData->whereNotIn($keyW, $valueW);
                     $totalCount->whereNotIn($keyW, $valueW);
-                }else if(is_array($valueW)){
+                } else if (is_array($valueW)) {
                     $totalData->where([$valueW]);
                     $filterData->where([$valueW]);
                     $totalCount->where([$valueW]);
-                }else if(strpos($keyW, ' and') === false){
-                    if(strpos($keyW, ' NOTEQ') !== false){
+                } else if (strpos($keyW, ' and') === false) {
+                    if (strpos($keyW, ' NOTEQ') !== false) {
                         $keyW = str_replace(' NOTEQ', '', $keyW);
                         $totalData->orWhere($keyW, '!=', $valueW);
                         $filterData->orWhere($keyW, '!=',  $valueW);
                         $totalCount->orWhere($keyW, '!=', $valueW);
-                    }
-                    else{
+                    } else {
                         $totalData->orWhere($keyW, $valueW);
                         $filterData->orWhere($keyW, $valueW);
                         $totalCount->orWhere($keyW, $valueW);
                     }
-                }
-                else{
+                } else {
                     $keyW = str_replace(' and', '', $keyW);
-                    if(strpos($keyW, ' NOTEQ') !== false){
+                    if (strpos($keyW, ' NOTEQ') !== false) {
                         $keyW = str_replace(' NOTEQ', '', $keyW);
                         $totalData->where($keyW, '!=', $valueW);
                         $filterData->where($keyW, '!=',  $valueW);
                         $totalCount->where($keyW, '!=', $valueW);
-                    }
-                    else{
+                    } else {
                         $totalData->where($keyW, $valueW);
                         $filterData->where($keyW, $valueW);
                         $totalCount->where($keyW, $valueW);
@@ -104,66 +100,64 @@ class CategoryWiseFloorSlot extends Model
         }
 
 
-        if($limit > 0){
+        if ($limit > 0) {
             $totalData->limit($limit)->offset($offset);
         }
 
-        if(count($with) > 0){
+        if (count($with) > 0) {
             foreach ($with as $w) {
                 $totalData->with($w);
             }
         }
 
-        if(count($join) > 0){
+        if (count($join) > 0) {
             foreach ($join as list($nameJ, $withJ, $asJ)) {
                 $name_array = explode(" ", $nameJ);
                 $name_as = end($name_array);
-                if($name_as =='rev'){
-                    $totalData->leftJoin($name_array[0], $withJ, '=', $this->getTable().'.id')
-                    ->selectRaw($asJ);
-                    $filterData->leftJoin($name_array[0], $withJ, '=', $this->getTable().'.id');
-                    $totalCount->leftJoin($name_array[0], $withJ, '=', $this->getTable().'.id');
-                }else if($name_as =='inner'){
-                    $totalData->join($name_array[0], $withJ, '=', $name_array[0].'.id')
-                    ->selectRaw($asJ);
-                    $filterData->join($name_array[0], $withJ, '=', $name_array[0].'.id');
-                    $totalCount->join($name_array[0], $withJ, '=', $name_array[0].'.id');
-                }
-                else{
-                    $totalData->leftJoin($nameJ, $withJ, '=', $name_as.'.id')
-                    ->selectRaw($asJ);
-                    $filterData->leftJoin($nameJ, $withJ, '=', $name_as.'.id');
-                    $totalCount->leftJoin($nameJ, $withJ, '=', $name_as.'.id');
+                if ($name_as == 'rev') {
+                    $totalData->leftJoin($name_array[0], $withJ, '=', $this->getTable() . '.id')
+                        ->selectRaw($asJ);
+                    $filterData->leftJoin($name_array[0], $withJ, '=', $this->getTable() . '.id');
+                    $totalCount->leftJoin($name_array[0], $withJ, '=', $this->getTable() . '.id');
+                } else if ($name_as == 'inner') {
+                    $totalData->join($name_array[0], $withJ, '=', $name_array[0] . '.id')
+                        ->selectRaw($asJ);
+                    $filterData->join($name_array[0], $withJ, '=', $name_array[0] . '.id');
+                    $totalCount->join($name_array[0], $withJ, '=', $name_array[0] . '.id');
+                } else {
+                    $totalData->leftJoin($nameJ, $withJ, '=', $name_as . '.id')
+                        ->selectRaw($asJ);
+                    $filterData->leftJoin($nameJ, $withJ, '=', $name_as . '.id');
+                    $totalCount->leftJoin($nameJ, $withJ, '=', $name_as . '.id');
                 }
             }
 
-            if($select == null){
-                $totalData->selectRaw($this->getTable().'.*');
-                $filterData->selectRaw($this->getTable().'.*');
+            if ($select == null) {
+                $totalData->selectRaw($this->getTable() . '.*');
+                $filterData->selectRaw($this->getTable() . '.*');
             }
         }
 
-        if(count($search) > 0){
-            $totalData->where(function($totalData) use($search) {
+        if (count($search) > 0) {
+            $totalData->where(function ($totalData) use ($search) {
                 foreach ($search as $keyS => $valueS) {
-                    if(strpos($keyS, ' and') === false){
+                    if (strpos($keyS, ' and') === false) {
                         $totalData->orWhere($keyS, 'like', "%$valueS%");
-                    }
-                    else{
+                    } else {
                         $keyS = str_replace(' and', '', $keyS);
                         $totalData->where($keyS, $valueS);
                     }
                 }
             });
 
-            $filterData->where(function($filterData) use($search) {
+            $filterData->where(function ($filterData) use ($search) {
                 foreach ($search as $keyS => $valueS) {
                     $filterData->orWhere($keyS, 'like', "%$valueS%");
                 }
             });
         }
 
-        if($select != null){
+        if ($select != null) {
             $totalData->selectRaw($select);
             $filterData->selectRaw($select);
         }
@@ -183,5 +177,4 @@ class CategoryWiseFloorSlot extends Model
             'recordsFiltered'   => $filterData->count(),
         ];
     }
-   
 }

@@ -15,10 +15,19 @@ class CreateCategoryCategoryWiseFloorSlotTable extends Migration
     {
         Schema::create('category_category_wise_floor_slot', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('slot_id');
             $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('category_slot_id');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
-            $table->foreign('category_slot_id')->references('id')->on('category_wise_floor_slots')->onDelete('cascade');
+
+            $table->foreign('slot_id')
+                ->references('id')
+                ->on('category_wise_floor_slots')
+                ->onDelete('cascade');
+
+            $table->foreign('category_id')
+                ->references('id')
+                ->on('categories')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

@@ -27,6 +27,7 @@ Route::middleware(['installed','auth','xss_clean'])->group(function () {
 	Route::middleware('roles:admin')->group(function () {
 
 		Route::get('user-list', 'UserController@index')->name('user.list');
+		Route::get('testreadwise', 'CategoryWiseFloorSlotController@readwise')->name('readwise');
 		Route::get('user-status/{user}', 'UserController@status')->name('user.status');
 
 		Route::get('user/getListForDataTable', 'UserController@getListForDataTable')->name('userListJson');

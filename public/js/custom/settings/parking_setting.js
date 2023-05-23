@@ -22,24 +22,26 @@
           },
         },
         {
-          title: "Category",
-          class: "no-sort",
-          name: "category.type",
-          data: "category.type",
+          title: "Categories",
+          // i want to show here an icon of category
+          con
+          // class: "no-sort",
+          // name: "category[0].type",
+          // data: "category[0].type",
         },
         {
-          title: "Floor",
+          title: "ParkZone",
           class: "no-sort",
           name: "floor.name",
           data: "floor.name",
         },
         { title: "Slot Name", name: "slot_name", data: "slot_name" },
         { title: "Slot ID", name: "slotId", data: "slotId" },
-        {
-          title: "operator",
-          name: "operator",
-          data: "operator",
-        },
+        // {
+        //   title: "operator",
+        //   name: "operator",
+        //   data: "operator",
+        // },
         {
           title: "Status",
           name: "status",
