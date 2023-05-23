@@ -30,17 +30,17 @@
               console.log(row.category[i].type);
               if (row.category[i].type == "Car") {
                 html += "<i class='fa fa-car' aria-hidden='true'></i>";
-              }else if (row.category[i].type == "Bike") {
+              } else if (row.category[i].type == "Bike") {
                 html += "<i class='fa fa-motorcycle' aria-hidden='true'></i>";
-              }else if (row.category[i].type == "Cycle") {
+              } else if (row.category[i].type == "Cycle") {
                 html += "<i class='fa fa-bicycle' aria-hidden='true'></i>";
-              }else if (row.category[i].type == "Truck") {
+              } else if (row.category[i].type == "Truck") {
                 html += "<i class='fa fa-truck' aria-hidden='true'></i>";
-              }else if (row.category[i].type == "Bus") {
+              } else if (row.category[i].type == "Bus") {
                 html += "<i class='fa fa-bus' aria-hidden='true'></i>";
-              }else if (row.category[i].type == "Auto") {
+              } else if (row.category[i].type == "Auto") {
                 html += "<i class='fa fa-taxi' aria-hidden='true'></i>";
-              }else{
+              } else {
                 html += "<i class='fa fa-car' aria-hidden='true'></i>";
               }
             }
@@ -58,8 +58,13 @@
         { title: "Slot ID", name: "slotId", data: "slotId" },
         {
           title: "operator",
-          name: "operator",
-          data: "operator",
+          // name: "operator",
+          // data: "operator",
+          render: function (data, type, row) {
+            return (
+              '<div class="d-flex justify-content-center"><i class="fa fa-users" aria-hidden="true"></i></div>'
+            );
+          },
         },
         {
           title: "Status",

@@ -31,7 +31,7 @@ class CategoryWiseFloorSlot extends Model
 
     public function operator()
     {
-        return $this->hasMany('App\User');
+        return $this->belongsToMany('App\User', 'operators_in_parks', 'category_wise_floor_slot_id', 'operator_id');
     }
 
     public function createBy()

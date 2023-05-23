@@ -16,7 +16,8 @@ class UserTableSeeder extends Seeder
 	public function run()
 	{
 		$role_admin 		 = Role::where('name', 'admin')->first();
-		$role_operator       = Role::where('name', 'operator')->first();
+		$gardien       = Role::where('name', 'gardien')->first();
+		$chefzone = Role::where('name', 'chef zone')->first();
 
 		$admin = new User();
 
@@ -27,6 +28,24 @@ class UserTableSeeder extends Seeder
 		$admin->Phone = '0123456789';
 		$admin->save();
 
+		$gardian = new User();
+		$gardian->name = 'Gardian Name';
+		$gardian->email = 'gardian@gmail.com';
+		$gardian->status = 1;
+		$gardian->password = bcrypt('123456');
+		$gardian->Phone = '0123456787';
+		$gardian->save();
+
+		$chefzone = new User();
+		$chefzone->name = 'Chef Zone Name';
+		$chefzone->email = 'chefzone@gmail.com';
+		$chefzone->status = 1;
+		$chefzone->password = bcrypt('123456');
+		$chefzone->Phone = '0123456787';
+		$chefzone->save();
+
+		$gardian->roles()->attach($gardien);
+		$chefzone->roles()->attach($chefzone);
 		$admin->roles()->attach($role_admin);
 	}
 }

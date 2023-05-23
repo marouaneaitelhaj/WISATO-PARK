@@ -42,4 +42,8 @@ class User extends Authenticatable implements MustVerifyEmail
         
         return (boolean) $this->roles()->whereIn('name', $roles)->first();
     }
+    public function CategoryWiseFloorSlot()
+    {
+        return $this->belongsToMany('App\Models\CategoryWiseFloorSlot', 'operators_in_parks', 'operator_id', 'category_wise_floor_slot_id');
+    }
 }
