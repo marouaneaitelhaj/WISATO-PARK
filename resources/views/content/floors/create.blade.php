@@ -27,9 +27,7 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-12 w-100">
                                 @livewire('search-agent')
-                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name" class="text-md-right">{{ __('Remarks') }}</label>
@@ -42,14 +40,19 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
+                                <label for="name" class="text-md-right">{{ __('Map') }}</label>
+                                <div id="map"></div>
+
+                            </div>
+                            <div class="col-md-12">
                                 <div class="form-group d-flex justify-content-around ">
                                     <div>
                                         {{-- <label for="name" class="text-md-right">{{ __('lng') }}</label> --}}
-                                        <input type="text" id="lng" name="lng" class="form-control" />
+                                        <input type="hidden" id="lng" name="lng" class="form-control"  disabled/>
                                     </div>
                                     <div>
                                         {{-- <label for="name" class="text-md-right">{{ __('lat') }}</label> --}}
-                                        <input type="text" id="lat" name="lat" class="form-control" />
+                                        <input type="hidden" id="lat" name="lat" class="form-control" disabled/>
                                     </div>
                                 </div>
                             </div>
@@ -78,7 +81,7 @@
 
     #map {
         width: 100%;
-        height: 500px;
+        height: 300px;
     }
 </style>
 
@@ -92,7 +95,6 @@
 <script src='https://unpkg.com/leaflet@1.8.0/dist/leaflet.js' crossorigin=''></script>
 <script src='https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js' crossorigin=''></script>
 <link rel='stylesheet' href='https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css' crossorigin='' /> --}}
-<div id='map'></div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel='stylesheet' href='https://unpkg.com/leaflet@1.8.0/dist/leaflet.css' crossorigin='' />
@@ -118,7 +120,7 @@
         });
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap'
+            // attribution: '© OpenStreetMap'
         }).addTo(map);
 
         map.on('click', mapClicked);
