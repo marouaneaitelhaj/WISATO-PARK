@@ -27,7 +27,6 @@
           render: function (data, type, row) {
             var html = "<div class='d-flex justify-content-around'>";
             for (var i = 0; i < row.category.length; i++) {
-              console.log(row.category[i].type);
               if (row.category[i].type == "Car") {
                 html += "<i class='fa fa-car' aria-hidden='true'></i>";
               } else if (row.category[i].type == "Bike") {
@@ -61,10 +60,13 @@
           // name: "operator",
           // data: "operator",
           render: function (data, type, row) {
-            return (
-              '<div class="d-flex justify-content-center"><i class="fa fa-users" aria-hidden="true"></i></div>'
-            );
+            var arr = row.operator.map((item) => item.name);
+            var jsonString = JSON.stringify(arr);
+            var encodedString = encodeURIComponent(jsonString);
+          
+            return '<div onclick="myFunction(decodeURIComponent(\'' + encodedString + '\'))" class="d-flex justify-content-center"><i class="fa fa-users" aria-hidden="true"></i></div>';
           },
+          
         },
         {
           title: "Status",
@@ -139,3 +141,22 @@
     });
   });
 })(jQuery);
+
+function myFunction(jsonArray) {
+  // Parse the JSON string to convert it back to an array
+  document.getElementById("exampleModalLive").classList.toggle("d-none")
+  var arr = JSON.parse(jsonArray);
+
+  // Loop over the array
+  for (var i = 0; i < arr.length; i++) {
+    // Access each element of the array
+    var element = arr[i];
+    console.log(document.getElementById("exampleModalLive"));
+    document.getElementById("OperatorsList").innerHTML += `<li class="list-group-item">${element}</li>`;
+  }
+}
+
+document.getElementById("close").addEventListener("click", function () {
+  document.getElementById("exampleModalLive").classList.toggle("d-none")
+  document.getElementById("OperatorsList").innerHTML = ""
+});
