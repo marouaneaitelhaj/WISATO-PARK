@@ -47,5 +47,7 @@ class UserTableSeeder extends Seeder
 		$gardian->roles()->attach($gardien);
 		$chefzone->roles()->attach($chefzone);
 		$admin->roles()->attach($role_admin);
+
+		// User::factory()->count(10)->create();
 	}
 }
