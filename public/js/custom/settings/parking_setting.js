@@ -23,11 +23,7 @@
         },
         {
           title: "Categories",
-          // i want to show here an icon of category
-          con
-          // class: "no-sort",
-          // name: "category[0].type",
-          // data: "category[0].type",
+          
         },
         {
           title: "ParkZone",
