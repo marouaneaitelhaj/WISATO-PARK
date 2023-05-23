@@ -31,7 +31,7 @@ class CategoryWiseFloorSlot extends Model
 
     public function operator()
     {
-        return $this->hasMany('App\User', 'operator');
+        return $this->hasMany('App\User');
     }
 
     public function createBy()

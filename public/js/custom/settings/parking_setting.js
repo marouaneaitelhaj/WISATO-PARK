@@ -23,7 +23,30 @@
         },
         {
           title: "Categories",
-          
+          data: "category",
+          render: function (data, type, row) {
+            var html = "<div class='d-flex justify-content-around'>";
+            for (var i = 0; i < row.category.length; i++) {
+              console.log(row.category[i].type);
+              if (row.category[i].type == "Car") {
+                html += "<i class='fa fa-car' aria-hidden='true'></i>";
+              }else if (row.category[i].type == "Bike") {
+                html += "<i class='fa fa-motorcycle' aria-hidden='true'></i>";
+              }else if (row.category[i].type == "Cycle") {
+                html += "<i class='fa fa-bicycle' aria-hidden='true'></i>";
+              }else if (row.category[i].type == "Truck") {
+                html += "<i class='fa fa-truck' aria-hidden='true'></i>";
+              }else if (row.category[i].type == "Bus") {
+                html += "<i class='fa fa-bus' aria-hidden='true'></i>";
+              }else if (row.category[i].type == "Auto") {
+                html += "<i class='fa fa-taxi' aria-hidden='true'></i>";
+              }else{
+                html += "<i class='fa fa-car' aria-hidden='true'></i>";
+              }
+            }
+            html += "</div>";
+            return html;
+          },
         },
         {
           title: "ParkZone",
@@ -33,11 +56,11 @@
         },
         { title: "Slot Name", name: "slot_name", data: "slot_name" },
         { title: "Slot ID", name: "slotId", data: "slotId" },
-        // {
-        //   title: "operator",
-        //   name: "operator",
-        //   data: "operator",
-        // },
+        {
+          title: "operator",
+          name: "operator",
+          data: "operator",
+        },
         {
           title: "Status",
           name: "status",

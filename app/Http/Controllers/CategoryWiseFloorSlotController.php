@@ -28,7 +28,7 @@ class CategoryWiseFloorSlotController extends Controller
             $offset = 0;
             $search = [];
             $where = [];
-            $with = ['category','createBy', 'floor'];
+            $with = ['category','createBy', 'floor', 'operator'];
             $join = [];
             $orderBy = [];
 
