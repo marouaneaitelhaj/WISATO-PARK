@@ -110,6 +110,7 @@ class CategoryWiseFloorSlotController extends Controller
         $categoryWiseFloorSlot->slotId = random_int(10000, 99999);
         $categoryWiseFloorSlot->created_by = auth()->id();
         $categoryWiseFloorSlot->save();
+        // dd($request);
         // Create a new record in operators_in_parks
         foreach ($request->operator as $operatorId) {
             $operatorInPark = new OperatorsInPark();
