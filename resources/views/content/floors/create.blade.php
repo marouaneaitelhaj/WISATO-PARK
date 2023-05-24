@@ -91,16 +91,7 @@
 
 
 
-{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel='stylesheet' href='https://unpkg.com/leaflet@1.8.0/dist/leaflet.css' crossorigin='' />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
-<script src='https://unpkg.com/leaflet@1.8.0/dist/leaflet.js' crossorigin=''></script>
-<script src='https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js' crossorigin=''></script>
-<link rel='stylesheet' href='https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css' crossorigin='' /> --}}
-
-
-{{-- <div id='map'></div> --}}
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel='stylesheet' href='https://unpkg.com/leaflet@1.8.0/dist/leaflet.css' crossorigin='' />
