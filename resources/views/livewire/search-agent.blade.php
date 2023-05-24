@@ -1,16 +1,21 @@
-<div class="d-flex justify-content-evenly flex-wrap flex-sm-nowrap">
-    <div class="form-group w-100">
-        <label for="identity" class="text-md-right">{{ __('Search for Agent') }}</label>
-        <input type="search" wire:model="search" class="form-control{{ $errors->has('agent') ? ' is-invalid' : '' }}">
+<div class="border form-group">
+    <div class="d-flex border w-100 justify-content-evenly">
+        <div class="w-100 d-flex">
+            <ul class="d-flex" style="list-style: none;">
+                @foreach ($selectedAgents as $index => $agent)
+                <li class="bg-success px-2 m-1 py-1 rounded">{{ $agent['name'] }}</li>
+                @endforeach
+            </ul>
+            <input type="text" style="border: none;" wire:model="search" class="form-control{{ $errors->has('agent') ? ' is-invalid' : '' }}" name="agent">
+        </div>
     </div>
-    <div class="form-group w-100">
-        <label for="identity" class="text-md-right">{{ __('Select Agent') }}</label>
-
-        <select name="agent_id" class="form-control">
-            <option  hidden selected>Select Agent</option>
-            @foreach ($agents as $agent)
-            <option value="{{ $agent->id }}">{{ $agent->name }}</option>
+    <div class="w-100">
+        <div class="border">
+            @foreach ($agents as $index => $agent)
+            <div wire:click="selectAgent({{ $agent->id }})" class="border">
+                <p>{{ $agent->name }}</p>
+            </div>
             @endforeach
-        </select>
+        </div>
     </div>
 </div>
