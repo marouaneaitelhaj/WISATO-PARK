@@ -48,6 +48,16 @@ class UserTableSeeder extends Seeder
 		$chefzone->roles()->attach($chefzone);
 		$admin->roles()->attach($role_admin);
 
-		User::factory()->count(10)->create();
+		User::factory()->count(50)->create();
+
+		$allusers = User::all();
+		foreach ($allusers as $user) {
+			$value = rand(1, 2);
+			if ($value == 1) {
+				$user->roles()->attach($gardien);
+			} else {
+				$user->roles()->attach($chefzone);
+			}
+		}
 	}
 }
