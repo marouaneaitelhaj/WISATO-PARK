@@ -48,6 +48,6 @@ class UserTableSeeder extends Seeder
 		$chefzone->roles()->attach($chefzone);
 		$admin->roles()->attach($role_admin);
 
-		// User::factory()->count(10)->create();
+		User::factory()->count(10)->create();
 	}
 }
