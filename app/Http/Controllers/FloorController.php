@@ -73,8 +73,15 @@ class FloorController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        $validated = $request->validate(['name' => 'bail|required|unique:floors', 'remarks' => 'bail|nullable|min:3', 'lat' => 'bail|required', 'lng' => 'bail|required', 'agent_id' => 'bail|required']);
+        // dd( $request->all() );
+        $validated = $request->validate([
+            'name' => 'bail|required|unique:floors',
+            'remarks' => 'bail|nullable|min:3',
+            'lat' => 'bail|required',
+            'lng' => 'bail|required',
+            'agent_id' => 'bail|required'
+        ]);
+    
         $floor = new Floor();
         $floor->name = $request->name;
         $floor->remarks = $request->remarks;
@@ -82,10 +89,12 @@ class FloorController extends Controller
         $floor->agent_id = $request->agent_id;
         $floor->lng = $request->lng;
         $floor->save();
+    
         return redirect()
             ->route('floors.index')
             ->with(['flashMsg' => ['msg' => 'Floor successfully added.', 'type' => 'success']]);
     }
+    
 
     /**
      * Display the specified resource.

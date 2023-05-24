@@ -28,6 +28,8 @@
                     <a type="button" wire:click="removeAgent({{ $index }})" class="" style="color: azure"><i
                             class="fa fa-minus-circle mx-1" aria-hidden="true"></i>
                     </a>
+                    <input type="text" hidden value="{{$agent['id']}}" name="agent_id[]">
+
                 </li>
             @endforeach
             <input type="text" style="border: none;" wire:model="search" class="flex-grow-1">
