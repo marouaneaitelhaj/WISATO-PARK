@@ -1,8 +1,8 @@
 <div class="cabin">
-    @foreach($slots->groupBy('floor_id') as $florSlots)
+    @foreach($slots->groupBy('parkzone_id') as $florSlots)
     <div class="row">
         <div class="col-12">
-            <h4 class="border-top pt-2 text-center">ParkZone : {{ $florSlots->first()->floor->name }}</h4>
+            <h4 class="border-top pt-2 text-center">ParkZone : {{ $florSlots->first()->parkzone->name }}</h4>
         </div>
     </div>
     <div class="row row--10 mb-4">

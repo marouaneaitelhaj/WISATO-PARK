@@ -39,7 +39,7 @@
                                 <tr>
                                     <td class="w40">ParkZone</td>
                                     <td class="w10">:</td>
-                                    <td class="w50">{{ $parking->slot->floor->name ?? '' }}</td>
+                                    <td class="w50">{{ $parking->slot->parkzone->name ?? '' }}</td>
                                 </tr>
                                 <tr>
                                     <td class="w40">Parking Slot</td>

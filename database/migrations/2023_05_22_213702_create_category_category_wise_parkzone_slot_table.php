@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategoryCategoryWiseFloorSlotTable extends Migration
+class CreateCategoryCategoryWiseParkzoneSlotTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateCategoryCategoryWiseFloorSlotTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_category_wise_floor_slot', function (Blueprint $table) {
+        Schema::create('category_category_wise_parkzone_slot', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('slot_id');
             $table->unsignedBigInteger('category_id');
 
             $table->foreign('slot_id')
                 ->references('id')
-                ->on('category_wise_floor_slots')
+                ->on('category_wise_parkzone_slots')
                 ->onDelete('cascade');
 
             $table->foreign('category_id')
@@ -39,6 +39,6 @@ class CreateCategoryCategoryWiseFloorSlotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_category_wise_floor_slot');
+        Schema::dropIfExists('category_category_wise_parkzone_slot');
     }
 }

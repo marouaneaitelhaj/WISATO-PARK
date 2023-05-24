@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Floor;
+use App\Models\Parkzone;
 use Exception;
 use Illuminate\Http\Request;
 
-class FloorController extends Controller
+class ParkzoneController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class FloorController extends Controller
     public function index(Request $request)
     {
         if ($request->wantsJson()) {
-            $floors = new Floor();
+            $parkzones = new Parkzone();
             $limit = 10;
             $offset = 0;
             $search = [];
@@ -48,11 +48,11 @@ class FloorController extends Controller
                 $where = $request->input('where');
             }
 
-            $floors = $floors->getDataForDataTable($limit, $offset, $search, $where, $with, $join, $orderBy,  $request->all());
-            return response()->json($floors);
+            $parkzones = $parkzones->getDataForDataTable($limit, $offset, $search, $where, $with, $join, $orderBy,  $request->all());
+            return response()->json($parkzones);
         }
 
-        return view('content.floors.list');
+        return view('content.parkzones.list');
     }
 
     /**
@@ -62,7 +62,7 @@ class FloorController extends Controller
      */
     public function create()
     {
-        return view('content.floors.create');
+        return view('content.parkzones.create');
     }
 
     /**
@@ -75,71 +75,71 @@ class FloorController extends Controller
     {
         // dd( $request->all() );
         $validated = $request->validate([
-            'name' => 'bail|required|unique:floors',
+            'name' => 'bail|required|unique:parkzones',
             'remarks' => 'bail|nullable|min:3',
             'lat' => 'bail|required',
             'lng' => 'bail|required',
             'agent_id' => 'bail|required'
         ]);
     
-        $floor = new Floor();
-        $floor->name = $request->name;
-        $floor->remarks = $request->remarks;
-        $floor->lat = $request->lat;
-        $floor->agent_id = $request->agent_id;
-        $floor->lng = $request->lng;
-        $floor->save();
+        $parkzone = new Parkzone();
+        $parkzone->name = $request->name;
+        $parkzone->remarks = $request->remarks;
+        $parkzone->lat = $request->lat;
+        $parkzone->agent_id = $request->agent_id;
+        $parkzone->lng = $request->lng;
+        $parkzone->save();
     
         return redirect()
-            ->route('floors.index')
-            ->with(['flashMsg' => ['msg' => 'Floor successfully added.', 'type' => 'success']]);
+            ->route('parkzones.index')
+            ->with(['flashMsg' => ['msg' => 'Parkzone successfully added.', 'type' => 'success']]);
     }
     
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Floor  $floor
+     * @param  \App\Parkzone  $parkzone
      * @return \Illuminate\Http\Response
      */
-    public function show(Floor $floor)
+    public function show(Parkzone $parkzone)
     {
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Floor  $floor
+     * @param  \App\Parkzone  $parkzone
      * @return \Illuminate\Http\Response
      */
-    public function edit(Floor $floor)
+    public function edit(Parkzone $parkzone)
     {
         $viewData = array(
-            'floor' => $floor,
+            'parkzone' => $parkzone,
         );
 
-        return view('content.floors.edit')->with($viewData);
+        return view('content.parkzones.edit')->with($viewData);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Floor  $floor
+     * @param  \App\Parkzone  $parkzone
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Floor $floor)
+    public function update(Request $request, Parkzone $parkzone)
     {
-        $validated = $request->validate(['name' => 'bail|required|unique:floors,name,' . $floor->id,  'remarks' => 'bail|nullable|min:3']);
+        $validated = $request->validate(['name' => 'bail|required|unique:parkzones,name,' . $parkzone->id,  'remarks' => 'bail|nullable|min:3']);
 
-        $floor->update([
+        $parkzone->update([
             'name'     => $validated['name'],
             'remarks'  => $validated['remarks'],
         ]);
 
         return redirect()
-            ->route('floors.index')
-            ->with(['flashMsg' => ['msg' => 'Floor successfully updated.', 'type' => 'success']]);
+            ->route('parkzones.index')
+            ->with(['flashMsg' => ['msg' => 'Parkzone successfully updated.', 'type' => 'success']]);
     }
 
 
@@ -147,18 +147,18 @@ class FloorController extends Controller
      * Update the status
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Floor  $floor
+     * @param  \App\Parkzone  $parkzone
      * @return \Illuminate\Http\Response
      */
-    public function statusChange(Request $request, Floor $floor)
+    public function statusChange(Request $request, Parkzone $parkzone)
     {
-        if ($floor->active_parking) {
-            return back()->with(['flashMsg' => ['msg' => 'This floor has already been used in an active parking.', 'type' => 'warning']]);
+        if ($parkzone->active_parking) {
+            return back()->with(['flashMsg' => ['msg' => 'This parkzone has already been used in an active parking.', 'type' => 'warning']]);
         } else {
-            if ($floor->status == 1) {
-                $floor->update(['status' => 0]);
+            if ($parkzone->status == 1) {
+                $parkzone->update(['status' => 0]);
             } else {
-                $floor->update(['status' => 1]);
+                $parkzone->update(['status' => 1]);
             }
 
             return back()->with(['flashMsg' => ['msg' => 'Status successfully changed.', 'type' => 'success']]);
@@ -168,11 +168,11 @@ class FloorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Floor  $floor
+     * @param  \App\Parkzone  $parkzone
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Floor $floor)
+    public function destroy(Parkzone $parkzone)
     {
-        $floor->delete();
+        $parkzone->delete();
     }
 }

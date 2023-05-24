@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CategoryWiseFloorSlot extends Model
+class CategoryWiseParkzoneSlot extends Model
 {
     use ModelCommonMethodTrait;
     protected $fillable = [
         'id',
-        'floor_id',
+        'parkzone_id',
         'slot_name',
         'slotId',
         'identity',
@@ -21,17 +21,17 @@ class CategoryWiseFloorSlot extends Model
 
     public function category()
     {
-        return $this->belongsToMany('App\Models\Category', 'category_category_wise_floor_slot', 'slot_id', 'category_id');
+        return $this->belongsToMany('App\Models\Category', 'category_category_wise_parkzone_slot', 'slot_id', 'category_id');
     }
 
-    public function floor()
+    public function parkzone()
     {
-        return $this->belongsTo('App\Models\Floor');
+        return $this->belongsTo('App\Models\Parkzone');
     }
 
     public function operator()
     {
-        return $this->belongsToMany('App\User', 'operators_in_parks', 'category_wise_floor_slot_id', 'operator_id');
+        return $this->belongsToMany('App\User', 'operators_in_parks', 'category_wise_parkzone_slot_id', 'operator_id');
     }
 
     public function createBy()

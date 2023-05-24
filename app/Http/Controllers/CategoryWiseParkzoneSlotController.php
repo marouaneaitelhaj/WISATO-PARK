@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\CategoryWiseFloorSlot;
-use App\Models\category_category_wise_floor_slot;
+use App\Models\CategoryWiseParkzoneSlot;
+use App\Models\category_category_wise_parkzone_slot;
 
-use App\Models\Floor;
+use App\Models\Parkzone;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\OperatorsInPark;
 
-class CategoryWiseFloorSlotController extends Controller
+class CategoryWiseParkzoneSlotController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,12 +23,12 @@ class CategoryWiseFloorSlotController extends Controller
     public function index(Request $request)
     {
         if ($request->wantsJson()) {
-            $parkingSlot = new CategoryWiseFloorSlot();
+            $parkingSlot = new CategoryWiseParkzoneSlot();
             $limit = 10;
             $offset = 0;
             $search = [];
             $where = [];
-            $with = ['category','createBy', 'floor', 'operator'];
+            $with = ['category','createBy', 'parkzone', 'operator'];
             $join = [];
             $orderBy = [];
 
@@ -70,8 +70,8 @@ class CategoryWiseFloorSlotController extends Controller
     {
 
         $categories = Category::where('status', 1)->get();
-        $floors = Floor::where('status', 1)->get();
-        return view('content.parking_settings.create')->with(['categories' => $categories, 'floors' => $floors]);
+        $parkzones = Parkzone::where('status', 1)->get();
+        return view('content.parking_settings.create')->with(['categories' => $categories, 'parkzones' => $parkzones]);
     }
 
     /**
@@ -91,7 +91,7 @@ class CategoryWiseFloorSlotController extends Controller
         ]);
 
         $validator->after(function ($validator) use ($request) {
-            $oldSlot =  CategoryWiseFloorSlot::where(['floor_id' => $request->floor_id, 'slot_name' => $request->slot_name])->count();
+            $oldSlot =  CategoryWiseParkzoneSlot::where(['parkzone_id' => $request->parkzone_id, 'slot_name' => $request->slot_name])->count();
             if ($oldSlot) {
                 $validator->errors()->add('slot_name', 'This slot name has been used.');
             }
@@ -101,28 +101,28 @@ class CategoryWiseFloorSlotController extends Controller
             return back()->withErrors($validator)->withInput();
         }
 
-        // Create a new record in category_wise_floor_slots
-        $categoryWiseFloorSlot = new CategoryWiseFloorSlot();
-        $categoryWiseFloorSlot->identity = $request->identity;
-        $categoryWiseFloorSlot->remarks = $request->remarks;
-        $categoryWiseFloorSlot->floor_id = $request->floor_id;
-        $categoryWiseFloorSlot->slot_name = $request->slot_name;
-        $categoryWiseFloorSlot->slotId = random_int(10000, 99999);
-        $categoryWiseFloorSlot->created_by = auth()->id();
-        $categoryWiseFloorSlot->save();
+        // Create a new record in category_wise_parkzone_slots
+        $categoryWiseParkzoneSlot = new CategoryWiseParkzoneSlot();
+        $categoryWiseParkzoneSlot->identity = $request->identity;
+        $categoryWiseParkzoneSlot->remarks = $request->remarks;
+        $categoryWiseParkzoneSlot->parkzone_id = $request->parkzone_id;
+        $categoryWiseParkzoneSlot->slot_name = $request->slot_name;
+        $categoryWiseParkzoneSlot->slotId = random_int(10000, 99999);
+        $categoryWiseParkzoneSlot->created_by = auth()->id();
+        $categoryWiseParkzoneSlot->save();
         // dd($request);
         // Create a new record in operators_in_parks
         foreach ($request->operator as $operatorId) {
             $operatorInPark = new OperatorsInPark();
-            $operatorInPark->category_wise_floor_slot_id = $categoryWiseFloorSlot->id;
+            $operatorInPark->category_wise_parkzone_slot_id = $categoryWiseParkzoneSlot->id;
             $operatorInPark->operator_id = $operatorId;
             $operatorInPark->save();
         }
         foreach ($request->category_id as $category) {
-            $category_category_wise_floor_slot = new category_category_wise_floor_slot();
-            $category_category_wise_floor_slot->category_id = $category;
-            $category_category_wise_floor_slot->slot_id = $categoryWiseFloorSlot->id;
-            $category_category_wise_floor_slot->save();
+            $category_category_wise_parkzone_slot = new category_category_wise_parkzone_slot();
+            $category_category_wise_parkzone_slot->category_id = $category;
+            $category_category_wise_parkzone_slot->slot_id = $categoryWiseParkzoneSlot->id;
+            $category_category_wise_parkzone_slot->save();
         }
 
         return redirect()
@@ -133,10 +133,10 @@ class CategoryWiseFloorSlotController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\CategoryWiseFloorSlot  $parking_setting
+     * @param  \App\Models\CategoryWiseParkzoneSlot  $parking_setting
      * @return \Illuminate\Http\Response
      */
-    public function show(CategoryWiseFloorSlot $parking_setting)
+    public function show(CategoryWiseParkzoneSlot $parking_setting)
     {
         //
     }
@@ -144,24 +144,24 @@ class CategoryWiseFloorSlotController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\CategoryWiseFloorSlot  $parking_setting
+     * @param  \App\Models\CategoryWiseParkzoneSlot  $parking_setting
      * @return \Illuminate\Http\Response
      */
-    public function edit(CategoryWiseFloorSlot $parking_setting)
+    public function edit(CategoryWiseParkzoneSlot $parking_setting)
     {
         $categories = Category::where('status', 1)->get();
-        $floors = Floor::where('status', 1)->get();
-        return view('content.parking_settings.edit')->with(['categories' => $categories, 'floors' => $floors, 'parking_setting' => $parking_setting]);
+        $parkzones = Parkzone::where('status', 1)->get();
+        return view('content.parking_settings.edit')->with(['categories' => $categories, 'parkzones' => $parkzones, 'parking_setting' => $parking_setting]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CategoryWiseFloorSlot  $parking_setting
+     * @param  \App\Models\CategoryWiseParkzoneSlot  $parking_setting
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CategoryWiseFloorSlot $parking_setting)
+    public function update(Request $request, CategoryWiseParkzoneSlot $parking_setting)
     {
         $validator = Validator::make($request->all(), [
             'slot_name' => 'bail|required|min:1|max:5',
@@ -170,7 +170,7 @@ class CategoryWiseFloorSlotController extends Controller
         ]);
 
         $validator->after(function ($validator) use ($request, $parking_setting) {
-            $oldSlot =  CategoryWiseFloorSlot::where(['category_id' => $request->category_id, 'floor_id' => $request->floor_id, 'slot_name' => $request->slot_name])->where('id', '!=', $parking_setting->id)->count();
+            $oldSlot =  CategoryWiseParkzoneSlot::where(['category_id' => $request->category_id, 'parkzone_id' => $request->parkzone_id, 'slot_name' => $request->slot_name])->where('id', '!=', $parking_setting->id)->count();
             if ($oldSlot) {
                 $validator->errors()->add('slot_name', 'This slot name has been used.');
             }
@@ -184,7 +184,7 @@ class CategoryWiseFloorSlotController extends Controller
             'identity' => $request->identity,
             'remarks' => $request->remarks,
             'category_id' => $request->category_id,
-            'floor_id' => $request->floor_id,
+            'parkzone_id' => $request->parkzone_id,
             'slot_name' => $request->slot_name
         ];
 
@@ -199,10 +199,10 @@ class CategoryWiseFloorSlotController extends Controller
      * Update the status
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Floor  $floor
+     * @param  \App\Parkzone  $parkzone
      * @return \Illuminate\Http\Response
      */
-    public function statusChange(Request $request, CategoryWiseFloorSlot $parking_setting)
+    public function statusChange(Request $request, CategoryWiseParkzoneSlot $parking_setting)
     {
         if ($parking_setting->active_parking) {
             return back()->with(['flashMsg' => ['msg' => 'This Slot has already been used in an active parking.', 'type' => 'warning']]);
@@ -221,15 +221,15 @@ class CategoryWiseFloorSlotController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CategoryWiseFloorSlot  $parking_setting
+     * @param  \App\Models\CategoryWiseParkzoneSlot  $parking_setting
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CategoryWiseFloorSlot $parking_setting)
+    public function destroy(CategoryWiseParkzoneSlot $parking_setting)
     {
         $parking_setting->delete();
     }
     public function readwise()
     {
-        return CategoryWiseFloorSlot::with('category')->get();
+        return CategoryWiseParkzoneSlot::with('category')->get();
     }
 }

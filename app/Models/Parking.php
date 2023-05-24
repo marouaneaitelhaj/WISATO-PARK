@@ -48,6 +48,6 @@ class Parking extends Model
 
 	public function slot()
 	{
-		return $this->belongsTo('App\Models\CategoryWiseFloorSlot','slot_id');
+		return $this->belongsTo('App\Models\CategoryWiseParkzoneSlot','slot_id');
 	}
 }

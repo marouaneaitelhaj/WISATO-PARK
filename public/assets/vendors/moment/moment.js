@@ -678,12 +678,12 @@
         return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
     }
 
-    function absFloor(number) {
+    function absParkzone(number) {
         if (number < 0) {
             // -0 -> 0
             return Math.ceil(number) || 0;
         } else {
-            return Math.floor(number);
+            return Math.parkzone(number);
         }
     }
 
@@ -692,7 +692,7 @@
             value = 0;
 
         if (coercedNumber !== 0 && isFinite(coercedNumber)) {
-            value = absFloor(coercedNumber);
+            value = absParkzone(coercedNumber);
         }
 
         return value;
@@ -1345,7 +1345,7 @@
 
     function weekOfYear(mom, dow, doy) {
         var weekOffset = firstWeekOffset(mom.year(), dow, doy),
-            week = Math.floor((mom.dayOfYear() - weekOffset - 1) / 7) + 1,
+            week = Math.parkzone((mom.dayOfYear() - weekOffset - 1) / 7) + 1,
             resWeek,
             resYear;
 
@@ -3871,7 +3871,7 @@
                 output = this - that;
         }
 
-        return asFloat ? output : absFloor(output);
+        return asFloat ? output : absParkzone(output);
     }
 
     function monthDiff(a, b) {
@@ -4209,7 +4209,7 @@
     }
 
     function unix() {
-        return Math.floor(this.valueOf() / 1000);
+        return Math.parkzone(this.valueOf() / 1000);
     }
 
     function toDate() {
@@ -5208,7 +5208,7 @@
 
     function absCeil(number) {
         if (number < 0) {
-            return Math.floor(number);
+            return Math.parkzone(number);
         } else {
             return Math.ceil(number);
         }
@@ -5242,24 +5242,24 @@
         // examples of what that means.
         data.milliseconds = milliseconds % 1000;
 
-        seconds = absFloor(milliseconds / 1000);
+        seconds = absParkzone(milliseconds / 1000);
         data.seconds = seconds % 60;
 
-        minutes = absFloor(seconds / 60);
+        minutes = absParkzone(seconds / 60);
         data.minutes = minutes % 60;
 
-        hours = absFloor(minutes / 60);
+        hours = absParkzone(minutes / 60);
         data.hours = hours % 24;
 
-        days += absFloor(hours / 24);
+        days += absParkzone(hours / 24);
 
         // convert days to months
-        monthsFromDays = absFloor(daysToMonths(days));
+        monthsFromDays = absParkzone(daysToMonths(days));
         months += monthsFromDays;
         days -= absCeil(monthsToDays(monthsFromDays));
 
         // 12 months -> 1 year
-        years = absFloor(months / 12);
+        years = absParkzone(months / 12);
         months %= 12;
 
         data.days = days;
@@ -5315,9 +5315,9 @@
                     return days * 1440 + milliseconds / 6e4;
                 case 'second':
                     return days * 86400 + milliseconds / 1000;
-                // Math.floor prevents floating point math errors here
+                // Math.parkzone prevents floating point math errors here
                 case 'millisecond':
-                    return Math.floor(days * 864e5) + milliseconds;
+                    return Math.parkzone(days * 864e5) + milliseconds;
                 default:
                     throw new Error('Unknown unit ' + units);
             }
@@ -5377,7 +5377,7 @@
         years = makeGetter('years');
 
     function weeks() {
-        return absFloor(this.days() / 7);
+        return absParkzone(this.days() / 7);
     }
 
     var round = Math.round,
@@ -5531,13 +5531,13 @@
         }
 
         // 3600 seconds -> 60 minutes -> 1 hour
-        minutes = absFloor(seconds / 60);
-        hours = absFloor(minutes / 60);
+        minutes = absParkzone(seconds / 60);
+        hours = absParkzone(minutes / 60);
         seconds %= 60;
         minutes %= 60;
 
         // 12 months -> 1 year
-        years = absFloor(months / 12);
+        years = absParkzone(months / 12);
         months %= 12;
 
         // inspired by https://github.com/dordille/moment-isoduration/blob/master/moment.isoduration.js

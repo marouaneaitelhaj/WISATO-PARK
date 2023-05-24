@@ -21,9 +21,9 @@ class Category extends Model
     {
         return $this->hasMany('App\Models\Parking');
     }
-    public function CategoryWiseFloorSlot()
+    public function CategoryWiseParkzoneSlot()
     {
-        return $this->hasMany('App\Models\CategoryWiseFloorSlot', 'category_category_wise_floor_slot', 'category_id', 'slot_id');
+        return $this->hasMany('App\Models\CategoryWiseParkzoneSlot', 'category_category_wise_parkzone_slot', 'category_id', 'slot_id');
     }
 
     public function tariff()
@@ -33,11 +33,11 @@ class Category extends Model
 
     public function slots()
     {
-        return $this->hasMany('App\Models\CategoryWiseFloorSlot');
+        return $this->hasMany('App\Models\CategoryWiseParkzoneSlot');
     }
 
     public function active_parking()
     {
-        return $this->hasOneThrough('App\Models\Parking', 'App\Models\CategoryWiseFloorSlot', 'category_id', 'slot_id')->whereNull('out_time');
+        return $this->hasOneThrough('App\Models\Parking', 'App\Models\CategoryWiseParkzoneSlot', 'category_id', 'slot_id')->whereNull('out_time');
     }
 }

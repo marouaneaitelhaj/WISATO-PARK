@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Floor extends Model
+class Parkzone extends Model
 {
     use ModelCommonMethodTrait;
     /**
@@ -21,11 +21,11 @@ class Floor extends Model
 
     public function slots()
     {
-        return $this->hasMany('App\Models\CategoryWiseFloorSlot');
+        return $this->hasMany('App\Models\CategoryWiseParkzoneSlot');
     }
 
     public function active_parking()
     {
-        return $this->hasOneThrough('App\Models\Parking', 'App\Models\CategoryWiseFloorSlot', 'floor_id', 'slot_id')->whereNull('out_time');
+        return $this->hasOneThrough('App\Models\Parking', 'App\Models\CategoryWiseParkzoneSlot', 'parkzone_id', 'slot_id')->whereNull('out_time');
     }
 }

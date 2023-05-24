@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', ' - Create New Floor')
+@section('title', ' - Create New Parkzone')
 @section('content')
 <div class="container-fluid mb100">
 
@@ -8,11 +8,11 @@
             <div class="card">
                 <div class="card-header">
                     {{ __('Create ParkZone') }}
-                    <a class="btn btn-sm btn-info pull-right" href="{{ route('floors.index') }}">ParkZone List</a>
+                    <a class="btn btn-sm btn-info pull-right" href="{{ route('parkzones.index') }}">ParkZone List</a>
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('floors.store') }}">
+                    <form method="POST" action="{{ route('parkzones.store') }}">
                         @csrf
 
                         <div class="row">

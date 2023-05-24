@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddOrderIdToFloorsTable extends Migration
+class AddOrderIdToParkzonesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddOrderIdToFloorsTable extends Migration
      */
     public function up()
     {
-        Schema::table('floors', function (Blueprint $table) {
+        Schema::table('parkzones', function (Blueprint $table) {
             $table->tinyInteger('level')->after('name')->default(0);
             $table->string('remarks')->after('level')->nullable();
         });
@@ -26,7 +26,7 @@ class AddOrderIdToFloorsTable extends Migration
      */
     public function down()
     {
-        Schema::table('floors', function (Blueprint $table) {
+        Schema::table('parkzones', function (Blueprint $table) {
             $table->dropColumn('level');
             $table->dropColumn('remarks');
         });

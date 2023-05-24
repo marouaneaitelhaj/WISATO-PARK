@@ -11,7 +11,7 @@ class OperatorsInPark extends Model
     protected $table = 'operators_in_parks';
 
     protected $fillable = [
-        'category_wise_floor_slot_id ',
+        'category_wise_parkzone_slot_id ',
         'operator_id',
     ];
 

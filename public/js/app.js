@@ -2492,44 +2492,44 @@ var Ziggy = {
       "uri": "general-settings",
       "methods": ["POST"]
     },
-    "floors.index": {
-      "uri": "floors",
+    "parkzones.index": {
+      "uri": "parkzones",
       "methods": ["GET", "HEAD"]
     },
-    "floors.create": {
-      "uri": "floors\/create",
+    "parkzones.create": {
+      "uri": "parkzones\/create",
       "methods": ["GET", "HEAD"]
     },
-    "floors.store": {
-      "uri": "floors",
+    "parkzones.store": {
+      "uri": "parkzones",
       "methods": ["POST"]
     },
-    "floors.edit": {
-      "uri": "floors\/{floor}\/edit",
+    "parkzones.edit": {
+      "uri": "parkzones\/{parkzone}\/edit",
       "methods": ["GET", "HEAD"],
       "bindings": {
-        "floor": "id"
+        "parkzone": "id"
       }
     },
-    "floors.update": {
-      "uri": "floors\/{floor}",
+    "parkzones.update": {
+      "uri": "parkzones\/{parkzone}",
       "methods": ["PUT", "PATCH"],
       "bindings": {
-        "floor": "id"
+        "parkzone": "id"
       }
     },
-    "floors.destroy": {
-      "uri": "floors\/{floor}",
+    "parkzones.destroy": {
+      "uri": "parkzones\/{parkzone}",
       "methods": ["DELETE"],
       "bindings": {
-        "floor": "id"
+        "parkzone": "id"
       }
     },
-    "floors.status_changes": {
-      "uri": "floors\/change-status\/{floor}",
+    "parkzones.status_changes": {
+      "uri": "parkzones\/change-status\/{parkzone}",
       "methods": ["GET", "HEAD"],
       "bindings": {
-        "floor": "id"
+        "parkzone": "id"
       }
     },
     "parking_settings.index": {
@@ -4847,7 +4847,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
     /* Built-in method references for those with the same name as other `lodash` methods. */
     var nativeCeil = Math.ceil,
-        nativeFloor = Math.floor,
+        nativeParkzone = Math.parkzone,
         nativeGetSymbols = Object.getOwnPropertySymbols,
         nativeIsBuffer = Buffer ? Buffer.isBuffer : undefined,
         nativeIsFinite = context.isFinite,
@@ -4957,7 +4957,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * `cloneDeep`, `cloneDeepWith`, `cloneWith`, `conformsTo`, `deburr`,
      * `defaultTo`, `divide`, `each`, `eachRight`, `endsWith`, `eq`, `escape`,
      * `escapeRegExp`, `every`, `find`, `findIndex`, `findKey`, `findLast`,
-     * `findLastIndex`, `findLastKey`, `first`, `floor`, `forEach`, `forEachRight`,
+     * `findLastIndex`, `findLastKey`, `first`, `parkzone`, `forEach`, `forEachRight`,
      * `forIn`, `forInRight`, `forOwn`, `forOwnRight`, `get`, `gt`, `gte`, `has`,
      * `hasIn`, `head`, `identity`, `includes`, `indexOf`, `inRange`, `invoke`,
      * `isArguments`, `isArray`, `isArrayBuffer`, `isArrayLike`, `isArrayLikeObject`,
@@ -7235,7 +7235,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * @returns {number} Returns the random number.
      */
     function baseRandom(lower, upper) {
-      return lower + nativeFloor(nativeRandom() * (upper - lower + 1));
+      return lower + nativeParkzone(nativeRandom() * (upper - lower + 1));
     }
 
     /**
@@ -7280,7 +7280,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
         if (n % 2) {
           result += string;
         }
-        n = nativeFloor(n / 2);
+        n = nativeParkzone(n / 2);
         if (n) {
           string += string;
         }
@@ -7519,7 +7519,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
           valIsUndefined = value === undefined;
 
       while (low < high) {
-        var mid = nativeFloor((low + high) / 2),
+        var mid = nativeParkzone((low + high) / 2),
             computed = iteratee(array[mid]),
             othIsDefined = computed !== undefined,
             othIsNull = computed === null,
@@ -10351,7 +10351,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * @returns {Array} Returns the new array of filtered values.
      * @example
      *
-     * _.differenceBy([2.1, 1.2], [2.3, 3.4], Math.floor);
+     * _.differenceBy([2.1, 1.2], [2.3, 3.4], Math.parkzone);
      * // => [1.2]
      *
      * // The `_.property` iteratee shorthand.
@@ -10900,7 +10900,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * @returns {Array} Returns the new array of intersecting values.
      * @example
      *
-     * _.intersectionBy([2.1, 1.2], [2.3, 3.4], Math.floor);
+     * _.intersectionBy([2.1, 1.2], [2.3, 3.4], Math.parkzone);
      * // => [2.1]
      *
      * // The `_.property` iteratee shorthand.
@@ -11495,7 +11495,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * @returns {Array} Returns the new duplicate free array.
      * @example
      *
-     * _.sortedUniqBy([1.1, 1.2, 2.3, 2.4], Math.floor);
+     * _.sortedUniqBy([1.1, 1.2, 2.3, 2.4], Math.parkzone);
      * // => [1.1, 2.3]
      */
     function sortedUniqBy(array, iteratee) {
@@ -11709,7 +11709,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * @returns {Array} Returns the new array of combined values.
      * @example
      *
-     * _.unionBy([2.1], [1.2, 2.3], Math.floor);
+     * _.unionBy([2.1], [1.2, 2.3], Math.parkzone);
      * // => [2.1, 1.2]
      *
      * // The `_.property` iteratee shorthand.
@@ -11789,7 +11789,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * @returns {Array} Returns the new duplicate free array.
      * @example
      *
-     * _.uniqBy([2.1, 1.2, 2.3], Math.floor);
+     * _.uniqBy([2.1, 1.2, 2.3], Math.parkzone);
      * // => [2.1, 1.2]
      *
      * // The `_.property` iteratee shorthand.
@@ -11958,7 +11958,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * @returns {Array} Returns the new array of filtered values.
      * @example
      *
-     * _.xorBy([2.1, 1.2], [2.3, 3.4], Math.floor);
+     * _.xorBy([2.1, 1.2], [2.3, 3.4], Math.parkzone);
      * // => [1.2, 3.4]
      *
      * // The `_.property` iteratee shorthand.
@@ -12449,7 +12449,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * @returns {Object} Returns the composed aggregate object.
      * @example
      *
-     * _.countBy([6.1, 4.2, 6.3], Math.floor);
+     * _.countBy([6.1, 4.2, 6.3], Math.parkzone);
      * // => { '4': 1, '6': 2 }
      *
      * // The `_.property` iteratee shorthand.
@@ -12769,7 +12769,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * @returns {Object} Returns the composed aggregate object.
      * @example
      *
-     * _.groupBy([6.1, 4.2, 6.3], Math.floor);
+     * _.groupBy([6.1, 4.2, 6.3], Math.parkzone);
      * // => { '4': [4.2], '6': [6.1, 6.3] }
      *
      * // The `_.property` iteratee shorthand.
@@ -17764,7 +17764,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
       }
       var mid = (length - strLength) / 2;
       return (
-        createPadding(nativeFloor(mid), chars) +
+        createPadding(nativeParkzone(mid), chars) +
         string +
         createPadding(nativeCeil(mid), chars)
       );
@@ -19662,16 +19662,16 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * @returns {number} Returns the rounded down number.
      * @example
      *
-     * _.floor(4.006);
+     * _.parkzone(4.006);
      * // => 4
      *
-     * _.floor(0.046, 2);
+     * _.parkzone(0.046, 2);
      * // => 0.04
      *
-     * _.floor(4060, -2);
+     * _.parkzone(4060, -2);
      * // => 4000
      */
-    var floor = createRound('floor');
+    var parkzone = createRound('parkzone');
 
     /**
      * Computes the maximum value of `array`. If `array` is empty or falsey,
@@ -20124,7 +20124,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
     lodash.findLast = findLast;
     lodash.findLastIndex = findLastIndex;
     lodash.findLastKey = findLastKey;
-    lodash.floor = floor;
+    lodash.parkzone = parkzone;
     lodash.forEach = forEach;
     lodash.forEachRight = forEachRight;
     lodash.forIn = forIn;
@@ -21788,7 +21788,7 @@ function getRoundedOffsets(data, shouldRound) {
       popper = _data$offsets.popper,
       reference = _data$offsets.reference;
   var round = Math.round,
-      floor = Math.floor;
+      parkzone = Math.parkzone;
 
   var noRound = function noRound(v) {
     return v;
@@ -21802,7 +21802,7 @@ function getRoundedOffsets(data, shouldRound) {
   var sameWidthParity = referenceWidth % 2 === popperWidth % 2;
   var bothOddWidth = referenceWidth % 2 === 1 && popperWidth % 2 === 1;
 
-  var horizontalToInteger = !shouldRound ? noRound : isVertical || isVariation || sameWidthParity ? round : floor;
+  var horizontalToInteger = !shouldRound ? noRound : isVertical || isVariation || sameWidthParity ? round : parkzone;
   var verticalToInteger = !shouldRound ? noRound : round;
 
   return {
@@ -22150,14 +22150,14 @@ function flip(data, options) {
     var popperOffsets = data.offsets.popper;
     var refOffsets = data.offsets.reference;
 
-    // using floor because the reference offsets may contain decimals we are not going to consider here
-    var floor = Math.floor;
-    var overlapsRef = placement === 'left' && floor(popperOffsets.right) > floor(refOffsets.left) || placement === 'right' && floor(popperOffsets.left) < floor(refOffsets.right) || placement === 'top' && floor(popperOffsets.bottom) > floor(refOffsets.top) || placement === 'bottom' && floor(popperOffsets.top) < floor(refOffsets.bottom);
+    // using parkzone because the reference offsets may contain decimals we are not going to consider here
+    var parkzone = Math.parkzone;
+    var overlapsRef = placement === 'left' && parkzone(popperOffsets.right) > parkzone(refOffsets.left) || placement === 'right' && parkzone(popperOffsets.left) < parkzone(refOffsets.right) || placement === 'top' && parkzone(popperOffsets.bottom) > parkzone(refOffsets.top) || placement === 'bottom' && parkzone(popperOffsets.top) < parkzone(refOffsets.bottom);
 
-    var overflowsLeft = floor(popperOffsets.left) < floor(boundaries.left);
-    var overflowsRight = floor(popperOffsets.right) > floor(boundaries.right);
-    var overflowsTop = floor(popperOffsets.top) < floor(boundaries.top);
-    var overflowsBottom = floor(popperOffsets.bottom) > floor(boundaries.bottom);
+    var overflowsLeft = parkzone(popperOffsets.left) < parkzone(boundaries.left);
+    var overflowsRight = parkzone(popperOffsets.right) > parkzone(boundaries.right);
+    var overflowsTop = parkzone(popperOffsets.top) < parkzone(boundaries.top);
+    var overflowsBottom = parkzone(popperOffsets.bottom) > parkzone(boundaries.bottom);
 
     var overflowsBoundaries = placement === 'left' && overflowsLeft || placement === 'right' && overflowsRight || placement === 'top' && overflowsTop || placement === 'bottom' && overflowsBottom;
 
@@ -22209,17 +22209,17 @@ function keepTogether(data) {
       reference = _data$offsets.reference;
 
   var placement = data.placement.split('-')[0];
-  var floor = Math.floor;
+  var parkzone = Math.parkzone;
   var isVertical = ['top', 'bottom'].indexOf(placement) !== -1;
   var side = isVertical ? 'right' : 'bottom';
   var opSide = isVertical ? 'left' : 'top';
   var measurement = isVertical ? 'width' : 'height';
 
-  if (popper[side] < floor(reference[opSide])) {
-    data.offsets.popper[opSide] = floor(reference[opSide]) - popper[measurement];
+  if (popper[side] < parkzone(reference[opSide])) {
+    data.offsets.popper[opSide] = parkzone(reference[opSide]) - popper[measurement];
   }
-  if (popper[opSide] > floor(reference[side])) {
-    data.offsets.popper[opSide] = floor(reference[side]);
+  if (popper[opSide] > parkzone(reference[side])) {
+    data.offsets.popper[opSide] = parkzone(reference[side]);
   }
 
   return data;
@@ -23432,7 +23432,7 @@ function isRegExp(v) {
  */
 function isValidArrayIndex(val) {
     const n = parseFloat(String(val));
-    return n >= 0 && Math.floor(n) === n && isFinite(val);
+    return n >= 0 && Math.parkzone(n) === n && isFinite(val);
 }
 function isPromise(val) {
     return (isDef(val) &&
@@ -31262,7 +31262,7 @@ function getTimeout(delays, durations) {
 // Old versions of Chromium (below 61.0.3163.100) formats floating pointer numbers
 // in a locale-dependent way, using a comma instead of a dot.
 // If comma is not replaced with a dot, the input will be rounded down (i.e. acting
-// as a floor function) causing unexpected behaviors
+// as a parkzone function) causing unexpected behaviors
 function toMs(s) {
     return Number(s.slice(0, -1).replace(',', '.')) * 1000;
 }

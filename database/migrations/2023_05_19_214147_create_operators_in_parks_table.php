@@ -15,13 +15,13 @@ class CreateOperatorsInParksTable extends Migration
     {
         Schema::create('operators_in_parks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('category_wise_floor_slot_id');
+            $table->unsignedBigInteger('category_wise_parkzone_slot_id');
             $table->unsignedBigInteger('operator_id');
 
             // Define foreign key constraints
-            $table->foreign('category_wise_floor_slot_id')
+            $table->foreign('category_wise_parkzone_slot_id')
                 ->references('id')
-                ->on('category_wise_floor_slots')
+                ->on('category_wise_parkzone_slots')
                 ->onDelete('cascade');
 
             $table->foreign('operator_id')

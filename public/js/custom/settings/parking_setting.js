@@ -50,8 +50,8 @@
         {
           title: "ParkZone",
           class: "no-sort",
-          name: "floor.name",
-          data: "floor.name",
+          name: "parkzone.name",
+          data: "parkzone.name",
         },
         { title: "Slot Name", name: "slot_name", data: "slot_name" },
         { title: "Slot ID", name: "slotId", data: "slotId" },

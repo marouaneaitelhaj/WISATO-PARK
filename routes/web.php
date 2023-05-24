@@ -27,7 +27,7 @@ Route::middleware(['installed','auth','xss_clean'])->group(function () {
 	Route::middleware('roles:admin')->group(function () {
 
 		Route::get('user-list', 'UserController@index')->name('user.list');
-		Route::get('testreadwise', 'CategoryWiseFloorSlotController@readwise')->name('readwise');
+		Route::get('testreadwise', 'CategoryWiseParkzoneSlotController@readwise')->name('readwise');
 		Route::get('user-status/{user}', 'UserController@status')->name('user.status');
 
 		Route::get('user/getListForDataTable', 'UserController@getListForDataTable')->name('userListJson');
@@ -46,10 +46,10 @@ Route::middleware(['installed','auth','xss_clean'])->group(function () {
 		Route::get('reports/pdf', 'ReportController@pdf_report')->name('reports.pdf_report');
 		Route::get('general-settings', 'SiteController@generalSettings')->name('settings.create');
 		Route::post('general-settings', 'SiteController@storeGeneralSettings')->name('settings.store');
-		Route::resource('floors', 'FloorController')->except(['show']);
-		Route::get('floors/change-status/{floor}', 'FloorController@statusChange')->name('floors.status_changes');
-		Route::resource('parking-settings', 'CategoryWiseFloorSlotController', ['names' => 'parking_settings']);
-		Route::get('parking-settings/change-status/{parking_setting}', 'CategoryWiseFloorSlotController@statusChange')->name('parking_settings.status_changes');
+		Route::resource('parkzones', 'ParkzoneController')->except(['show']);
+		Route::get('parkzones/change-status/{parkzone}', 'ParkzoneController@statusChange')->name('parkzones.status_changes');
+		Route::resource('parking-settings', 'CategoryWiseParkzoneSlotController', ['names' => 'parking_settings']);
+		Route::get('parking-settings/change-status/{parking_setting}', 'CategoryWiseParkzoneSlotController@statusChange')->name('parking_settings.status_changes');
 	});
 
 	Route::middleware('roles:operator|admin')->group(function () {

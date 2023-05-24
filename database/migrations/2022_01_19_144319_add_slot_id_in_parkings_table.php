@@ -15,7 +15,7 @@ class AddSlotIdInParkingsTable extends Migration
     {
         Schema::table('parkings', function (Blueprint $table) {
             $table->unsignedBigInteger('slot_id')->nullable()->after('id');
-            $table->foreign('slot_id')->references('id')->on('category_wise_floor_slots')->onDelete('cascade');
+            $table->foreign('slot_id')->references('id')->on('category_wise_parkzone_slots')->onDelete('cascade');
         });
     }
 

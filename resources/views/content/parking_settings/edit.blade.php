@@ -41,21 +41,21 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="floor_id" class="text-md-right">{{ __('Floor') }} <span
+                                    <label for="parkzone_id" class="text-md-right">{{ __('Parkzone') }} <span
                                             class="tcr text-danger">*</span></label>
-                                    <select name="floor_id" id="floor_id" required
-                                        class="form-control{{ $errors->has('floor_id') ? ' is-invalid' : '' }}"
+                                    <select name="parkzone_id" id="parkzone_id" required
+                                        class="form-control{{ $errors->has('parkzone_id') ? ' is-invalid' : '' }}"
                                         required>
-                                        @foreach ($floors as $floor)
-                                        <option value="{{ $floor->id }}" {{ (old('floor_id', $parking_setting->floor_id)
-                                            == $floor->id ) ? ' selected' : '' }}>{{ $floor->name
+                                        @foreach ($parkzones as $parkzone)
+                                        <option value="{{ $parkzone->id }}" {{ (old('parkzone_id', $parking_setting->parkzone_id)
+                                            == $parkzone->id ) ? ' selected' : '' }}>{{ $parkzone->name
                                             }}</option>
                                         @endforeach
                                     </select>
 
-                                    @if ($errors->has('floor_id'))
+                                    @if ($errors->has('parkzone_id'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('floor_id') }}</strong>
+                                        <strong>{{ $errors->first('parkzone_id') }}</strong>
                                     </span>
                                     @endif
                                 </div>

@@ -98,19 +98,19 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="collapse" href="#ui-floor" aria-expanded="false"
-                                aria-controls="ui-floor">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#ui-parkzone" aria-expanded="false"
+                                aria-controls="ui-parkzone">
                                 <i class="mdi mdi-layers menu-icon"></i>
                                 <span class="menu-title">ParkZone</span>
                                 <i class="menu-arrow"></i>
                             </a>
-                            <div class="collapse" id="ui-floor">
+                            <div class="collapse" id="ui-parkzone">
                                 <ul class="nav flex-column sub-menu">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('floors.create') }}">Add ParkZone</a>
+                                        <a class="nav-link" href="{{ route('parkzones.create') }}">Add ParkZone</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('floors.index') }}">ParkZone List</a>
+                                        <a class="nav-link" href="{{ route('parkzones.index') }}">ParkZone List</a>
                                     </li>
                                 </ul>
                             </div>

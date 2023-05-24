@@ -51,15 +51,15 @@ LOCK TABLES `categories` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `category_wise_floor_slots`
+-- Table structure for table `category_wise_parkzone_slots`
 --
 
-DROP TABLE IF EXISTS `category_wise_floor_slots`;
+DROP TABLE IF EXISTS `category_wise_parkzone_slots`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `category_wise_floor_slots` (
+CREATE TABLE `category_wise_parkzone_slots` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `floor_id` bigint(20) unsigned NOT NULL,
+  `parkzone_id` bigint(20) unsigned NOT NULL,
   `category_id` bigint(20) unsigned NOT NULL,
   `slot_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `slotId` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -71,35 +71,35 @@ CREATE TABLE `category_wise_floor_slots` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `category_wise_floor_slots_floor_id_category_id_slot_name_unique` (`floor_id`,`category_id`,`slot_name`),
-  UNIQUE KEY `category_wise_floor_slots_slotid_unique` (`slotId`),
-  KEY `category_wise_floor_slots_category_id_foreign` (`category_id`),
-  KEY `category_wise_floor_slots_created_by_foreign` (`created_by`),
-  KEY `category_wise_floor_slots_updated_by_foreign` (`updated_by`),
-  CONSTRAINT `category_wise_floor_slots_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `category_wise_floor_slots_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `category_wise_floor_slots_floor_id_foreign` FOREIGN KEY (`floor_id`) REFERENCES `floors` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `category_wise_floor_slots_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE CASCADE
+  UNIQUE KEY `category_wise_parkzone_slots_parkzone_id_category_id_slot_name_unique` (`parkzone_id`,`category_id`,`slot_name`),
+  UNIQUE KEY `category_wise_parkzone_slots_slotid_unique` (`slotId`),
+  KEY `category_wise_parkzone_slots_category_id_foreign` (`category_id`),
+  KEY `category_wise_parkzone_slots_created_by_foreign` (`created_by`),
+  KEY `category_wise_parkzone_slots_updated_by_foreign` (`updated_by`),
+  CONSTRAINT `category_wise_parkzone_slots_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `category_wise_parkzone_slots_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `category_wise_parkzone_slots_parkzone_id_foreign` FOREIGN KEY (`parkzone_id`) REFERENCES `parkzones` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `category_wise_parkzone_slots_updated_by_foreign` FOREIGN KEY (`updated_by`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `category_wise_floor_slots`
+-- Dumping data for table `category_wise_parkzone_slots`
 --
 
-LOCK TABLES `category_wise_floor_slots` WRITE;
-/*!40000 ALTER TABLE `category_wise_floor_slots` DISABLE KEYS */;
-/*!40000 ALTER TABLE `category_wise_floor_slots` ENABLE KEYS */;
+LOCK TABLES `category_wise_parkzone_slots` WRITE;
+/*!40000 ALTER TABLE `category_wise_parkzone_slots` DISABLE KEYS */;
+/*!40000 ALTER TABLE `category_wise_parkzone_slots` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `floors`
+-- Table structure for table `parkzones`
 --
 
-DROP TABLE IF EXISTS `floors`;
+DROP TABLE IF EXISTS `parkzones`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `floors` (
+CREATE TABLE `parkzones` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `level` tinyint(4) NOT NULL DEFAULT 0,
@@ -108,17 +108,17 @@ CREATE TABLE `floors` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `floors_name_unique` (`name`)
+  UNIQUE KEY `parkzones_name_unique` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `floors`
+-- Dumping data for table `parkzones`
 --
 
-LOCK TABLES `floors` WRITE;
-/*!40000 ALTER TABLE `floors` DISABLE KEYS */;
-/*!40000 ALTER TABLE `floors` ENABLE KEYS */;
+LOCK TABLES `parkzones` WRITE;
+/*!40000 ALTER TABLE `parkzones` DISABLE KEYS */;
+/*!40000 ALTER TABLE `parkzones` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -142,7 +142,7 @@ CREATE TABLE `migrations` (
 
 LOCK TABLES `migrations` WRITE;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_resets_table',1),(3,'2018_03_27_184007_create_roles_table',1),(4,'2018_03_27_184207_create_role_user_table',1),(5,'2018_05_13_105030_add_status_column_in_users_table',1),(6,'2018_08_11_101437_create_salt_column_in_users_table',1),(7,'2019_02_11_045412_create_categories_table',1),(8,'2019_10_24_080706_create_parkings_table',1),(9,'2019_10_24_140234_create_tariffs_table',1),(10,'2019_10_31_181407_add_limit_on_category_table',1),(11,'2022_01_06_144511_create_settings_table',1),(12,'2022_01_17_111714_create_floors_table',1),(13,'2022_01_17_122657_create_category_wise_floor_slots_table',1),(14,'2022_01_19_144319_add_slot_id_in_parkings_table',1),(15,'2022_01_19_145300_add_order_id_to_floors_table',1);
+INSERT INTO `migrations` VALUES (1,'2014_10_12_000000_create_users_table',1),(2,'2014_10_12_100000_create_password_resets_table',1),(3,'2018_03_27_184007_create_roles_table',1),(4,'2018_03_27_184207_create_role_user_table',1),(5,'2018_05_13_105030_add_status_column_in_users_table',1),(6,'2018_08_11_101437_create_salt_column_in_users_table',1),(7,'2019_02_11_045412_create_categories_table',1),(8,'2019_10_24_080706_create_parkings_table',1),(9,'2019_10_24_140234_create_tariffs_table',1),(10,'2019_10_31_181407_add_limit_on_category_table',1),(11,'2022_01_06_144511_create_settings_table',1),(12,'2022_01_17_111714_create_parkzones_table',1),(13,'2022_01_17_122657_create_category_wise_parkzone_slots_table',1),(14,'2022_01_19_144319_add_slot_id_in_parkings_table',1),(15,'2022_01_19_145300_add_order_id_to_parkzones_table',1);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -179,7 +179,7 @@ CREATE TABLE `parkings` (
   CONSTRAINT `parkings_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
   CONSTRAINT `parkings_created_by_foreign` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE,
   CONSTRAINT `parkings_modified_by_foreign` FOREIGN KEY (`modified_by`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `parkings_slot_id_foreign` FOREIGN KEY (`slot_id`) REFERENCES `category_wise_floor_slots` (`id`) ON DELETE CASCADE
+  CONSTRAINT `parkings_slot_id_foreign` FOREIGN KEY (`slot_id`) REFERENCES `category_wise_parkzone_slots` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

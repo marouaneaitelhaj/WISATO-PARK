@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCategoryWiseFloorSlotsTable extends Migration
+class CreateCategoryWiseParkzoneSlotsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateCategoryWiseFloorSlotsTable extends Migration
      */
     public function up()
     {
-        Schema::create('category_wise_floor_slots', function (Blueprint $table) {
+        Schema::create('category_wise_parkzone_slots', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('floor_id')->constrained()->onDelete('cascade');
+            $table->foreignId('parkzone_id')->constrained()->onDelete('cascade');
             $table->string('slot_name');
             $table->string('slotId')->unique();
             $table->string('identity')->nullable();
@@ -25,7 +25,7 @@ class CreateCategoryWiseFloorSlotsTable extends Migration
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
-            $table->unique(["floor_id",  "slot_name"]);
+            $table->unique(["parkzone_id",  "slot_name"]);
 
             $table->timestamps();
         });
@@ -38,6 +38,6 @@ class CreateCategoryWiseFloorSlotsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('category_wise_floor_slots');
+        Schema::dropIfExists('category_wise_parkzone_slots');
     }
 }

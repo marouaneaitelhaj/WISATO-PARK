@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreParkingRequest;
 use App\Http\Requests\UpdateParkingRequest;
 use App\Http\Requests\PayParkingRequest;
-use App\Models\CategoryWiseFloorSlot;
-use App\Models\Floor;
+use App\Models\CategoryWiseParkzoneSlot;
+use App\Models\Parkzone;
 use Exception;
 use Illuminate\Support\Facades\Session;
 use phpDocumentor\Reflection\Types\This;
@@ -65,8 +65,8 @@ class ParkingController extends Controller
 
 		$data['categories'] = Category::where('status', 1)->get();
 		$data['currently_parking'] = Parking::where('out_time', NULL)->count();
-		$data['total_slots'] = CategoryWiseFloorSlot::where('category_wise_floor_slots.status', 1)
-			->whereHas('floor', function ($query) {
+		$data['total_slots'] = CategoryWiseParkzoneSlot::where('category_wise_parkzone_slots.status', 1)
+			->whereHas('parkzone', function ($query) {
 				$query->where('status', '1');
 			})
 			->whereHas('category', function ($query) {
@@ -126,8 +126,8 @@ class ParkingController extends Controller
 
 		$data['categories'] = Category::where('status', 1)->get();
 		$data['currently_parking'] = Parking::where('out_time', NULL)->count();
-		$data['total_slots'] = CategoryWiseFloorSlot::where('category_wise_floor_slots.status', 1)
-			->whereHas('floor', function ($query) {
+		$data['total_slots'] = CategoryWiseParkzoneSlot::where('category_wise_parkzone_slots.status', 1)
+			->whereHas('parkzone', function ($query) {
 				$query->where('status', '1');
 			})
 			->whereHas('category', function ($query) {
@@ -187,8 +187,8 @@ class ParkingController extends Controller
 
 		$data['categories'] = Category::where('status', 1)->get();
 		$data['currently_parking'] = Parking::where('out_time', NULL)->count();
-		$data['total_slots'] = CategoryWiseFloorSlot::where('category_wise_floor_slots.status', 1)
-			->whereHas('floor', function ($query) {
+		$data['total_slots'] = CategoryWiseParkzoneSlot::where('category_wise_parkzone_slots.status', 1)
+			->whereHas('parkzone', function ($query) {
 				$query->where('status', '1');
 			})
 			->whereHas('category', function ($query) {
@@ -207,8 +207,8 @@ class ParkingController extends Controller
 	{
 		$data['categories'] = Category::where('status', 1)->get();
 		$data['currently_parking'] = Parking::where('out_time', NULL)->count();
-		$data['total_slots'] = CategoryWiseFloorSlot::where('category_wise_floor_slots.status', 1)
-			->whereHas('floor', function ($query) {
+		$data['total_slots'] = CategoryWiseParkzoneSlot::where('category_wise_parkzone_slots.status', 1)
+			->whereHas('parkzone', function ($query) {
 				$query->where('status', '1');
 			})
 			->whereHas('category', function ($query) {
@@ -275,8 +275,8 @@ class ParkingController extends Controller
 		$data['categories'] = Category::where('status', 1)->get();
 		$data['currently_parking'] = Parking::where('out_time', NULL)->count();
 		$data['parking'] = $parking_crud;
-		$data['total_slots'] = CategoryWiseFloorSlot::where('category_wise_floor_slots.status', 1)
-			->whereHas('floor', function ($query) {
+		$data['total_slots'] = CategoryWiseParkzoneSlot::where('category_wise_parkzone_slots.status', 1)
+			->whereHas('parkzone', function ($query) {
 				$query->where('status', '1');
 			})
 			->whereHas('category', function ($query) {
@@ -468,16 +468,16 @@ class ParkingController extends Controller
 	 */
 	public function parkingSlot(Request $request, $category_id)
 	{
-		$slots = CategoryWiseFloorSlot::where('category_id', $category_id)
-			->whereHas('floor', function ($query) {
+		$slots = CategoryWiseParkzoneSlot::where('category_id', $category_id)
+			->whereHas('parkzone', function ($query) {
 				$query->where('status', '1');
 			})
 			->with('active_parking')
-			->where('category_wise_floor_slots.status', 1)
-			->join('floors', 'floors.id', '=', 'category_wise_floor_slots.floor_id')
-			->orderBy('floors.level', 'DESC')
-			->select('category_wise_floor_slots.*')
-			->where('category_wise_floor_slots.status', 1)
+			->where('category_wise_parkzone_slots.status', 1)
+			->join('parkzones', 'parkzones.id', '=', 'category_wise_parkzone_slots.parkzone_id')
+			->orderBy('parkzones.level', 'DESC')
+			->select('category_wise_parkzone_slots.*')
+			->where('category_wise_parkzone_slots.status', 1)
 			->get();
 
 		return view('content.parking.slot_list')->with(['slots' => $slots, 'id' => $request->id])->render();
@@ -518,7 +518,7 @@ class ParkingController extends Controller
 	}
 	public $initialMarkers = [];
 	public function maps(){
-		$markers = Floor::get();
+		$markers = Parkzone::get();
 		foreach($markers as $marker){
 			$newMarker = [
 				'position' => [
