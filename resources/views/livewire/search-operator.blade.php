@@ -1,48 +1,48 @@
-<div class="d-flex w-100 justify-content-evenly">
-    <div class="form-group w-100">
-        <label for="identity" class="text-md-right">{{ __('Search for Operator') }}</label>
-        <input type="search" wire:model="search" class="form-control{{ $errors->has('operator') ? ' is-invalid' : '' }}" name="operator">
-    </div>
-    <div class="form-group w-100">
-        <label for="identity" class="text-md-right">{{ __('Select Operator') }}</label>
-        <div class="d-flex flex-wrap justify-content-around">
-            <div class="form-check" id="operatorContainer">
-                @foreach ($operators as $index => $operator)
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" name="operator[]" value="{{ $operator->id }}" id="{{ $operator->id }}" class="custom-control-input" id="customCheckBox1">
-                        <label class="custom-control-label" for="{{ $operator->id }}">{{ $operator->name }}</label>
+<div class="form-group">
+    <label for="category_id" class="text-md-right">{{ __('Operators') }} <span class="tcr text-danger">*</span></label>
+
+    <div class="border form-group">
+        <div class="d-flex flex-wrap border w-100 justify-content-between align-items-center">
+            <ul class="d-flex flex-wrap list-unstyled m-0">
+                @foreach ($selectedOperators as $index => $operator)
+                <li style="background-color: #2dce89;" class="px-2 m-1 py-1 rounded d-flex">
+                    <div>
+                        {{$operator['name']}}
                     </div>
+                    <div wire:click="delete({{$index}})" class="align-items-start" style="display: flex;">
+                        <i class="fa fa-times  text-white" aria-hidden="true"></i>
+                    </div>
+                    <input type="text" hidden value="{{$operator['id']}}" name="operator[]">
+                </li>
                 @endforeach
+                <input type="text" style="border: none;" wire:model="search" class="flex-grow-1">
+
+            </ul>
+        </div>
+        <div class="border">
+            @foreach ($operators as $index => $operator)
+            <div wire:click="add({{$operator}})" style="cursor: pointer;" class="border tags d-flex align-items-center">
+                <span>
+                    {{$operator->name}}
+                </span>
             </div>
-            <div class="d-flex justify-content-center mt-2">
-                <button id="showMoreBtn" class="btn btn-primary btn-sm" type="button">
-                    <i class="fa fa-plus" aria-hidden="true"></i>
-                </button>
-                <button id="showLessBtn" class="btn btn-primary btn-sm" type="button" style="display: none;">
-                    <i class="fa fa-minus" aria-hidden="true"></i>
-                </button>
-            </div>
+            @endforeach
         </div>
     </div>
 </div>
+<style>
+    .tags {
+        padding: 5px 10px;
+        border-radius: 5px;
+        margin: 5px;
+    }
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.custom-checkbox:gt(2)').hide();
+    .tags:hover {
+        background-color: #2dce89;
+        color: white;
+    }
 
-        $('#showMoreBtn').on('click', function() {
-            $('.custom-checkbox').show();
-            $(this).hide();
-            $('#showLessBtn').show();
-        });
-
-        $('#showLessBtn').on('click', function() {
-            $('.custom-checkbox:gt(2)').hide();
-            $(this).hide();
-            $('#showMoreBtn').show();
-        });
-    });
-</script>
-
-</div>
+    .tags span {
+        font-size: 14px;
+    }
+</style>
