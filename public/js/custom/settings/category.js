@@ -17,10 +17,10 @@
                     data: "id",
                     class: "no-sort",
                     width: "50px",
-                    render: function (data, row, type, col) {
-                        var pageInfo = categoryDatatable.page.info();
-                        return col.row + 1 + pageInfo.start;
-                    },
+                    // render: function (data, row, type, col) {
+                    //     var pageInfo = categoryDatatable.page.info();
+                    //     return col.row + 1 + pageInfo.start;
+                    // },
                 },
                 { title: "Type", name: "type", data: "type" },
                 { title: "Description", name: "description", data: "description" },

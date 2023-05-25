@@ -16,10 +16,10 @@
                     data: "id",
                     class: "no-sort",
                     width: "50px",
-                    render: function (data, row, type, col) {
-                        var pageInfo = tariffDatatable.page.info();
-                        return col.row + 1 + pageInfo.start;
-                    },
+                    // render: function (data, row, type, col) {
+                    //     var pageInfo = tariffDatatable.page.info();
+                    //     return col.row + 1 + pageInfo.start;
+                    // },
                 },
                 { title: "Name", name: "name", data: "name" },
                 { title: "Type", name: "category.type", data: "category.type" },

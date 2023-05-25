@@ -1,0 +1,1885 @@
+{
+    "MAROC_CITIES": [
+        {
+            "CITY": "Aarab Sebbah Gheris"
+        },
+        {
+            "CITY": "Aarab Sebbah Ziz"
+        },
+        {
+            "CITY": "Abadou"
+        },
+        {
+            "CITY": "Abaynou"
+        },
+        {
+            "CITY": "Abbou Lakhal"
+        },
+        {
+            "CITY": "Abdelghaya Souahel"
+        },
+        {
+            "CITY": "Abteh"
+        },
+        {
+            "CITY": "Adaghas"
+        },
+        {
+            "CITY": "Adar"
+        },
+        {
+            "CITY": "Adrej"
+        },
+        {
+            "CITY": "Aferkat"
+        },
+        {
+            "CITY": "Afourar"
+        },
+        {
+            "CITY": "Agadir"
+        },
+        {
+            "CITY": "Agadir Melloul"
+        },
+        {
+            "CITY": "Agafay"
+        },
+        {
+            "CITY": "Agdz"
+        },
+        {
+            "CITY": "Aghbal"
+        },
+        {
+            "CITY": "Aghbala"
+        },
+        {
+            "CITY": "Aghbalou"
+        },
+        {
+            "CITY": "Aghbalou Nkerdous"
+        },
+        {
+            "CITY": "Aghouinite"
+        },
+        {
+            "CITY": "Agourai"
+        },
+        {
+            "CITY": "Aguelmous"
+        },
+        {
+            "CITY": "Ahfir"
+        },
+        {
+            "CITY": "Ahl Sidi Lahcen"
+        },
+        {
+            "CITY": "Ahlaf"
+        },
+        {
+            "CITY": "Ahmar Laglalcha"
+        },
+        {
+            "CITY": "Ain Aouda"
+        },
+        {
+            "CITY": "Ain Attig"
+        },
+        {
+            "CITY": "Ain Bida"
+        },
+        {
+            "CITY": "Ain Bni Mathar"
+        },
+        {
+            "CITY": "Ain Cheggag"
+        },
+        {
+            "CITY": "Ain Erreggada"
+        },
+        {
+            "CITY": "Ain Harrouda"
+        },
+        {
+            "CITY": "Ain Johra"
+        },
+        {
+            "CITY": "Ain Karma"
+        },
+        {
+            "CITY": "Ain Legdah"
+        },
+        {
+            "CITY": "Ain Leuh"
+        },
+        {
+            "CITY": "Ain Leuh"
+        },
+        {
+            "CITY": "Ain Orma"
+        },
+        {
+            "CITY": "Ain Sbit"
+        },
+        {
+            "CITY": "Ain Sfa"
+        },
+        {
+            "CITY": "Ain Taoujdate"
+        },
+        {
+            "CITY": "Ain Tizgha"
+        },
+        {
+            "CITY": "Ait Amira"
+        },
+        {
+            "CITY": "Ait Baha"
+        },
+        {
+            "CITY": "Ait Belkacem"
+        },
+        {
+            "CITY": "Ait Belkacem"
+        },
+        {
+            "CITY": "Ait Ben Yacoub"
+        },
+        {
+            "CITY": "Ait Boubidmane"
+        },
+        {
+            "CITY": "Ait Bouyahya El Hajjama"
+        },
+        {
+            "CITY": "Aït Iaaza"
+        },
+        {
+            "CITY": "Ait Ichou"
+        },
+        {
+            "CITY": "Ait Imour"
+        },
+        {
+            "CITY": "Ait Ishaq"
+        },
+        {
+            "CITY": "Ait Malek"
+        },
+        {
+            "CITY": "Ait Melloul"
+        },
+        {
+            "CITY": "Ait Milk"
+        },
+        {
+            "CITY": "Ait Mimoun"
+        },
+        {
+            "CITY": "Ait Ouallal"
+        },
+        {
+            "CITY": "Ait Ouribel"
+        },
+        {
+            "CITY": "Ait Ourir"
+        },
+        {
+            "CITY": "Ait Sidi Daoud"
+        },
+        {
+            "CITY": "Ait Yaazem"
+        },
+        {
+            "CITY": "Ait Yadine"
+        },
+        {
+            "CITY": "Ait Youl"
+        },
+        {
+            "CITY": "Ajdir"
+        },
+        {
+            "CITY": "Akarma"
+        },
+        {
+            "CITY": "Akhfennir"
+        },
+        {
+            "CITY": "Akka"
+        },
+        {
+            "CITY": "Aklim"
+        },
+        {
+            "CITY": "Aknoul"
+        },
+        {
+            "CITY": "Al Aaroui"
+        },
+        {
+            "CITY": "Al Haouz"
+        },
+        {
+            "CITY": "Al Hoceima"
+        },
+        {
+            "CITY": "Al Oioun Sidi Mellouk"
+        },
+        {
+            "CITY": "Allyene"
+        },
+        {
+            "CITY": "Alnif"
+        },
+        {
+            "CITY": "Amalou"
+        },
+        {
+            "CITY": "Amerzgane"
+        },
+        {
+            "CITY": "Amerzgane"
+        },
+        {
+            "CITY": "Ameur Seflia"
+        },
+        {
+            "CITY": "Amghras"
+        },
+        {
+            "CITY": "Amizmiz"
+        },
+        {
+            "CITY": "Amskroud"
+        },
+        {
+            "CITY": "Amtar"
+        },
+        {
+            "CITY": "Anfeg"
+        },
+        {
+            "CITY": "Anjra"
+        },
+        {
+            "CITY": "Aoulouz"
+        },
+        {
+            "CITY": "Aoulouz"
+        },
+        {
+            "CITY": "Aourir"
+        },
+        {
+            "CITY": "Aousserd"
+        },
+        {
+            "CITY": "Aqesri"
+        },
+        {
+            "CITY": "Aquouass Briech"
+        },
+        {
+            "CITY": "Arbaa Sahel"
+        },
+        {
+            "CITY": "Arbaoua"
+        },
+        {
+            "CITY": "Arekmane"
+        },
+        {
+            "CITY": "Arfoud"
+        },
+        {
+            "CITY": "Asilah"
+        },
+        {
+            "CITY": "Asni"
+        },
+        {
+            "CITY": "Assa"
+        },
+        {
+            "CITY": "Assa zag"
+        },
+        {
+            "CITY": "Assahrij"
+        },
+        {
+            "CITY": "Ayir"
+        },
+        {
+            "CITY": "Azemmour"
+        },
+        {
+            "CITY": "Azilal"
+        },
+        {
+            "CITY": "Azla"
+        },
+        {
+            "CITY": "Azlaf"
+        },
+        {
+            "CITY": "Azrou"
+        },
+        {
+            "CITY": "Bab Berred"
+        },
+        {
+            "CITY": "Bab Taza"
+        },
+        {
+            "CITY": "Barkine"
+        },
+        {
+            "CITY": "Bejaad"
+        },
+        {
+            "CITY": "Belfaa"
+        },
+        {
+            "CITY": "Ben Ahmed"
+        },
+        {
+            "CITY": "Ben Guerir"
+        },
+        {
+            "CITY": "Ben Maachou"
+        },
+        {
+            "CITY": "Ben Smim"
+        },
+        {
+            "CITY": "Ben Taieb"
+        },
+        {
+            "CITY": "Beni Malek"
+        },
+        {
+            "CITY": "Béni Mellal"
+        },
+        {
+            "CITY": "Béni Yakhlef"
+        },
+        {
+            "CITY": "Benslimane"
+        },
+        {
+            "CITY": "Berkane"
+        },
+        {
+            "CITY": "Berrechid"
+        },
+        {
+            "CITY": "Bhalil"
+        },
+        {
+            "CITY": "Bin El Ouidane"
+        },
+        {
+            "CITY": "Biougra"
+        },
+        {
+            "CITY": "Bir Ennasr"
+        },
+        {
+            "CITY": "Bir Jdid"
+        },
+        {
+            "CITY": "Bir Tam Tam"
+        },
+        {
+            "CITY": "Bitit"
+        },
+        {
+            "CITY": "Bizdad"
+        },
+        {
+            "CITY": "Bni Ansar"
+        },
+        {
+            "CITY": "Bni Ayat"
+        },
+        {
+            "CITY": "Bni Bouzra"
+        },
+        {
+            "CITY": "Bni Chiker"
+        },
+        {
+            "CITY": "Bni Drar"
+        },
+        {
+            "CITY": "Bni Drar"
+        },
+        {
+            "CITY": "Bni Ftah"
+        },
+        {
+            "CITY": "Bni Harchen"
+        },
+        {
+            "CITY": "Bni Hassane"
+        },
+        {
+            "CITY": "Bni Khloug"
+        },
+        {
+            "CITY": "Bni Marghnine"
+        },
+        {
+            "CITY": "Bni Mathar"
+        },
+        {
+            "CITY": "Bni Salah"
+        },
+        {
+            "CITY": "Bni Tadjite"
+        },
+        {
+            "CITY": "Bouadel"
+        },
+        {
+            "CITY": "Bouanane"
+        },
+        {
+            "CITY": "Bouarfa"
+        },
+        {
+            "CITY": "Boudinar"
+        },
+        {
+            "CITY": "Boudnib"
+        },
+        {
+            "CITY": "Boufkrane"
+        },
+        {
+            "CITY": "Boughriba"
+        },
+        {
+            "CITY": "Bouguedra"
+        },
+        {
+            "CITY": "Bouizakarne"
+        },
+        {
+            "CITY": "Boujdour"
+        },
+        {
+            "CITY": "Boujniba"
+        },
+        {
+            "CITY": "Boukhalef"
+        },
+        {
+            "CITY": "Boulanouar"
+        },
+        {
+            "CITY": "Boulaouane"
+        },
+        {
+            "CITY": "Boulemane"
+        },
+        {
+            "CITY": "Boulmane"
+        },
+        {
+            "CITY": "Boumalne-Dadès"
+        },
+        {
+            "CITY": "Boumia"
+        },
+        {
+            "CITY": "Bounaamane"
+        },
+        {
+            "CITY": "Bouskoura"
+        },
+        {
+            "CITY": "Bousselham"
+        },
+        {
+            "CITY": "Bouzemmour"
+        },
+        {
+            "CITY": "Bouznika"
+        },
+        {
+            "CITY": "Brachoua"
+        },
+        {
+            "CITY": "Bradia"
+        },
+        {
+            "CITY": "Bsara"
+        },
+        {
+            "CITY": "Cabo Negro"
+        },
+        {
+            "CITY": "Casablanca"
+        },
+        {
+            "CITY": "Chaibate"
+        },
+        {
+            "CITY": "Chakrane"
+        },
+        {
+            "CITY": "Chefchaouen"
+        },
+        {
+            "CITY": "Chellalate"
+        },
+        {
+            "CITY": "Cherrat"
+        },
+        {
+            "CITY": "Chichaoua"
+        },
+        {
+            "CITY": "Chouihia"
+        },
+        {
+            "CITY": "Chtouka"
+        },
+        {
+            "CITY": "Dakhla"
+        },
+        {
+            "CITY": "Daoura"
+        },
+        {
+            "CITY": "Dar Bel Amri"
+        },
+        {
+            "CITY": "Dar Bni Karrich"
+        },
+        {
+            "CITY": "Dar Bouazza"
+        },
+        {
+            "CITY": "Dar Chaffai"
+        },
+        {
+            "CITY": "Dar El Kebdani"
+        },
+        {
+            "CITY": "Dar Gueddari"
+        },
+        {
+            "CITY": "Dar Jamaa"
+        },
+        {
+            "CITY": "Dar Ould Zidouh"
+        },
+        {
+            "CITY": "Dcheira"
+        },
+        {
+            "CITY": "Dcheïra El Jihadia"
+        },
+        {
+            "CITY": "Debdou"
+        },
+        {
+            "CITY": "Demnate"
+        },
+        {
+            "CITY": "Deroua"
+        },
+        {
+            "CITY": "Dir El Ksiba"
+        },
+        {
+            "CITY": "Drargua"
+        },
+        {
+            "CITY": "Driouch"
+        },
+        {
+            "CITY": "Dzouz"
+        },
+        {
+            "CITY": "Echemmaia"
+        },
+        {
+            "CITY": "El Beddouza"
+        },
+        {
+            "CITY": "El Borouj"
+        },
+        {
+            "CITY": "El Foqra"
+        },
+        {
+            "CITY": "El Gara"
+        },
+        {
+            "CITY": "El Guerdane"
+        },
+        {
+            "CITY": "El Hajeb"
+        },
+        {
+            "CITY": "El Hanchane"
+        },
+        {
+            "CITY": "El Jadida"
+        },
+        {
+            "CITY": "El Jadida"
+        },
+        {
+            "CITY": "El Kelâa des Sraghna"
+        },
+        {
+            "CITY": "El Ksiba"
+        },
+        {
+            "CITY": "El Maader El Kabir"
+        },
+        {
+            "CITY": "El Majjatia Ouled Taleb"
+        },
+        {
+            "CITY": "El Mansouria"
+        },
+        {
+            "CITY": "El Marsa"
+        },
+        {
+            "CITY": "El Menzeh"
+        },
+        {
+            "CITY": "El Menzel"
+        },
+        {
+            "CITY": "El Outia"
+        },
+        {
+            "CITY": "Er-Rich"
+        },
+        {
+            "CITY": "Er-Rissani"
+        },
+        {
+            "CITY": "Errachidia"
+        },
+        {
+            "CITY": "Errahma"
+        },
+        {
+            "CITY": "Es-Semara"
+        },
+        {
+            "CITY": "Essaouira"
+        },
+        {
+            "CITY": "Ezzhiliga"
+        },
+        {
+            "CITY": "Farkhana"
+        },
+        {
+            "CITY": "Fask"
+        },
+        {
+            "CITY": "Fdalate"
+        },
+        {
+            "CITY": "Fès"
+        },
+        {
+            "CITY": "Fezna"
+        },
+        {
+            "CITY": "Fezouane"
+        },
+        {
+            "CITY": "Fezouata"
+        },
+        {
+            "CITY": "Figuig"
+        },
+        {
+            "CITY": "Fnideq"
+        },
+        {
+            "CITY": "Foum El Oued"
+        },
+        {
+            "CITY": "Foum Jemaa"
+        },
+        {
+            "CITY": "Foum Oudi"
+        },
+        {
+            "CITY": "Foum zguid"
+        },
+        {
+            "CITY": "Fquih Ben Saleh"
+        },
+        {
+            "CITY": "Freija"
+        },
+        {
+            "CITY": "Galaz"
+        },
+        {
+            "CITY": "Ghafsai"
+        },
+        {
+            "CITY": "Ghiata Al Gharbia"
+        },
+        {
+            "CITY": "Ghmate"
+        },
+        {
+            "CITY": "Goulmima"
+        },
+        {
+            "CITY": "Guelmim"
+        },
+        {
+            "CITY": "Guenfouda"
+        },
+        {
+            "CITY": "Guercif"
+        },
+        {
+            "CITY": "Gueznaia"
+        },
+        {
+            "CITY": "Guigou"
+        },
+        {
+            "CITY": "Guisser"
+        },
+        {
+            "CITY": "Gzenaya Al Janoubia"
+        },
+        {
+            "CITY": "Had Bouhssoussen"
+        },
+        {
+            "CITY": "Had Boumoussa"
+        },
+        {
+            "CITY": "Had Dra"
+        },
+        {
+            "CITY": "Had Kourt"
+        },
+        {
+            "CITY": "Had Soualem"
+        },
+        {
+            "CITY": "Had Soualem"
+        },
+        {
+            "CITY": "Haouzia"
+        },
+        {
+            "CITY": "Hassi Berkane"
+        },
+        {
+            "CITY": "Hattane"
+        },
+        {
+            "CITY": "Houara Oulad Raho"
+        },
+        {
+            "CITY": "Houderrane"
+        },
+        {
+            "CITY": "Hrara"
+        },
+        {
+            "CITY": "Iferni"
+        },
+        {
+            "CITY": "Ifrane"
+        },
+        {
+            "CITY": "Ifrane Atlas Saghir"
+        },
+        {
+            "CITY": "Ighrem Nougdal"
+        },
+        {
+            "CITY": "Ijoukak"
+        },
+        {
+            "CITY": "Imider"
+        },
+        {
+            "CITY": "Imindounit"
+        },
+        {
+            "CITY": "Imintanoute"
+        },
+        {
+            "CITY": "Imlil"
+        },
+        {
+            "CITY": "Imoulass"
+        },
+        {
+            "CITY": "Imouzzer"
+        },
+        {
+            "CITY": "Imouzzer Marmoucha"
+        },
+        {
+            "CITY": "Imouzzer-Kendar"
+        },
+        {
+            "CITY": "Imrabten"
+        },
+        {
+            "CITY": "Imsouane"
+        },
+        {
+            "CITY": "Imzouren"
+        },
+        {
+            "CITY": "Inchaden"
+        },
+        {
+            "CITY": "Inzegan"
+        },
+        {
+            "CITY": "Iqaddar"
+        },
+        {
+            "CITY": "Irohalen"
+        },
+        {
+            "CITY": "Issafen"
+        },
+        {
+            "CITY": "Issaguen"
+        },
+        {
+            "CITY": "Issen"
+        },
+        {
+            "CITY": "Itzer"
+        },
+        {
+            "CITY": "Izemmouren"
+        },
+        {
+            "CITY": "Jaadar"
+        },
+        {
+            "CITY": "Jaidate"
+        },
+        {
+            "CITY": "Jamaat Shaim"
+        },
+        {
+            "CITY": "Jbel Lahbib"
+        },
+        {
+            "CITY": "Jemaa Shaim"
+        },
+        {
+            "CITY": "Jorf"
+        },
+        {
+            "CITY": "Jorf El Melha"
+        },
+        {
+            "CITY": "Jrada"
+        },
+        {
+            "CITY": "Kalaat Mgouna"
+        },
+        {
+            "CITY": "Kandar Sidi Khiar"
+        },
+        {
+            "CITY": "Karia Ba Mohamed"
+        },
+        {
+            "CITY": "Kasba Tadla"
+        },
+        {
+            "CITY": "Kattara"
+        },
+        {
+            "CITY": "Kechoula"
+        },
+        {
+            "CITY": "Kénitra"
+        },
+        {
+            "CITY": "Ketama"
+        },
+        {
+            "CITY": "Khemis Sidi Yahya"
+        },
+        {
+            "CITY": "Khemis Sidi Yahya"
+        },
+        {
+            "CITY": "Khemisset"
+        },
+        {
+            "CITY": "Khemisset Chaouia"
+        },
+        {
+            "CITY": "Khénifra"
+        },
+        {
+            "CITY": "Khmis Ksiba"
+        },
+        {
+            "CITY": "Khouribga"
+        },
+        {
+            "CITY": "Korimate"
+        },
+        {
+            "CITY": "Kridid"
+        },
+        {
+            "CITY": "Ksabi Moulouya"
+        },
+        {
+            "CITY": "Ksar el-Kebir"
+        },
+        {
+            "CITY": "Ksar es-Seghir"
+        },
+        {
+            "CITY": "Laaouama"
+        },
+        {
+            "CITY": "Laaounate"
+        },
+        {
+            "CITY": "Laatamna"
+        },
+        {
+            "CITY": "Laattaouia"
+        },
+        {
+            "CITY": "Laattaouia Ech-Chaybia"
+        },
+        {
+            "CITY": "Laâyoune"
+        },
+        {
+            "CITY": "Laäyoune Ain Tizgha"
+        },
+        {
+            "CITY": "Lagfifat"
+        },
+        {
+            "CITY": "Laghnimyine"
+        },
+        {
+            "CITY": "Laghoualem"
+        },
+        {
+            "CITY": "Lagouira"
+        },
+        {
+            "CITY": "Lahraouyine"
+        },
+        {
+            "CITY": "Lakhiaita"
+        },
+        {
+            "CITY": "Lakhnafif"
+        },
+        {
+            "CITY": "Lakhoualqa"
+        },
+        {
+            "CITY": "Lakhssas"
+        },
+        {
+            "CITY": "Lamaachate"
+        },
+        {
+            "CITY": "Lamhadi"
+        },
+        {
+            "CITY": "Lamharza Essahel"
+        },
+        {
+            "CITY": "Lamkansa"
+        },
+        {
+            "CITY": "Laouamra"
+        },
+        {
+            "CITY": "Larache"
+        },
+        {
+            "CITY": "Larache"
+        },
+        {
+            "CITY": "Lbir Jdid"
+        },
+        {
+            "CITY": "Lkhaloua"
+        },
+        {
+            "CITY": "Lkheng"
+        },
+        {
+            "CITY": "Loudaya"
+        },
+        {
+            "CITY": "Loulad"
+        },
+        {
+            "CITY": "Louta"
+        },
+        {
+            "CITY": "Lqliaa"
+        },
+        {
+            "CITY": "Mhamid El Ghizlane"
+        },
+        {
+            "CITY": "Mhaya"
+        },
+        {
+            "CITY": "Mqam Tobla"
+        },
+        {
+            "CITY": "Msick"
+        },
+        {
+            "CITY": "Maaziz"
+        },
+        {
+            "CITY": "Machraa El Ain"
+        },
+        {
+            "CITY": "Madagh"
+        },
+        {
+            "CITY": "Majjat"
+        },
+        {
+            "CITY": "Mallalienne"
+        },
+        {
+            "CITY": "Mansoura"
+        },
+        {
+            "CITY": "Marchouch"
+        },
+        {
+            "CITY": "Marrakech"
+        },
+        {
+            "CITY": "Martil"
+        },
+        {
+            "CITY": "Massa"
+        },
+        {
+            "CITY": "Mdiq"
+        },
+        {
+            "CITY": "Méchouar Fès Jdid"
+        },
+        {
+            "CITY": "Méchouar Kasba"
+        },
+        {
+            "CITY": "Mechra Bel Ksiri"
+        },
+        {
+            "CITY": "Mediouna"
+        },
+        {
+            "CITY": "Mehdia"
+        },
+        {
+            "CITY": "Meknassa Acharqia"
+        },
+        {
+            "CITY": "Meknassa Al Gharbia"
+        },
+        {
+            "CITY": "Meknès"
+        },
+        {
+            "CITY": "Mellila"
+        },
+        {
+            "CITY": "Mers El Kheir"
+        },
+        {
+            "CITY": "Merzouga"
+        },
+        {
+            "CITY": "Messassa"
+        },
+        {
+            "CITY": "Mestegmer"
+        },
+        {
+            "CITY": "Mestferki"
+        },
+        {
+            "CITY": "Midar"
+        },
+        {
+            "CITY": "Midelt"
+        },
+        {
+            "CITY": "Mirleft"
+        },
+        {
+            "CITY": "Missour"
+        },
+        {
+            "CITY": "Mkansa"
+        },
+        {
+            "CITY": "Mograne"
+        },
+        {
+            "CITY": "Mohammedia"
+        },
+        {
+            "CITY": "Moualine El Oued"
+        },
+        {
+            "CITY": "Moulay Abdallah"
+        },
+        {
+            "CITY": "Moulay Bouazza"
+        },
+        {
+            "CITY": "Moulay Bousselham"
+        },
+        {
+            "CITY": "Moulay Bouzarqtoune"
+        },
+        {
+            "CITY": "Moulay Driss Aghbal"
+        },
+        {
+            "CITY": "Moulay Driss Zerhoun"
+        },
+        {
+            "CITY": "Moulay Yaâcoub"
+        },
+        {
+            "CITY": "Moulay Yaccoub"
+        },
+        {
+            "CITY": "Mrirt"
+        },
+        {
+            "CITY": "Nkhila"
+        },
+        {
+            "CITY": "Nador"
+        },
+        {
+            "CITY": "Naima"
+        },
+        {
+            "CITY": "Naour"
+        },
+        {
+            "CITY": "Nouaceur"
+        },
+        {
+            "CITY": "Ouad Eddahab"
+        },
+        {
+            "CITY": "Ouahat Sidi Brahim"
+        },
+        {
+            "CITY": "Ouaklim"
+        },
+        {
+            "CITY": "Oualidia"
+        },
+        {
+            "CITY": "Oualili"
+        },
+        {
+            "CITY": "Ouaouizeght"
+        },
+        {
+            "CITY": "Ouaoumana"
+        },
+        {
+            "CITY": "Ouaouzgane"
+        },
+        {
+            "CITY": "Ouarzazate"
+        },
+        {
+            "CITY": "Ouazzane"
+        },
+        {
+            "CITY": "Oued Amlil"
+        },
+        {
+            "CITY": "Oued Ifrane"
+        },
+        {
+            "CITY": "Oued Jdida"
+        },
+        {
+            "CITY": "Oued Laou"
+        },
+        {
+            "CITY": "Oued Malha"
+        },
+        {
+            "CITY": "Oued Zem"
+        },
+        {
+            "CITY": "Ouirgane"
+        },
+        {
+            "CITY": "Ouislane"
+        },
+        {
+            "CITY": "Oujda"
+        },
+        {
+            "CITY": "Oukaimden"
+        },
+        {
+            "CITY": "Oulad Abbou"
+        },
+        {
+            "CITY": "Oulad Aissa"
+        },
+        {
+            "CITY": "Oulad Al Toualaa"
+        },
+        {
+            "CITY": "Oulad Dahou"
+        },
+        {
+            "CITY": "Oulad Fares"
+        },
+        {
+            "CITY": "Oulad Frej"
+        },
+        {
+            "CITY": "Oulad Ftata"
+        },
+        {
+            "CITY": "Oulad Ghanem"
+        },
+        {
+            "CITY": "Oulad Hamdane"
+        },
+        {
+            "CITY": "Oulad Hcine"
+        },
+        {
+            "CITY": "Oulad Mbarek"
+        },
+        {
+            "CITY": "Oulad Mrah"
+        },
+        {
+            "CITY": "Oulad Mtaa"
+        },
+        {
+            "CITY": "Oulad Said"
+        },
+        {
+            "CITY": "Oulad Said Loued"
+        },
+        {
+            "CITY": "Oulad Salah"
+        },
+        {
+            "CITY": "Oulad Yahya Louta"
+        },
+        {
+            "CITY": "Oulad Yaich"
+        },
+        {
+            "CITY": "Oulad Youssef"
+        },
+        {
+            "CITY": "Oulad Zidane"
+        },
+        {
+            "CITY": "Ouled Ayad"
+        },
+        {
+            "CITY": "Ouled Berhil"
+        },
+        {
+            "CITY": "Ouled Dlim"
+        },
+        {
+            "CITY": "Ouled Frej"
+        },
+        {
+            "CITY": "Ouled Teïma"
+        },
+        {
+            "CITY": "Oulmes"
+        },
+        {
+            "CITY": "Ounagha"
+        },
+        {
+            "CITY": "Ourika"
+        },
+        {
+            "CITY": "Outat El Haj"
+        },
+        {
+            "CITY": "Rabat"
+        },
+        {
+            "CITY": "Ras Ain Rhamna"
+        },
+        {
+            "CITY": "Ras El Ain"
+        },
+        {
+            "CITY": "Ras el Ma"
+        },
+        {
+            "CITY": "Ras Ijerri"
+        },
+        {
+            "CITY": "Ratba"
+        },
+        {
+            "CITY": "Rfala"
+        },
+        {
+            "CITY": "Ribat el Kheir"
+        },
+        {
+            "CITY": "Rima"
+        },
+        {
+            "CITY": "Rissana Janoubia"
+        },
+        {
+            "CITY": "Rissani"
+        },
+        {
+            "CITY": "Rommani"
+        },
+        {
+            "CITY": "Saada"
+        },
+        {
+            "CITY": "Saadla"
+        },
+        {
+            "CITY": "Sabaa Aiyoun"
+        },
+        {
+            "CITY": "Sabbah"
+        },
+        {
+            "CITY": "Safi"
+        },
+        {
+            "CITY": "Sahel Chamali"
+        },
+        {
+            "CITY": "Sahel Oulad Hriz"
+        },
+        {
+            "CITY": "Saidia"
+        },
+        {
+            "CITY": "Saka"
+        },
+        {
+            "CITY": "Sala Al-Jadida"
+        },
+        {
+            "CITY": "Salé"
+        },
+        {
+            "CITY": "Sbouya"
+        },
+        {
+            "CITY": "Sebt Ennabour"
+        },
+        {
+            "CITY": "Sebt Gzoula"
+        },
+        {
+            "CITY": "Sefrou"
+        },
+        {
+            "CITY": "Selouane"
+        },
+        {
+            "CITY": "Settat"
+        },
+        {
+            "CITY": "Sfassif"
+        },
+        {
+            "CITY": "Sid Lmokhtar"
+        },
+        {
+            "CITY": "Sid Zouine"
+        },
+        {
+            "CITY": "Sidi Abdallah El Bouchouari"
+        },
+        {
+            "CITY": "Sidi Abdallah Ghiat"
+        },
+        {
+            "CITY": "Sidi Abderrazak"
+        },
+        {
+            "CITY": "Sidi Abed"
+        },
+        {
+            "CITY": "Sidi Ahmed Ou Amar"
+        },
+        {
+            "CITY": "Sidi Aissa Ben Ali"
+        },
+        {
+            "CITY": "Sidi Aissa Ben Slimane"
+        },
+        {
+            "CITY": "Sidi Ali"
+        },
+        {
+            "CITY": "Sidi Ali Ben Hamdouche"
+        },
+        {
+            "CITY": "Sidi Allal El Bahraoui"
+        },
+        {
+            "CITY": "Sidi Allal Tazi"
+        },
+        {
+            "CITY": "Sidi Bennour"
+        },
+        {
+            "CITY": "Sidi Bettache"
+        },
+        {
+            "CITY": "Sidi Bibi"
+        },
+        {
+            "CITY": "Sidi Boaal"
+        },
+        {
+            "CITY": "Sidi Bou Othmane"
+        },
+        {
+            "CITY": "Sidi Boubker"
+        },
+        {
+            "CITY": "Sidi Boukhalkhal"
+        },
+        {
+            "CITY": "Sidi Bouknadel"
+        },
+        {
+            "CITY": "Sidi Boulenouar"
+        },
+        {
+            "CITY": "Sidi Boumehdi"
+        },
+        {
+            "CITY": "Sidi Bouzid"
+        },
+        {
+            "CITY": "Sidi Chiker"
+        },
+        {
+            "CITY": "Sidi Dahbi"
+        },
+        {
+            "CITY": "Sidi El Abed"
+        },
+        {
+            "CITY": "Sidi el Aîdi"
+        },
+        {
+            "CITY": "Sidi El Makhfi"
+        },
+        {
+            "CITY": "Sidi El Mekki"
+        },
+        {
+            "CITY": "Sidi Hajjaj"
+        },
+        {
+            "CITY": "Sidi Hajjaj Oued Hassar"
+        },
+        {
+            "CITY": "Sidi Ifni"
+        },
+        {
+            "CITY": "Sidi Jaber"
+        },
+        {
+            "CITY": "Sidi Kacem"
+        },
+        {
+            "CITY": "Sidi Lyamani"
+        },
+        {
+            "CITY": "Sidi Moussa Ben Ali"
+        },
+        {
+            "CITY": "Sidi Moussa El Majdoub"
+        },
+        {
+            "CITY": "Sidi Ouassay"
+        },
+        {
+            "CITY": "Sidi Rahal"
+        },
+        {
+            "CITY": "Sidi Rahal Chatai"
+        },
+        {
+            "CITY": "Sidi Slimane"
+        },
+        {
+            "CITY": "Sidi Slimane Echcharraa"
+        },
+        {
+            "CITY": "Sidi Smail"
+        },
+        {
+            "CITY": "Sidi Taibi"
+        },
+        {
+            "CITY": "Sidi Yahya"
+        },
+        {
+            "CITY": "Sidi Yahya El Gharb"
+        },
+        {
+            "CITY": "Sidi Yahya Zaer"
+        },
+        {
+            "CITY": "Skhinate"
+        },
+        {
+            "CITY": "Skhirat"
+        },
+        {
+            "CITY": "Skhour Rhamna"
+        },
+        {
+            "CITY": "Skoura Ahl El Oust"
+        },
+        {
+            "CITY": "Skoura Mdaz"
+        },
+        {
+            "CITY": "Smia"
+        },
+        {
+            "CITY": "Souaken"
+        },
+        {
+            "CITY": "Souihla"
+        },
+        {
+            "CITY": "Souk El Arbaa"
+        },
+        {
+            "CITY": "Souk Sebt Ouled Nemma"
+        },
+        {
+            "CITY": "Souk Tlet El Gharb"
+        },
+        {
+            "CITY": "Steha"
+        },
+        {
+            "CITY": "Tabant"
+        },
+        {
+            "CITY": "Tabouda"
+        },
+        {
+            "CITY": "Tadighoust"
+        },
+        {
+            "CITY": "Tafersit"
+        },
+        {
+            "CITY": "Tafoughalt"
+        },
+        {
+            "CITY": "Tafraout"
+        },
+        {
+            "CITY": "Tagante"
+        },
+        {
+            "CITY": "Taghazout"
+        },
+        {
+            "CITY": "Taghzout"
+        },
+        {
+            "CITY": "Taghzoute Nait Atta"
+        },
+        {
+            "CITY": "Tahannaout"
+        },
+        {
+            "CITY": "Tahla"
+        },
+        {
+            "CITY": "Takate"
+        },
+        {
+            "CITY": "Talat Nyaaqoub"
+        },
+        {
+            "CITY": "Taliouine"
+        },
+        {
+            "CITY": "Talmakante"
+        },
+        {
+            "CITY": "Talmest"
+        },
+        {
+            "CITY": "Talsint"
+        },
+        {
+            "CITY": "Tamallalt"
+        },
+        {
+            "CITY": "Tamaris"
+        },
+        {
+            "CITY": "Tamazouzte"
+        },
+        {
+            "CITY": "Tamedit"
+        },
+        {
+            "CITY": "Tamensourt"
+        },
+        {
+            "CITY": "Tameslohte"
+        },
+        {
+            "CITY": "Tamesna"
+        },
+        {
+            "CITY": "Tamezmoute"
+        },
+        {
+            "CITY": "Tamorot"
+        },
+        {
+            "CITY": "Tamouda Bay"
+        },
+        {
+            "CITY": "Tamri"
+        },
+        {
+            "CITY": "Tamsaout"
+        },
+        {
+            "CITY": "Tan-Tan"
+        },
+        {
+            "CITY": "Tanant"
+        },
+        {
+            "CITY": "Tangarfa"
+        },
+        {
+            "CITY": "Tanger"
+        },
+        {
+            "CITY": "Taounate"
+        },
+        {
+            "CITY": "Taourirt"
+        },
+        {
+            "CITY": "Tarfaya"
+        },
+        {
+            "CITY": "Targuist"
+        },
+        {
+            "CITY": "Taroudant"
+        },
+        {
+            "CITY": "Tassoultante"
+        },
+        {
+            "CITY": "Tata"
+        },
+        {
+            "CITY": "Tataoute"
+        },
+        {
+            "CITY": "Tatoft"
+        },
+        {
+            "CITY": "Taza"
+        },
+        {
+            "CITY": "Tazart"
+        },
+        {
+            "CITY": "Tazemmourt"
+        },
+        {
+            "CITY": "Taznakht"
+        },
+        {
+            "CITY": "Temara"
+        },
+        {
+            "CITY": "Temsamane"
+        },
+        {
+            "CITY": "Temsia"
+        },
+        {
+            "CITY": "Tendrara"
+        },
+        {
+            "CITY": "Tétouan"
+        },
+        {
+            "CITY": "Thar Es-Souk"
+        },
+        {
+            "CITY": "Tichla"
+        },
+        {
+            "CITY": "Tiddas"
+        },
+        {
+            "CITY": "Tifarouine"
+        },
+        {
+            "CITY": "Tifelt"
+        },
+        {
+            "CITY": "Tighirt"
+        },
+        {
+            "CITY": "Tikiouine"
+        },
+        {
+            "CITY": "Timahdite"
+        },
+        {
+            "CITY": "Timoulay"
+        },
+        {
+            "CITY": "Timoulilt"
+        },
+        {
+            "CITY": "Tinejdad"
+        },
+        {
+            "CITY": "Tinghir"
+        },
+        {
+            "CITY": "Tissa"
+        },
+        {
+            "CITY": "Tit Mellil"
+        },
+        {
+            "CITY": "Tizgane"
+        },
+        {
+            "CITY": "Tiznit"
+        },
+        {
+            "CITY": "Tlite"
+        },
+        {
+            "CITY": "Tnine Aglou"
+        },
+        {
+            "CITY": "Touama"
+        },
+        {
+            "CITY": "Touissit"
+        },
+        {
+            "CITY": "Tsaft"
+        },
+        {
+            "CITY": "Youssoufia"
+        },
+        {
+            "CITY": "Zag"
+        },
+        {
+            "CITY": "Zagora"
+        },
+        {
+            "CITY": "Zaida"
+        },
+        {
+            "CITY": "Zaïo"
+        },
+        {
+            "CITY": "Zaouia Sidi Tahar"
+        },
+        {
+            "CITY": "Zaouïat Cheikh"
+        },
+        {
+            "CITY": "Zaouiat Sidi Kacem"
+        },
+        {
+            "CITY": "Zeghanghane"
+        },
+        {
+            "CITY": "Zemamra"
+        },
+        {
+            "CITY": "Zemrane"
+        },
+        {
+            "CITY": "Ziaida"
+        },
+        {
+            "CITY": "Zoug"
+        },
+        {
+            "CITY": "Zoumi"
+        }
+    ]
+}

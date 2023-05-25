@@ -24,10 +24,10 @@
                     name: "sl",
                     class: "no-sort",
                     title: "#SL",
-                    render: function (data, type, row, ind) {
-                        var pageInfo = userDataTable.page.info();
-                        return ind.row + 1 + pageInfo.start;
-                    },
+                    // render: function (data, type, row, ind) {
+                    //     var pageInfo = userDataTable.page.info();
+                    //     return ind.row + 1 + pageInfo.start;
+                    // },
                 },
                 {
                     data: "name",
