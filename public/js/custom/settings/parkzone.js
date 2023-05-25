@@ -17,15 +17,21 @@
           data: "id",
           class: "no-sort",
           width: "50px",
-          render: function (data, row, type, col) {
-            var pageInfo = parkzoneDatatableEl.page.info();
-            return col.row + 1 + pageInfo.start;
-          },
         },
         { title: "Name", name: "name", data: "name" },
         { title: "Remarks", name: "remarks", data: "remarks" },
         { title: "lat", name: "lat", data: "lat" },
         { title: "lng", name: "lng", data: "lng" },
+        {
+          title: "Chef Zone",
+          name: "chef_zone",
+          render : function(data, type, row){
+            var arr = row.agents.map((item) => item.name);
+            var jsonString = JSON.stringify(arr);
+            var encodedString = encodeURIComponent(jsonString);
+            return '<div onclick="myFunction(decodeURIComponent(\'' + encodedString + '\'))" class="d-flex justify-content-center"><i class="fa fa-users" aria-hidden="true"></i></div>';
+          }
+        }
       ],
 
       ajax: {
@@ -53,4 +59,22 @@
     });
   });
 })(jQuery);
-//this data not showed in the list in table what i do 
+
+function myFunction(jsonArray) {
+  // Parse the JSON string to convert it back to an array
+  document.getElementById("exampleModalLive").classList.toggle("d-none")
+  var arr = JSON.parse(jsonArray);
+
+  // Loop over the array
+  for (var i = 0; i < arr.length; i++) {
+    // Access each element of the array
+    var element = arr[i];
+    console.log(document.getElementById("exampleModalLive"));
+    document.getElementById("OperatorsList").innerHTML += `<li class="list-group-item">${element}</li>`;
+  }
+}
+
+document.getElementById("close").addEventListener("click", function () {
+  document.getElementById("exampleModalLive").classList.toggle("d-none")
+  document.getElementById("OperatorsList").innerHTML = ""
+});

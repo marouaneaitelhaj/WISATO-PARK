@@ -23,7 +23,7 @@ class ParkzoneController extends Controller
             $offset = 0;
             $search = [];
             $where = [];
-            $with = [];
+            $with = ['agents'];
             $join = [];
             $orderBy = [];
 

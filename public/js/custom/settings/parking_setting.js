@@ -16,10 +16,10 @@
           data: "id",
           class: "no-sort",
           width: "50px",
-          render: function (data, row, type, col) {
-            var pageInfo = parkingSetupDatatableEl.page.info();
-            return col.row + 1 + pageInfo.start;
-          },
+          // render: function (data, row, type, col) {
+          //   var pageInfo = parkingSetupDatatableEl.page.info();
+          //   return col.row + 1 + pageInfo.start;
+          // },
         },
         {
           title: "Categories",
