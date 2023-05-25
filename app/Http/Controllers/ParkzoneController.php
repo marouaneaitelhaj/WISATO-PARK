@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Parkzone;
 use Exception;
 use Illuminate\Http\Request;
+use App\User;
+
 
 class ParkzoneController extends Controller
 {
@@ -73,28 +75,31 @@ class ParkzoneController extends Controller
      */
     public function store(Request $request)
     {
-        // dd( $request->all() );
         $validated = $request->validate([
             'name' => 'bail|required|unique:parkzones',
             'remarks' => 'bail|nullable|min:3',
             'lat' => 'bail|required',
             'lng' => 'bail|required',
-            'agent_id' => 'bail|required'
+            'agent_id' => 'bail|required|array', // Ensure agent_id is an array
+            'agent_id.*' => 'exists:users,id'
         ]);
-    
+
         $parkzone = new Parkzone();
         $parkzone->name = $request->name;
         $parkzone->remarks = $request->remarks;
         $parkzone->lat = $request->lat;
-        $parkzone->agent_id = $request->agent_id;
         $parkzone->lng = $request->lng;
         $parkzone->save();
-    
+
+        // Attach agent_id values to the parkzone using the pivot table
+        $parkzone->agents()->attach($request->agent_id);
+
         return redirect()
             ->route('parkzones.index')
             ->with(['flashMsg' => ['msg' => 'Parkzone successfully added.', 'type' => 'success']]);
     }
-    
+
+
 
     /**
      * Display the specified resource.

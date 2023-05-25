@@ -28,4 +28,10 @@ class Parkzone extends Model
     {
         return $this->hasOneThrough('App\Models\Parking', 'App\Models\CategoryWiseParkzoneSlot', 'parkzone_id', 'slot_id')->whereNull('out_time');
     }
+    public function agents()
+    {
+        return $this->belongsToMany('App\User', 'agent_inparkzone', 'parkzone_id', 'agent_id');
+    }
+    
+
 }
