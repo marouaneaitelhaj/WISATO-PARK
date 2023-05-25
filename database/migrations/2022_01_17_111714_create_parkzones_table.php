@@ -26,7 +26,7 @@ class CreateParkzonesTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
+     *a
      * @return void
      */
     public function down()

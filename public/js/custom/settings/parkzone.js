@@ -53,3 +53,4 @@
     });
   });
 })(jQuery);
+//this data not showed in the list in table what i do 
