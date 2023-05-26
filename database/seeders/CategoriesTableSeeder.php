@@ -17,12 +17,6 @@ class CategoriesTableSeeder extends Seeder
     {
         $user = User::first();
 
-        Category::create([
-            'type' => 'All',
-            'created_by' => $user->id,
-            'description' => 'All Categories'
-        ]);
-
         $categories = [
             [
                 'type' => 'Car',

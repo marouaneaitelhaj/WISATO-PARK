@@ -12,7 +12,8 @@ class QuartierCity extends Component
     public $selectedQuartier = null;
     public function mount()
     {
-        $this->cities = \App\Models\cities::all();
+        // $this->cities = \App\Models\cities::all();
+        
     }
     public function updatedSelectedCity($city)
     {
