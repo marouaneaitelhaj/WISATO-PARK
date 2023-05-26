@@ -14,7 +14,7 @@ class CitiesTableSeeder extends Seeder
      */
     public function run()
     {
-        $cities = file_get_contents("json/wi.json");
+        $cities = file_get_contents("public/files/wi.json");
         $data = json_decode($cities, true);
         
 

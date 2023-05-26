@@ -16,40 +16,46 @@ class CategoriesTableSeeder extends Seeder
     public function run()
     {
         $user = User::first();
+
         Category::create([
             'type' => 'All',
             'created_by' => $user->id,
             'description' => 'All Categories'
         ]);
-        Category::create([
-            'type' => 'Car',
-            'description' => 'Car Description',
-            'created_by' => $user->id
-        ]);
-        Category::create([
-            'type' => 'Bike',
-            'created_by' => $user->id,
-            'description' => 'Bike Description'
-        ]);
-        Category::create([
-            'type' => 'Cycle',
-            'created_by' => $user->id,
-            'description' => 'Cycle Description'
-        ]);
-        Category::create([
-            'type' => 'Truck',
-            'created_by' => $user->id,
-            'description' => 'Truck Description'
-        ]);
-        Category::create([
-            'type' => 'Bus',
-            'created_by' => $user->id,
-            'description' => 'Bus Description'
-        ]);
-        Category::create([
-            'type' => 'Auto',
-            'created_by' => $user->id,
-            'description' => 'Auto Description'
-        ]);
+
+        $categories = [
+            [
+                'type' => 'Car',
+                'description' => 'Car Description'
+            ],
+            [
+                'type' => 'Car Hydrogène',
+                'description' => 'HYDROGÈNE Description'
+            ],
+            [
+                'type' => 'Jeep',
+                'description' => 'Jeep Description'
+            ],
+            [
+                'type' => 'Bike',
+                'description' => 'Bike Description'
+            ],
+            [
+                'type' => 'Truck',
+                'description' => 'Truck Description'
+            ],
+            [
+                'type' => 'Bus',
+                'description' => 'Bus Description'
+            ],
+            [
+                'type' => 'Auto',
+                'description' => 'Auto Description'
+            ],
+        ];
+
+        foreach ($categories as $category) {
+            Category::create(array_merge($category, ['created_by' => $user->id]));
+        }
     }
 }

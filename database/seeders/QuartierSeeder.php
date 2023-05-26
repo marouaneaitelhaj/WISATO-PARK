@@ -13,8 +13,8 @@ class QuartierSeeder extends Seeder
 {
     public function run()
     {
-        //$file = file_get_contents('public/files/saad.json');
-        $file = file_get_contents('public/files/daas.txt');
+        $file = file_get_contents('public/files/saad.json');
+        // $file = file_get_contents('public/files/saad.json');
 
         $data = json_decode($file, true);
 
