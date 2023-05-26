@@ -23,7 +23,7 @@ class ParkzoneController extends Controller
             $offset = 0;
             $search = [];
             $where = [];
-            $with = ['agents'];
+            $with = ['agents' , 'Quartier'];
             $join = [];
             $orderBy = [];
 
@@ -64,6 +64,7 @@ class ParkzoneController extends Controller
      */
     public function create()
     {
+        
         return view('content.parkzones.create');
     }
 
@@ -81,7 +82,8 @@ class ParkzoneController extends Controller
             'lat' => 'bail|required',
             'lng' => 'bail|required',
             'agent_id' => 'bail|required|array', // Ensure agent_id is an array
-            'agent_id.*' => 'exists:users,id'
+            'agent_id.*' => 'exists:users,id',
+            'quartier_id' => 'required',
         ]);
 
         $parkzone = new Parkzone();
@@ -89,6 +91,7 @@ class ParkzoneController extends Controller
         $parkzone->remarks = $request->remarks;
         $parkzone->lat = $request->lat;
         $parkzone->lng = $request->lng;
+        $parkzone->quartier_id = $request->quartier_id;
         $parkzone->save();
 
         // Attach agent_id values to the parkzone using the pivot table

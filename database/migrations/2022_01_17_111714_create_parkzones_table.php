@@ -16,6 +16,8 @@ class CreateParkzonesTable extends Migration
         Schema::create('parkzones', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->unsignedBigInteger('quartier_id');
+            $table->foreign('quartier_id')->references('id')->on('quartiers')->onDelete('cascade');
             $table->string('lng');
             $table->string('lat');
             $table->tinyInteger('status')->default(1);

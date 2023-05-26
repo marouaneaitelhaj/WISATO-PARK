@@ -41,22 +41,24 @@
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 d-none">
                                 <div class="form-group d-flex justify-content-around ">
                                     <div>
                                         {{-- <label for="name" class="text-md-right">{{ __('lng') }}</label> --}}
-                                        <input type="hidden" id="lng" name="lng" class="form-control" readonly/>
+                                        <input type="hidden" id="lng" name="lng" class="form-control" readonly />
                                     </div>
                                     <div>
                                         {{-- <label for="name" class="text-md-right">{{ __('lat') }}</label> --}}
-                                        <input type="hidden" id="lat" name="lat" class="form-control" readonly/>
+                                        <input type="hidden" id="lat" name="lat" class="form-control" readonly />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
+                                @livewire('quartier-city')
+                            </div>
+                            <div class="col-md-12">
                                 <div class="form-group d-flex justify-content-around ">
-
-                                <div id="map"></div>
+                                    <div id="map"></div>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -102,10 +104,45 @@
 <link rel='stylesheet' href='https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css' crossorigin='' />
 
 <script>
+    var selectedcity = '';
+    var selectedquartier = '';
+    document.getElementById("city").addEventListener('change', function(e) {
+        var selectedOption = e.target.options[e.target.selectedIndex];
+        selectedcity = selectedOption.textContent;
+        console.log(selectedcity);
+        fetch('https://nominatim.openstreetmap.org/search?q=' + selectedcity + '&limit=1&format=json&addressdetails=1')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                document.getElementById("lat").value = data[0].lat;
+                document.getElementById("lng").value = data[0].lon;
+                map.setView([data[0].lat, data[0].lon], 15);
+            });
+    })
+    document.getElementById("quartier").addEventListener('change', function(e) {
+
+    })
+    document.getElementById("quartier").addEventListener("change", function(e) {
+        // i want to get the selected option text and add it to the url with the city text
+        var selectedOption = e.target.options[e.target.selectedIndex];
+        selectedquartier = selectedOption.textContent;
+        console.log(selectedquartier);
+        // change spaCE TO +
+        selectedquartier = selectedquartier.replace(/ /g, '+');
+        fetch('https://nominatim.openstreetmap.org/search?q=' + selectedquartier + '+' + selectedcity + '&limit=1&format=json&addressdetails=1')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                document.getElementById("lat").value = data[0].lat;
+                document.getElementById("lng").value = data[0].lon;
+                map.setView([data[0].lat, data[0].lon], 15);
+            });
+
+    })
     let map, markers = [];
     let circle;
     let isSatelliteView = false;
-    
+
     /* ----------------------------- Initialize Map ----------------------------- */
     function initMap() {
         map = L.map('map', {
@@ -122,7 +159,7 @@
 
         map.on('click', mapClicked);
 
-        // Add geocoder control for search functionality
+        // Add geocoder control for search functionality 
         L.Control.geocoder().addTo(map);
 
         // Create the "Find My Location" icon and position it in the middle of the map
@@ -143,7 +180,7 @@
             position: 'bottomright'
         });
 
-        satelliteViewIcon.onAdd = function (map) {
+        satelliteViewIcon.onAdd = function(map) {
             const div = L.DomUtil.create('div', 'leaflet-bar leaflet-control leaflet-control-custom');
             div.innerHTML = '<a href="#" title="Toggle View" onclick="toggleView(); return false;"><i id="toggle-icon" class="fa fa-globe"></i></a>';
             return div;
@@ -265,10 +302,5 @@
         isSatelliteView = false;
     }
 </script>
-
-
 @livewireScripts
-
-
-
 @endsection

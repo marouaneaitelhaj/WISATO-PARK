@@ -16,12 +16,17 @@ class Parkzone extends Model
         'name',
         'level',
         'remarks',
+        'quartier_id',
         'status'
     ];
 
     public function slots()
     {
         return $this->hasMany('App\Models\CategoryWiseParkzoneSlot');
+    }
+    public function Quartier()
+    {
+        return $this->belongsTo('App\Models\Quartier');
     }
 
     public function active_parking()
