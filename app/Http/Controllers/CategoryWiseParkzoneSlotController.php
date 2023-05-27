@@ -118,10 +118,11 @@ class CategoryWiseParkzoneSlotController extends Controller
             $operatorInPark->operator_id = $operatorId;
             $operatorInPark->save();
         }
-        foreach ($request->category_id as $category) {
+        foreach ($request->category as $index => $category) {
             $category_category_wise_parkzone_slot = new category_category_wise_parkzone_slot();
-            $category_category_wise_parkzone_slot->category_id = $category;
+            $category_category_wise_parkzone_slot->category_id = $index;
             $category_category_wise_parkzone_slot->slot_id = $categoryWiseParkzoneSlot->id;
+            $category_category_wise_parkzone_slot->slot_number = $category;
             $category_category_wise_parkzone_slot->save();
         }
 

@@ -85,7 +85,7 @@ class ParkzoneController extends Controller
             'agent_id.*' => 'exists:users,id',
             'quartier_id' => 'required',
         ]);
-
+        
         $parkzone = new Parkzone();
         $parkzone->name = $request->name;
         $parkzone->remarks = $request->remarks;
@@ -93,9 +93,10 @@ class ParkzoneController extends Controller
         $parkzone->lng = $request->lng;
         $parkzone->quartier_id = $request->quartier_id;
         $parkzone->save();
-
+        
         // Attach agent_id values to the parkzone using the pivot table
         $parkzone->agents()->attach($request->agent_id);
+        // dd($request->all());
 
         return redirect()
             ->route('parkzones.index')
