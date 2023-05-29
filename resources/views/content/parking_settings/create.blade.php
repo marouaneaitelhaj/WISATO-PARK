@@ -20,9 +20,9 @@
                             <div class="">
                                 <div class="form-group">
                                     <label for="category_id" class="text-md-right">{{ __('Category') }} <span class="tcr text-danger">*</span></label>
-                                    <div class="d-flex flex-wrap justify-content-around">
+                                    <div class="d-flex flex-wrap justify-content-start">
                                         @foreach ($categories as $category)
-                                        <div>
+                                        <div class="m-1">
                                             <input type="number" class="form-control" placeholder="{{$category->type}}" name="category[{{$category->id}}]">
                                         </div>
                                         @endforeach
