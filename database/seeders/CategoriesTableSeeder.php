@@ -52,10 +52,7 @@ class CategoriesTableSeeder extends Seeder
                 'type' => 'Gasoline Truck',
                 'description' => 'Gasoline Truck Description'
             ],
-            // [
-            //     'type' => 'Auto',
-            //     'description' => 'Auto Description'
-            // ],
+
         ];
 
         foreach ($categories as $category) {
