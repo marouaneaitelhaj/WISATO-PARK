@@ -20,13 +20,10 @@
                             <div class="">
                                 <div class="form-group">
                                     <label for="category_id" class="text-md-right">{{ __('Category') }} <span class="tcr text-danger">*</span></label>
-                                    <div class="d-flex justify-content-around">
+                                    <div class="d-flex flex-wrap justify-content-start">
                                         @foreach ($categories as $category)
-                                        <div class="d-flex align-items-end">
-                                            <input class="form-check-input" type="checkbox" name="category_id[]" value="{{$category->id}}" id="category_id">
-                                            <label class="form-check-label" for="flexCheckDefault">
-                                                {{ $category->type }}
-                                            </label>
+                                        <div class="m-1">
+                                            <input type="number" class="form-control" placeholder="{{$category->type}}" name="category[{{$category->id}}]">
                                         </div>
                                         @endforeach
                                     </div>

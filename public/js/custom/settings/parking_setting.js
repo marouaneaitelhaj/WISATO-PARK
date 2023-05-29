@@ -27,20 +27,22 @@
           render: function (data, type, row) {
             var html = "<div class='d-flex justify-content-around'>";
             for (var i = 0; i < row.category.length; i++) {
-              if (row.category[i].type == "Car") {
-                html += "<i class='fa fa-car' aria-hidden='true'></i>";
-              } else if (row.category[i].type == "Bike") {
-                html += "<i class='fa fa-motorcycle' aria-hidden='true'></i>";
-              } else if (row.category[i].type == "Cycle") {
-                html += "<i class='fa fa-bicycle' aria-hidden='true'></i>";
-              } else if (row.category[i].type == "Truck") {
-                html += "<i class='fa fa-truck' aria-hidden='true'></i>";
-              } else if (row.category[i].type == "Bus") {
-                html += "<i class='fa fa-bus' aria-hidden='true'></i>";
-              } else if (row.category[i].type == "Auto") {
-                html += "<i class='fa fa-taxi' aria-hidden='true'></i>";
-              } else {
-                html += "<i class='fa fa-car' aria-hidden='true'></i>";
+              if (row.category[i].type == "Electric Car") {
+                html += "<i class='fa fa-car text-success' aria-hidden='true'></i>";
+              } else if (row.category[i].type == "Electric Bike") {
+                html += "<i class='fa fa-motorcycle text-success' aria-hidden='true'></i>";
+              } else if (row.category[i].type == "Gasoline Car") {
+                html += "<i class='fa fa-car text-danger' aria-hidden='true'></i>";
+              } else if (row.category[i].type == "Electric Truck") {
+                html += "<i class='fa fa-truck text-success' aria-hidden='true'></i>";
+              } else if (row.category[i].type == "Electric Bus") {
+                html += "<i class='fa fa-bus text-success' aria-hidden='true'></i>";
+              } else if (row.category[i].type == "Gasoline Bike") {
+                html += "<i class='fa fa-motorcycle text-danger' aria-hidden='true'></i>";
+              } else if(row.category[i].type == "Gasoline Bus") {
+                html += "<i class='fa fa-bus text-danger' aria-hidden='true'></i>";
+              }else if(row.category[i].type == "Gasoline Truck"){
+                html += "<i class='fa fa-truck text-danger' aria-hidden='true'></i>";
               }
             }
             html += "</div>";

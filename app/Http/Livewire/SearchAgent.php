@@ -16,11 +16,15 @@ class SearchAgent extends Component
 
     public function mount()
     {
-        $this->fetchAgents();
+        // $this->fetchAgents();
+        
     }
 
     public function updatedSearch()
     {
+        if ($this->search == '') {
+            return $this->agents = [];
+        }
         $this->fetchAgents();
     }
 

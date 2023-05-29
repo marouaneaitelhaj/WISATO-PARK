@@ -15,4 +15,8 @@ class Quartier extends Model
     {
         return $this->belongsTo(City::class, 'city_id');
     }
+    public function parkzones()
+    {
+        return $this->hasMany(Parkzone::class);
+    }
 }

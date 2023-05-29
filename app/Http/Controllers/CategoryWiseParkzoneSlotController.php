@@ -28,7 +28,7 @@ class CategoryWiseParkzoneSlotController extends Controller
             $offset = 0;
             $search = [];
             $where = [];
-            $with = ['category','createBy', 'parkzone', 'operator'];
+            $with = ['category', 'createBy', 'parkzone', 'operator'];
             $join = [];
             $orderBy = [];
 
@@ -118,11 +118,14 @@ class CategoryWiseParkzoneSlotController extends Controller
             $operatorInPark->operator_id = $operatorId;
             $operatorInPark->save();
         }
-        foreach ($request->category_id as $category) {
-            $category_category_wise_parkzone_slot = new category_category_wise_parkzone_slot();
-            $category_category_wise_parkzone_slot->category_id = $category;
-            $category_category_wise_parkzone_slot->slot_id = $categoryWiseParkzoneSlot->id;
-            $category_category_wise_parkzone_slot->save();
+        foreach ($request->category as $index => $category) {
+            if ($category != null) {
+                $category_category_wise_parkzone_slot = new category_category_wise_parkzone_slot();
+                $category_category_wise_parkzone_slot->category_id = $index;
+                $category_category_wise_parkzone_slot->slot_id = $categoryWiseParkzoneSlot->id;
+                $category_category_wise_parkzone_slot->slot_number = $category;
+                $category_category_wise_parkzone_slot->save();
+            }
         }
 
         return redirect()

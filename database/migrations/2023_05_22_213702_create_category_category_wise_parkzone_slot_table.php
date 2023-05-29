@@ -15,6 +15,7 @@ class CreateCategoryCategoryWiseParkzoneSlotTable extends Migration
     {
         Schema::create('category_category_wise_parkzone_slot', function (Blueprint $table) {
             $table->id();
+            $table->string('slot_number');
             $table->unsignedBigInteger('slot_id');
             $table->unsignedBigInteger('category_id');
 
@@ -29,6 +30,7 @@ class CreateCategoryCategoryWiseParkzoneSlotTable extends Migration
                 ->onDelete('cascade');
 
             $table->timestamps();
+
         });
     }
 

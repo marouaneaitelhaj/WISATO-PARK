@@ -6,6 +6,8 @@ use Illuminate\Database\Seeder;
 use App\Models\Category;
 use App\User;
 
+use function PHPSTORM_META\type;
+
 class CategoriesTableSeeder extends Seeder
 {
     /**
@@ -17,41 +19,43 @@ class CategoriesTableSeeder extends Seeder
     {
         $user = User::first();
 
-        Category::create([
-            'type' => 'All',
-            'created_by' => $user->id,
-            'description' => 'All Categories'
-        ]);
-
         $categories = [
             [
-                'type' => 'Car',
-                'description' => 'Car Description'
+                'type' => 'Electric Car',
+                'description' => 'Electric Car Description'
             ],
             [
-                'type' => 'Car Hydrogène',
-                'description' => 'HYDROGÈNE Description'
+                'type' => 'Electric Bike',
+                'description' => 'Electric Bike Description'
             ],
             [
-                'type' => 'Jeep',
-                'description' => 'Jeep Description'
+                'type' => 'Electric Bus',
+                'description' => 'Electric Bus Description'
             ],
             [
-                'type' => 'Bike',
-                'description' => 'Bike Description'
+                'type' => 'Electric Truck',
+                'description' => 'Electric Truck Description'
             ],
             [
-                'type' => 'Truck',
-                'description' => 'Truck Description'
+                'type' => 'Gasoline Car',
+                'description' => 'Gasoline Car Description'
             ],
             [
-                'type' => 'Bus',
-                'description' => 'Bus Description'
+                'type' => 'Gasoline Bike',
+                'description' => 'Gasoline Bike Description'
             ],
             [
-                'type' => 'Auto',
-                'description' => 'Auto Description'
+                'type' => 'Gasoline Bus',
+                'description' => 'Gasoline Bus Description'
             ],
+            [
+                'type' => 'Gasoline Truck',
+                'description' => 'Gasoline Truck Description'
+            ],
+            // [
+            //     'type' => 'Auto',
+            //     'description' => 'Auto Description'
+            // ],
         ];
 
         foreach ($categories as $category) {
