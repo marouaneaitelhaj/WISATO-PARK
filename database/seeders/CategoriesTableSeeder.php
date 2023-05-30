@@ -59,7 +59,7 @@ class CategoriesTableSeeder extends Seeder
         ];
 
         foreach ($categories as $category) {
-            Category::create(array_merge($category, ['created_by' => $user->id]));
+            Category::create(array_merge($category, ['created_by' => 1]));
         }
     }
 }

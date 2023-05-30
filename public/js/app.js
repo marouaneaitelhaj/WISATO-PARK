@@ -23432,7 +23432,7 @@ function isRegExp(v) {
  */
 function isValidArrayIndex(val) {
     const n = parseFloat(String(val));
-    return n >= 0 && Math.parkzone(n) === n && isFinite(val);
+    return n >= 0 && Math.floor(n) === n && isFinite(val);
 }
 function isPromise(val) {
     return (isDef(val) &&

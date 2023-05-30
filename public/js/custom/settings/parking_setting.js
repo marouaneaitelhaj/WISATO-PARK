@@ -16,35 +16,43 @@
           data: "id",
           class: "no-sort",
           width: "50px",
-          // render: function (data, row, type, col) {
-          //   var pageInfo = parkingSetupDatatableEl.page.info();
-          //   return col.row + 1 + pageInfo.start;
-          // },
+          render: function (data, row, type, col) {
+            var pageInfo = parkingSetupDatatableEl.page.info();
+            return col.row + 1 + pageInfo.start;
+          },
         },
         {
           title: "Categories",
           data: "category",
           render: function (data, type, row) {
             var html = "<div class='d-flex justify-content-around'>";
-            for (var i = 0; i < row.category.length; i++) {
-              if (row.category[i].type == "Electric Car") {
-                html += "<i class='fa fa-car text-success' aria-hidden='true'></i>";
-              } else if (row.category[i].type == "Electric Bike") {
-                html += "<i class='fa fa-motorcycle text-success' aria-hidden='true'></i>";
-              } else if (row.category[i].type == "Gasoline Car") {
-                html += "<i class='fa fa-car text-danger' aria-hidden='true'></i>";
-              } else if (row.category[i].type == "Electric Truck") {
-                html += "<i class='fa fa-truck text-success' aria-hidden='true'></i>";
-              } else if (row.category[i].type == "Electric Bus") {
-                html += "<i class='fa fa-bus text-success' aria-hidden='true'></i>";
-              } else if (row.category[i].type == "Gasoline Bike") {
-                html += "<i class='fa fa-motorcycle text-danger' aria-hidden='true'></i>";
-              } else if(row.category[i].type == "Gasoline Bus") {
-                html += "<i class='fa fa-bus text-danger' aria-hidden='true'></i>";
-              }else if(row.category[i].type == "Gasoline Truck"){
-                html += "<i class='fa fa-truck text-danger' aria-hidden='true'></i>";
+            // for (var i = 0; i < row.category.length; i++) {
+              if (row.category.type == "Electric Car") {
+                html +=
+                  "<i class='fa fa-car text-success' aria-hidden='true'></i>";
+              } else if (row.category.type == "Electric Bike") {
+                html +=
+                  "<i class='fa fa-motorcycle text-success' aria-hidden='true'></i>";
+              } else if (row.category.type == "Gasoline Car") {
+                html +=
+                  "<i class='fa fa-car text-danger' aria-hidden='true'></i>";
+              } else if (row.category.type == "Electric Truck") {
+                html +=
+                  "<i class='fa fa-truck text-success' aria-hidden='true'></i>";
+              } else if (row.category.type == "Electric Bus") {
+                html +=
+                  "<i class='fa fa-bus text-success' aria-hidden='true'></i>";
+              } else if (row.category.type == "Gasoline Bike") {
+                html +=
+                  "<i class='fa fa-motorcycle text-danger' aria-hidden='true'></i>";
+              } else if (row.category.type == "Gasoline Bus") {
+                html +=
+                  "<i class='fa fa-bus text-danger' aria-hidden='true'></i>";
+              } else if (row.category.type == "Gasoline Truck") {
+                html +=
+                  "<i class='fa fa-truck text-danger' aria-hidden='true'></i>";
               }
-            }
+            // }
             html += "</div>";
             return html;
           },
@@ -56,7 +64,6 @@
           data: "parkzone.name",
         },
         { title: "Slot Name", name: "slot_name", data: "slot_name" },
-        { title: "Slot ID", name: "slotId", data: "slotId" },
         {
           title: "operator",
           // name: "operator",
@@ -65,10 +72,13 @@
             var arr = row.operator.map((item) => item.name);
             var jsonString = JSON.stringify(arr);
             var encodedString = encodeURIComponent(jsonString);
-          
-            return '<div onclick="myFunction(decodeURIComponent(\'' + encodedString + '\'))" class="d-flex justify-content-center"><i class="fa fa-users" aria-hidden="true"></i></div>';
+
+            return (
+              "<div onclick=\"myFunction(decodeURIComponent('" +
+              encodedString +
+              '\'))" class="d-flex justify-content-center"><i class="fa fa-users" aria-hidden="true"></i></div>'
+            );
           },
-          
         },
         {
           title: "Status",
@@ -146,7 +156,7 @@
 
 function myFunction(jsonArray) {
   // Parse the JSON string to convert it back to an array
-  document.getElementById("exampleModalLive").classList.toggle("d-none")
+  document.getElementById("exampleModalLive").classList.toggle("d-none");
   var arr = JSON.parse(jsonArray);
 
   // Loop over the array
@@ -154,11 +164,13 @@ function myFunction(jsonArray) {
     // Access each element of the array
     var element = arr[i];
     console.log(document.getElementById("exampleModalLive"));
-    document.getElementById("OperatorsList").innerHTML += `<li class="list-group-item">${element}</li>`;
+    document.getElementById(
+      "OperatorsList"
+    ).innerHTML += `<li class="list-group-item">${element}</li>`;
   }
 }
 
 document.getElementById("close").addEventListener("click", function () {
-  document.getElementById("exampleModalLive").classList.toggle("d-none")
-  document.getElementById("OperatorsList").innerHTML = ""
+  document.getElementById("exampleModalLive").classList.toggle("d-none");
+  document.getElementById("OperatorsList").innerHTML = "";
 });

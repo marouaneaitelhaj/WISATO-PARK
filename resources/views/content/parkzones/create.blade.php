@@ -30,6 +30,21 @@
                             <div class="col-md-12 w-100">
                                 @livewire('search-agent')
                             </div>
+                            <div class="form-group">
+                                <label for="category_id" class="text-md-right">{{ __('Category') }} <span class="tcr text-danger">*</span></label>
+                                <div class="d-flex flex-wrap justify-content-start">
+                                    @foreach ($categories as $category)
+                                    <div class="m-1">
+                                        <input type="number"  class="form-control" placeholder="{{$category->type}}" name="category[{{$category->id}}]">
+                                    </div>
+                                    @endforeach
+                                </div>
+                                @if ($errors->has('category_id'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('category_id') }}</strong>
+                                </span>
+                                @endif
+                            </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name" class="text-md-right">{{ __('Remarks') }}</label>
