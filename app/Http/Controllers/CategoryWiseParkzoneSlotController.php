@@ -27,7 +27,7 @@ class CategoryWiseParkzoneSlotController extends Controller
             $offset = 0;
             $search = [];
             $where = [];
-            $with = ['createBy', 'parkzone', 'operator', 'category'];
+            $with = ['createBy', 'parkzone' , 'category'];
             $join = [];
             $orderBy = [];
 

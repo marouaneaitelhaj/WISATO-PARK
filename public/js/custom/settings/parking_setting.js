@@ -64,22 +64,7 @@
           data: "parkzone.name",
         },
         { title: "Slot Name", name: "slot_name", data: "slot_name" },
-        {
-          title: "operator",
-          // name: "operator",
-          // data: "operator",
-          render: function (data, type, row) {
-            var arr = row.operator.map((item) => item.name);
-            var jsonString = JSON.stringify(arr);
-            var encodedString = encodeURIComponent(jsonString);
-
-            return (
-              "<div onclick=\"myFunction(decodeURIComponent('" +
-              encodedString +
-              '\'))" class="d-flex justify-content-center"><i class="fa fa-users" aria-hidden="true"></i></div>'
-            );
-          },
-        },
+        
         {
           title: "Status",
           name: "status",
@@ -143,7 +128,7 @@
         {
           searchable: false,
           orderable: false,
-          targets: [0, 1, 2, 5, 6],
+          targets: [0,1,3,4,5,6],
         },
       ],
       responsive: true,

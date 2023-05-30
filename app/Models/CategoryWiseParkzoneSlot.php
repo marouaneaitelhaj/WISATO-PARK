@@ -20,7 +20,7 @@ class CategoryWiseParkzoneSlot extends Model
     ];
 
     
-
+    
     public function parkzone()
     {
         return $this->belongsTo('App\Models\Parkzone');
