@@ -88,10 +88,13 @@
                             <div class="collapse" id="ui-taem-management">
                                 <ul class="nav flex-column sub-menu">
                                     <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('team.create2') }}">Add User</a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a class="nav-link" href="{{ route('team.create') }}">Add Team</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('team.index') }}">User List</a>
+                                        <a class="nav-link" href="{{ route('team.index') }}">Team List</a>
                                     </li>
                                 </ul>
                             </div>

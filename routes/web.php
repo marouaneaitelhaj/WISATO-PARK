@@ -15,7 +15,15 @@
 
 Route::resource('team', ControlOperatorController::class);
 
+
+Route::get('operator-create', 'UserController@create2')->name('team.create2');
+
+Route::post('operator-create', 'UserController@store2')->name('team.store2');
+
+
 Auth::routes(['verify' => true, 'register' => false]);
+
+// Route::get('operator.create', 'OperatorController@create')->name('operator.create');
 
 Route::get('/', 'HomeController@welcome')->name('site.home')->middleware(['install', 'update']);
 
@@ -36,6 +44,10 @@ Route::middleware(['installed','auth','xss_clean'])->group(function () {
 		Route::get('user/getListForDataTable', 'UserController@getListForDataTable')->name('userListJson');
 
 		Route::get('user-create', 'UserController@create')->name('user.create');
+		//ll
+
+
+		
 		Route::post('user-create', 'UserController@store')->name('user.store');
 
 		Route::get('user-edit/{user}', 'UserController@edit')->name('user.edit');

@@ -49,6 +49,8 @@ class StoreUserInformation extends FormRequest
             ],
             'role'            => 'bail|required_if:required_role,true|integer',
             'password'        => 'bail|required_if:required_password,true|confirmed|max:191',
+            // 'cin'             => 'required|string|max:191', // New rule for the 'cin' field
+
         ];
     }
 
