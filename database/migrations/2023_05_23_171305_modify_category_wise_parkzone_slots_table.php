@@ -13,9 +13,7 @@ class ModifyCategoryWiseParkzoneSlotsTable extends Migration
      */
     public function up()
     {
-        Schema::table('category_wise_parkzone_slots', function (Blueprint $table) {
-            $table->foreignId('category_id')->default(1)->constrained()->onDelete('cascade');
-        });
+       
     }
 
     /**

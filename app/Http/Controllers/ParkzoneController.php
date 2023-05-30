@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Parkzone;
+use App\Models\Category;
+use App\Models\CategoryWiseParkzoneSlot;
+
 use Exception;
 use Illuminate\Http\Request;
 use App\User;
-
+use Illuminate\Support\Facades\App;
 
 class ParkzoneController extends Controller
 {
@@ -23,7 +26,7 @@ class ParkzoneController extends Controller
             $offset = 0;
             $search = [];
             $where = [];
-            $with = ['agents' , 'Quartier'];
+            $with = ['agents', 'Quartier'];
             $join = [];
             $orderBy = [];
 
@@ -64,8 +67,8 @@ class ParkzoneController extends Controller
      */
     public function create()
     {
-        
-        return view('content.parkzones.create');
+        $categories = Category::get();
+        return view('content.parkzones.create', compact('categories'));
     }
 
     /**
@@ -76,16 +79,19 @@ class ParkzoneController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $validated = $request->validate([
             'name' => 'bail|required|unique:parkzones',
             'remarks' => 'bail|nullable|min:3',
             'lat' => 'bail|required',
+            'category' => 'bail|required|array', // Ensure category is an array
             'lng' => 'bail|required',
             'agent_id' => 'bail|required|array', // Ensure agent_id is an array
             'agent_id.*' => 'exists:users,id',
             'quartier_id' => 'required',
         ]);
-        
+
+
         $parkzone = new Parkzone();
         $parkzone->name = $request->name;
         $parkzone->remarks = $request->remarks;
@@ -93,7 +99,20 @@ class ParkzoneController extends Controller
         $parkzone->lng = $request->lng;
         $parkzone->quartier_id = $request->quartier_id;
         $parkzone->save();
-        
+
+        foreach ($request->category as $index => $category) {
+            if ($category != null) {
+                for($cat = 1; $cat <= intval($category); $cat++) {
+                    $category_category_wise_parkzone_slot = new CategoryWiseParkzoneSlot();
+                    $category_category_wise_parkzone_slot->category_id = $index;
+                    $category_category_wise_parkzone_slot->parkzone_id = $parkzone->id;
+                    $category_category_wise_parkzone_slot->slot_name = $index . '-' . $parkzone->id . '-' . $cat;
+                    $category_category_wise_parkzone_slot->created_by = auth()->user()->id;
+                    $category_category_wise_parkzone_slot->save();
+                }
+            }
+        }
+
         // Attach agent_id values to the parkzone using the pivot table
         $parkzone->agents()->attach($request->agent_id);
         // dd($request->all());

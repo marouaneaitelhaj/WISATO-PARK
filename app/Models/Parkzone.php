@@ -20,6 +20,9 @@ class Parkzone extends Model
         'status'
     ];
 
+    public function category(){
+        return $this->hasMany('App\Models\Category', 'category_wise_parkzone_slot', 'parkzone_id', 'category_id');
+    }
     public function slots()
     {
         return $this->hasMany('App\Models\CategoryWiseParkzoneSlot');

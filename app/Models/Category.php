@@ -16,14 +16,18 @@ class Category extends Model
     ];
 
     protected $guarded = [];
-
+    // realtion with CategoryWiseParkzoneSlot
+    public function categoryWiseParkzoneSlot()
+    {
+        return $this->hasMany('App\Models\CategoryWiseParkzoneSlot');
+    }
     public function parking()
     {
         return $this->hasMany('App\Models\Parking');
     }
-    public function CategoryWiseParkzoneSlot()
+    public function parkzone()
     {
-        return $this->hasMany('App\Models\CategoryWiseParkzoneSlot', 'category_category_wise_parkzone_slot', 'category_id', 'slot_id');
+        return $this->belongsToMany('App\Models\Parkzone', 'category_wise_parkzone_slot', 'category_id', 'parkzone_id');
     }
 
     public function tariff()

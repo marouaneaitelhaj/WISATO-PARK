@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\CategoryWiseParkzoneSlot;
-use App\Models\category_category_wise_parkzone_slot;
 
 use App\Models\Parkzone;
 use Exception;
@@ -28,7 +27,7 @@ class CategoryWiseParkzoneSlotController extends Controller
             $offset = 0;
             $search = [];
             $where = [];
-            $with = ['category', 'createBy', 'parkzone', 'operator'];
+            $with = ['createBy', 'parkzone' , 'category'];
             $join = [];
             $orderBy = [];
 
@@ -118,15 +117,16 @@ class CategoryWiseParkzoneSlotController extends Controller
             $operatorInPark->operator_id = $operatorId;
             $operatorInPark->save();
         }
-        foreach ($request->category as $index => $category) {
-            if ($category != null) {
-                $category_category_wise_parkzone_slot = new category_category_wise_parkzone_slot();
-                $category_category_wise_parkzone_slot->category_id = $index;
-                $category_category_wise_parkzone_slot->slot_id = $categoryWiseParkzoneSlot->id;
-                $category_category_wise_parkzone_slot->slot_number = $category;
-                $category_category_wise_parkzone_slot->save();
-            }
-        }
+        // foreach ($request->category as $index => $category) {
+        //     if ($category != null) {
+        //         for ($i = 0; $i < intval($category); $i++) {
+        //             $category_category_wise_parkzone_slot = new CategoryWiseParkzoneSlot();
+        //             $category_category_wise_parkzone_slot->category_id = $cat;
+        //             $category_category_wise_parkzone_slot->slot_id = $categoryWiseParkzoneSlot->id;
+        //             $category_category_wise_parkzone_slot->save();
+        //         }
+        //     }
+        // }
 
         return redirect()
             ->route('parking_settings.index')

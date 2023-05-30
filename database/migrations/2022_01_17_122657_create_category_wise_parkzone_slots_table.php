@@ -15,18 +15,16 @@ class CreateCategoryWiseParkzoneSlotsTable extends Migration
     {
         Schema::create('category_wise_parkzone_slots', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('parkzone_id')->constrained()->onDelete('cascade');
-            $table->string('slot_name');
-            $table->string('slotId')->unique();
-            $table->string('identity')->nullable();
-            $table->string('remarks')->nullable();
+            $table->unsignedBigInteger('parkzone_id');
+            $table->string('slot_name')->unique();
+            $table->foreign('parkzone_id')->references('id')->on('parkzones')->onDelete('cascade');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->tinyInteger('status')->default(1);
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('updated_by')->references('id')->on('users')->onDelete('cascade');
-            $table->unique(["parkzone_id",  "slot_name"]);
-
             $table->timestamps();
         });
     }

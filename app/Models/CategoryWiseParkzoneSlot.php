@@ -19,14 +19,16 @@ class CategoryWiseParkzoneSlot extends Model
         'updated_by'
     ];
 
-    public function category()
-    {
-        return $this->belongsToMany('App\Models\Category', 'category_category_wise_parkzone_slot', 'slot_id', 'category_id');
-    }
-
+    
+    
     public function parkzone()
     {
         return $this->belongsTo('App\Models\Parkzone');
+    }
+    // realtion with category
+    public function category()
+    {
+        return $this->belongsTo('App\Models\Category');
     }
 
     public function operator()

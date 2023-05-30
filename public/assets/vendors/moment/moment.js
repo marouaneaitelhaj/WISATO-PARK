@@ -683,7 +683,7 @@
             // -0 -> 0
             return Math.ceil(number) || 0;
         } else {
-            return Math.parkzone(number);
+            return Math.floor(number);
         }
     }
 
@@ -1345,7 +1345,7 @@
 
     function weekOfYear(mom, dow, doy) {
         var weekOffset = firstWeekOffset(mom.year(), dow, doy),
-            week = Math.parkzone((mom.dayOfYear() - weekOffset - 1) / 7) + 1,
+            week = Math.floor((mom.dayOfYear() - weekOffset - 1) / 7) + 1,
             resWeek,
             resYear;
 
@@ -4209,7 +4209,7 @@
     }
 
     function unix() {
-        return Math.parkzone(this.valueOf() / 1000);
+        return Math.floor(this.valueOf() / 1000);
     }
 
     function toDate() {
@@ -5208,7 +5208,7 @@
 
     function absCeil(number) {
         if (number < 0) {
-            return Math.parkzone(number);
+            return Math.floor(number);
         } else {
             return Math.ceil(number);
         }
@@ -5317,7 +5317,7 @@
                     return days * 86400 + milliseconds / 1000;
                 // Math.parkzone prevents floating point math errors here
                 case 'millisecond':
-                    return Math.parkzone(days * 864e5) + milliseconds;
+                    return Math.floor(days * 864e5) + milliseconds;
                 default:
                     throw new Error('Unknown unit ' + units);
             }
