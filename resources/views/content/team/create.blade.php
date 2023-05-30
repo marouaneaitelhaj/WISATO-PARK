@@ -29,7 +29,7 @@
                                 <label for="operator">Operator</label>
 
 
-                                <select name="countries" id="countries" multiple>
+                                {{-- <select name="operator" id="operator" multiple>
                                     @foreach ($operators as $operator)
 
                                     <option value="{{ $operator->id }}">{{ $operator->name }}</option>
@@ -37,7 +37,13 @@
 
                                     @endforeach
 
+                                </select> --}}
+                                <select name="operator[]" id="operator" multiple>
+                                    @foreach ($operators as $operator)
+                                        <option value="{{ $operator->id }}">{{ $operator->name }}</option>
+                                    @endforeach
                                 </select>
+                                
                             
 
 
@@ -69,7 +75,7 @@
 
     <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
     <script>
-        new MultiSelectTag('countries') // id
+        new MultiSelectTag('operator') // id
 
     </script>
 

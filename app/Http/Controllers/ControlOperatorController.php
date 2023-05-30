@@ -17,38 +17,42 @@ class ControlOperatorController extends Controller
 
     public function create()
     {
-        $operators = User::all();
+        $operators = User::whereHas('roles', function ($query) {
+            $query->where('name', 'gardien');
+        })->get();
 
         return view('content.team.create', compact('operators'));
     }
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'agent' => 'required',
+            'operator' => 'required|array', // Change validation rule to array
+            'operator.*' => 'exists:users,id', // Validate each operator ID exists in the users table
             'status' => 'required',
             'remark' => 'nullable',
         ]);
-
-        $controlOperator = new ControlOperator();
-        $controlOperator->operator = $request->input('countries');
-        $controlOperator->agent = $request->input('agent');
-        $controlOperator->status = $request->input('status');
-        $controlOperator->remark = $request->input('remark');
-
-        $controlOperator->save();
-
+    
+        $operators = $request->input('operator');
+        $status = $request->input('status');
+        $remark = $request->input('remark');
+    
+        foreach ($operators as $operator) {
+            $controlOperator = new ControlOperator();
+            $controlOperator->operator = $operator;
+            $controlOperator->agent = $request->input('agent');
+            $controlOperator->status = $status;
+            $controlOperator->remark = $remark;
+            $controlOperator->save();
+        }
+    
         return redirect()->route('team.index')->with('success', 'Team added successfully.');
     }
+    
 
 
 
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function show($id)
     {
         //
