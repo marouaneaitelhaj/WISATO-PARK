@@ -79,6 +79,25 @@
                         </li>
 
                         <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#ui-taem-management" aria-expanded="false"
+                                aria-controls="ui-team-management">
+                                <i class="mdi mdi-account-group menu-icon"></i>
+                                <span class="menu-title">Team</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="ui-taem-management">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('team.create') }}">Add Team</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('team.index') }}">User List</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+
+                        <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#ui-category" aria-expanded="false"
                                 aria-controls="ui-category">
                                 <i class="mdi mdi-tag-multiple menu-icon"></i>
@@ -116,6 +135,7 @@
                             </div>
                         </li>
 
+                        
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#ui-tariff" aria-expanded="false"
                                 aria-controls="ui-tariff">

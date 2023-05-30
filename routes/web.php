@@ -12,6 +12,9 @@
 */
 
 
+
+Route::resource('team', ControlOperatorController::class);
+
 Auth::routes(['verify' => true, 'register' => false]);
 
 Route::get('/', 'HomeController@welcome')->name('site.home')->middleware(['install', 'update']);
@@ -53,6 +56,7 @@ Route::middleware(['installed','auth','xss_clean'])->group(function () {
 	});
 
 	Route::middleware('roles:operator|admin')->group(function () {
+		
 
 		Route::resource('parking-crud', 'ParkingController', ['names' => 'parking'])->except(['show']);
 		Route::get('parking/get-current', 'ParkingController@currentList')->name('parking.current_list');
@@ -86,3 +90,8 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
+
+
+// Route::get('/team', function () {
+// 	return view('content.team.create');
+// })->name('team');
