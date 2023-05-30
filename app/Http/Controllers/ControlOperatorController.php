@@ -8,12 +8,30 @@ use App\User;
 
 class ControlOperatorController extends Controller
 {
-    public function index()
-    {
-        $controlOperators = ControlOperator::all();
+    // public function index()
+    // {
+    //     $controlOperators = ControlOperator::all();
 
-        return view('content.team.index', ['controlOperators' => $controlOperators]);
+    //     return view('content.team.index', ['controlOperators' => $controlOperators]);
+    // }
+
+    public function index()
+{
+    $controlOperators = ControlOperator::all();
+    $agents = User::whereIn('id', $controlOperators->pluck('agent'))->get();
+    
+    $agentOperatorList = [];
+    foreach ($agents as $agent) {
+        $operators = $controlOperators->where('agent', $agent->id)->pluck('operator');
+        $operatorNames = User::whereIn('id', $operators)->pluck('name');
+        $agentOperatorList[] = [
+            'agent' => $agent->name,
+            'operators' => $operatorNames,
+        ];
     }
+    
+    return view('content.team.index', compact('agentOperatorList'));
+}
 
     public function create()
     {
