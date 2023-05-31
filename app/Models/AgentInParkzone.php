@@ -13,8 +13,8 @@ class AgentInParkzone extends Model
     protected $fillable = ['agent_id', 'parkzone_id'];
 
 
-    public function parkzone()
-    {
-        return $this->belongsTo(Parkzone::class, 'parkzone_id');
-    }
+    // public function parkzone()
+    // {
+    //     return $this->belongsTo(Parkzone::class, 'parkzone_id');
+    // }
 }

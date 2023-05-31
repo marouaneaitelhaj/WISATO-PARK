@@ -174,7 +174,7 @@
                             </div>
                         </li>
                     @endif
-                    @if (Auth::user()->hasRole(['admin', 'operator']))
+                    @if (Auth::user()->hasRole(['admin', 'chef zone']))
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#ui-parking" aria-expanded="false"
                                 aria-controls="ui-parking">

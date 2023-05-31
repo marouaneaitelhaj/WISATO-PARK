@@ -19,7 +19,7 @@ Auth::routes(['verify' => true, 'register' => false]);
 
 Route::get('/', 'HomeController@welcome')->name('site.home')->middleware(['install', 'update']);
 
-Route::middleware(['installed','auth','xss_clean'])->group(function () {
+Route::middleware(['installed', 'auth', 'xss_clean'])->group(function () {
 
 	Route::get('/home', 'HomeController@index')->name('home');
 
@@ -55,8 +55,8 @@ Route::middleware(['installed','auth','xss_clean'])->group(function () {
 		Route::get('parking-settings/change-status/{parking_setting}', 'CategoryWiseParkzoneSlotController@statusChange')->name('parking_settings.status_changes');
 	});
 
-	Route::middleware('roles:operator|admin')->group(function () {
-		
+	Route::middleware('roles:gardien|admin|chef zone')->group(function () {
+
 
 		Route::resource('parking-crud', 'ParkingController', ['names' => 'parking'])->except(['show']);
 		Route::get('parking/get-current', 'ParkingController@currentList')->name('parking.current_list');
@@ -67,8 +67,10 @@ Route::middleware(['installed','auth','xss_clean'])->group(function () {
 		Route::post('parking/quick-end', 'ParkingController@quick_end')->name('parking.quick_end');
 		Route::get('parking/slot/{category_id}', 'ParkingController@parkingSlot')->name('parking.slot');
 	});
+	// Route::middleware('roles:chef zone')->group(function () {
+	// });
 	Route::middleware('roles:client|admin')->group(function () {
-		Route::get('/maps' , 'ParkingController@maps');
+		Route::get('/maps', 'ParkingController@maps');
 		Route::GET('addMarker', 'ParkingController@addMarker');
 	});
 });
@@ -86,7 +88,7 @@ Route::fallback(function () {
 use App\Http\Controllers\Auth\RegisterController;
 
 Route::get('/register', function () {
-    return view('auth.register');
+	return view('auth.register');
 })->name('register');
 
 Route::post('/register', [RegisterController::class, 'register'])->name('register.post');

@@ -13,9 +13,41 @@
                 <label for="{{ $slot->slotId }}">
                     {{ $slot->slot_name }}<br>
                     @if($slot->active_parking != NULL && $slot->active_parking->id != $id)
-                    <i class="fa fa-car" aria-hidden="true"></i>
+                    @if($slot->category->type == 'Electric Car')
+                    <i class='fa fa-car text-success' aria-hidden='true'></i>
+                    @elseif($slot->category->type == 'Electric Bike')
+                    <i class='fa fa-motorcycle text-success' aria-hidden='true'></i>
+                    @elseif($slot->category->type == 'Gasoline Car')
+                    <i class='fa fa-car text-danger' aria-hidden='true'></i>
+                    @elseif($slot->category->type == 'Electric Truck')
+                    <i class='fa fa-truck text-success' aria-hidden='true'></i>
+                    @elseif($slot->category->type == 'Electric Bus')
+                    <i class='fa fa-bus text-success' aria-hidden='true'></i>
+                    @elseif($slot->category->type == 'Gasoline Bike')
+                    <i class='fa fa-motorcycle text-danger' aria-hidden='true'></i>
+                    @elseif($slot->category->type == 'Gasoline Bus')
+                    <i class='fa fa-bus text-danger' aria-hidden='true'></i>
+                    @elseif($slot->category->type == 'Gasoline Truck')
+                    <i class='fa fa-truck text-danger' aria-hidden='true'></i>
+                    @endif
                     @else
-                    <i class="fa fa-road" aria-hidden="true"></i>
+                    @if($slot->category->type == 'Electric Car')
+                    <i class='fa fa-car text-success' aria-hidden='true'></i>
+                    @elseif($slot->category->type == 'Electric Bike')
+                    <i class='fa fa-motorcycle text-success' aria-hidden='true'></i>
+                    @elseif($slot->category->type == 'Gasoline Car')
+                    <i class='fa fa-car text-danger' aria-hidden='true'></i>
+                    @elseif($slot->category->type == 'Electric Truck')
+                    <i class='fa fa-truck text-success' aria-hidden='true'></i>
+                    @elseif($slot->category->type == 'Electric Bus')
+                    <i class='fa fa-bus text-success' aria-hidden='true'></i>
+                    @elseif($slot->category->type == 'Gasoline Bike')
+                    <i class='fa fa-motorcycle text-danger' aria-hidden='true'></i>
+                    @elseif($slot->category->type == 'Gasoline Bus')
+                    <i class='fa fa-bus text-danger' aria-hidden='true'></i>
+                    @elseif($slot->category->type == 'Gasoline Truck')
+                    <i class='fa fa-truck text-danger' aria-hidden='true'></i>
+                    @endif
                     @endif
                 </label>
             </div>
