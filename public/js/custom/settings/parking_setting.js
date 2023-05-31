@@ -23,35 +23,36 @@
         },
         {
           title: "Categories",
+          name: "category_id",
           data: "category",
           render: function (data, type, row) {
             var html = "<div class='d-flex justify-content-around'>";
             // for (var i = 0; i < row.category.length; i++) {
-              if (row.category.type == "Electric Car") {
-                html +=
-                  "<i class='fa fa-car text-success' aria-hidden='true'></i>";
-              } else if (row.category.type == "Electric Bike") {
-                html +=
-                  "<i class='fa fa-motorcycle text-success' aria-hidden='true'></i>";
-              } else if (row.category.type == "Gasoline Car") {
-                html +=
-                  "<i class='fa fa-car text-danger' aria-hidden='true'></i>";
-              } else if (row.category.type == "Electric Truck") {
-                html +=
-                  "<i class='fa fa-truck text-success' aria-hidden='true'></i>";
-              } else if (row.category.type == "Electric Bus") {
-                html +=
-                  "<i class='fa fa-bus text-success' aria-hidden='true'></i>";
-              } else if (row.category.type == "Gasoline Bike") {
-                html +=
-                  "<i class='fa fa-motorcycle text-danger' aria-hidden='true'></i>";
-              } else if (row.category.type == "Gasoline Bus") {
-                html +=
-                  "<i class='fa fa-bus text-danger' aria-hidden='true'></i>";
-              } else if (row.category.type == "Gasoline Truck") {
-                html +=
-                  "<i class='fa fa-truck text-danger' aria-hidden='true'></i>";
-              }
+            if (row.category.type == "Electric Car") {
+              html +=
+                "<i class='fa fa-car text-success' aria-hidden='true'></i>";
+            } else if (row.category.type == "Electric Bike") {
+              html +=
+                "<i class='fa fa-motorcycle text-success' aria-hidden='true'></i>";
+            } else if (row.category.type == "Gasoline Car") {
+              html +=
+                "<i class='fa fa-car text-danger' aria-hidden='true'></i>";
+            } else if (row.category.type == "Electric Truck") {
+              html +=
+                "<i class='fa fa-truck text-success' aria-hidden='true'></i>";
+            } else if (row.category.type == "Electric Bus") {
+              html +=
+                "<i class='fa fa-bus text-success' aria-hidden='true'></i>";
+            } else if (row.category.type == "Gasoline Bike") {
+              html +=
+                "<i class='fa fa-motorcycle text-danger' aria-hidden='true'></i>";
+            } else if (row.category.type == "Gasoline Bus") {
+              html +=
+                "<i class='fa fa-bus text-danger' aria-hidden='true'></i>";
+            } else if (row.category.type == "Gasoline Truck") {
+              html +=
+                "<i class='fa fa-truck text-danger' aria-hidden='true'></i>";
+            }
             // }
             html += "</div>";
             return html;
@@ -60,11 +61,11 @@
         {
           title: "ParkZone",
           class: "no-sort",
-          name: "parkzone.name",
+          name: "parkzone_id",
           data: "parkzone.name",
         },
         { title: "Slot Name", name: "slot_name", data: "slot_name" },
-        
+
         {
           title: "Status",
           name: "status",
@@ -126,9 +127,9 @@
       },
       columnDefs: [
         {
-          searchable: false,
-          orderable: false,
-          targets: [0,1,3,4,5,6],
+          searchable: true,
+          orderable: true,
+          targets: [0,1,2,3,4,5,6,7],
         },
       ],
       responsive: true,
