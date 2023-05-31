@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreUserInformation;
 use Exception;
 use Illuminate\Support\Facades\{Hash, Mail};
+use Illuminate\Foundation\Http\FormRequest;
 
 
 class UserController extends Controller
@@ -85,7 +86,7 @@ class UserController extends Controller
     {
 
         $validated = $request->validated();
-        
+
         try {
             // dd($validated);
             $user = User::create([
@@ -115,6 +116,48 @@ class UserController extends Controller
             ->route('user.list')
             ->with(['flashMsg' => ['msg' => 'User successfully created.', 'type' => 'success']]);
     }
+
+    public function create2()
+    {
+        return view('content.team.add')->with(['roles' => Role::where('selfmade', 0)->get()]);
+    }
+
+
+    public function store2(StoreUserInformation $request)
+    {
+        $validated = $request->validated();
+    
+        try {
+            $user = User::create([
+                'Phone' => $validated['Phone'],
+                'name' => $validated['name'],
+                'email' => $validated['email'],
+                'password' => Hash::make($validated['password']),
+                'status' => 1,
+                'cin' => $validated['cin'] 
+            ]);
+    
+            $user->roles()->attach($validated['role']);
+            $user->sendEmailVerificationNotification();
+    
+    
+            return redirect()
+                ->route('team.create')
+                ->with(['flashMsg' => ['msg' => 'User successfully created.', 'type' => 'success']]);
+        } catch (\PDOException $e) {
+            return redirect()
+                ->back()
+                ->withInput($request->except('password'))
+                ->with(['flashMsg' => ['msg' => $this->getMessage($e), 'type' => 'error']]);
+        } catch (Exception $ex) {
+            return redirect()
+                ->route('team.create')
+                ->with(['flashMsg' => ['msg' => "The user was successfully created but failed to send the email because the email is not configured.", 'type' => 'error']]);
+        }
+    }
+    
+
+
 
     public function status(User $user)
     {

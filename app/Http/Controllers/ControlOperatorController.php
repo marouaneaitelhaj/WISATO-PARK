@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ControlOperator;
 use App\User;
+use Illuminate\Support\Collection;
 
 class ControlOperatorController extends Controller
 {
@@ -15,23 +16,43 @@ class ControlOperatorController extends Controller
     //     return view('content.team.index', ['controlOperators' => $controlOperators]);
     // }
 
+    // public function index()
+    // {
+    //     $controlOperators = ControlOperator::all();
+    //     $agents = User::whereIn('id', $controlOperators->pluck('agent'))->get();
+
+    //     $agentOperatorList = [];
+    //     foreach ($agents as $agent) {
+    //         $operators = $controlOperators->where('agent', $agent->id)->pluck('operator');
+    //         $operatorNames = User::whereIn('id', $operators)->pluck('name');
+    //         $agentOperatorList[] = [
+    //             'agent' => $agent->name,
+    //             'operators' => $operatorNames,
+    //         ];
+    //     }
+
+    //     return view('content.team.index', compact('agentOperatorList'));
+    // }
+
+
     public function index()
-{
-    $controlOperators = ControlOperator::all();
-    $agents = User::whereIn('id', $controlOperators->pluck('agent'))->get();
-    
-    $agentOperatorList = [];
-    foreach ($agents as $agent) {
-        $operators = $controlOperators->where('agent', $agent->id)->pluck('operator');
-        $operatorNames = User::whereIn('id', $operators)->pluck('name');
-        $agentOperatorList[] = [
-            'agent' => $agent->name,
-            'operators' => $operatorNames,
-        ];
+    {
+        $controlOperators = ControlOperator::all();
+        $agents = User::whereIn('id', $controlOperators->pluck('agent'))->get();
+
+        $agentOperatorList = new Collection();
+        foreach ($agents as $agent) {
+            $operators = $controlOperators->where('agent', $agent->id)->pluck('operator');
+            $operatorDetails = User::whereIn('id', $operators)->get(['name', 'Phone', 'email', 'cin']);
+
+            $agentOperatorList->push([
+                'agent' => $agent->name,
+                'operators' => $operatorDetails,
+            ]);
+        }
+
+        return view('content.team.index', compact('agentOperatorList'));
     }
-    
-    return view('content.team.index', compact('agentOperatorList'));
-}
 
     public function create()
     {
@@ -44,16 +65,16 @@ class ControlOperatorController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'operator' => 'required|array', // Change validation rule to array
-            'operator.*' => 'exists:users,id', // Validate each operator ID exists in the users table
+            'operator' => 'required|array',
+            'operator.*' => 'exists:users,id',
             'status' => 'required',
             'remark' => 'nullable',
         ]);
-    
+
         $operators = $request->input('operator');
         $status = $request->input('status');
         $remark = $request->input('remark');
-    
+
         foreach ($operators as $operator) {
             $controlOperator = new ControlOperator();
             $controlOperator->operator = $operator;
@@ -62,10 +83,10 @@ class ControlOperatorController extends Controller
             $controlOperator->remark = $remark;
             $controlOperator->save();
         }
-    
+
         return redirect()->route('team.index')->with('success', 'Team added successfully.');
     }
-    
+
 
 
 

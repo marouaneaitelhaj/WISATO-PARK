@@ -16,8 +16,11 @@
                         <thead>
                             <tr role="row">
                                 <th class="no-sort sorting_asc" rowspan="1" colspan="1" style="width: 50px;" aria-label="#SL"></th>
-                                <th>Agent</th>
+                                <th>Team Leader</th>
                                 <th>Operators</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>CIN</th> <!-- Added column for CIN -->
                             </tr>
                         </thead>
                         <tbody>
@@ -28,7 +31,28 @@
                                 <td>
                                     <ul>
                                         @foreach($agentOperator['operators'] as $operator)
-                                        <li>{{ $operator }}</li>
+                                        <li>{{ $operator['name'] }}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        @foreach($agentOperator['operators'] as $operator)
+                                        <li>{{ $operator['Phone'] }}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        @foreach($agentOperator['operators'] as $operator)
+                                        <li>{{ $operator['email'] }}</li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        @foreach($agentOperator['operators'] as $operator)
+                                        <li>{{ $operator['cin'] }}</li>
                                         @endforeach
                                     </ul>
                                 </td>
