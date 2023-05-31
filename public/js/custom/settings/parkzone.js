@@ -1,3 +1,5 @@
+var arr = [];
+var html = "";
 (function ($) {
   "use strict";
   let parkzoneDatatableEl = null;
@@ -25,13 +27,15 @@
         {
           title: "Chef Zone",
           name: "chef_zone",
-          render : function(data, type, row){
-            var arr = row.agents.map((item) => item.name);
-            var jsonString = JSON.stringify(arr);
-            var encodedString = encodeURIComponent(jsonString);
-            return '<div onclick="myFunction(decodeURIComponent(\'' + encodedString + '\'))" class="d-flex justify-content-center"><i class="fa fa-users" aria-hidden="true"></i></div>';
-          }
-        }
+          render: function (data, type, row) {
+            arr.push(row);
+            return (
+              '<div onclick="agentslist(' +
+              row.id +
+              ')" class="d-flex justify-content-center"><i class="fa fa-users" aria-hidden="true"></i></div>'
+            );
+          },
+        },
       ],
 
       ajax: {
@@ -59,22 +63,22 @@
     });
   });
 })(jQuery);
-
-function myFunction(jsonArray) {
-  // Parse the JSON string to convert it back to an array
-  document.getElementById("exampleModalLive").classList.toggle("d-none")
-  var arr = JSON.parse(jsonArray);
-
-  // Loop over the array
-  for (var i = 0; i < arr.length; i++) {
-    // Access each element of the array
-    var element = arr[i];
-    console.log(document.getElementById("exampleModalLive"));
-    document.getElementById("OperatorsList").innerHTML += `<li class="list-group-item">${element}</li>`;
-  }
+function agentslist(id) {
+  var result = arr.find((obj) => {
+    return obj.id === id;
+  });
+  result.agents.forEach((element) => {
+    html +=
+      '<div class=""><div class="card"><div class="card-body"><h5 class="card-title">' +
+      element.name +
+      '</h5><p class="card-text">' +
+      element.email +
+      "</p></div></div></div>";
+  });
+  Swal.fire({
+    title: "Parkzone List",
+    html: html,
+    // icon: "success",
+    confirmButtonText: "Ok",
+  });
 }
-
-document.getElementById("close").addEventListener("click", function () {
-  document.getElementById("exampleModalLive").classList.toggle("d-none")
-  document.getElementById("OperatorsList").innerHTML = ""
-});
