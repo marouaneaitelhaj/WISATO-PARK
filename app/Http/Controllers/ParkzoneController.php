@@ -106,7 +106,7 @@ class ParkzoneController extends Controller
                     $category_category_wise_parkzone_slot = new CategoryWiseParkzoneSlot();
                     $category_category_wise_parkzone_slot->category_id = $index;
                     $category_category_wise_parkzone_slot->parkzone_id = $parkzone->id;
-                    $category_category_wise_parkzone_slot->slot_name = $index . '-' . $parkzone->id . '-' . $cat;
+                    $category_category_wise_parkzone_slot->slot_name =  $index . '-' . $parkzone->id . '-' . $cat;
                     $category_category_wise_parkzone_slot->created_by = auth()->user()->id;
                     $category_category_wise_parkzone_slot->save();
                 }

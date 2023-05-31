@@ -468,20 +468,23 @@ class ParkingController extends Controller
 	 */
 	public function parkingSlot(Request $request, $category_id)
 	{
+		$chefId = auth()->user()->id;
 		$slots = CategoryWiseParkzoneSlot::where('category_id', $category_id)
-			->whereHas('parkzone', function ($query) {
+			->where('status', 1)
+			->whereHas('parkzone', function ($query) use ($chefId) {
+				$query->where('status', 1)
+					->whereHas('agent_inparkzone', function ($query) use ($chefId) {
+						$query->where('agent_id', $chefId); // Add the condition to match the chef ID in the pivot table
+					});
+			})
+			->whereHas('category', function ($query) {
 				$query->where('status', '1');
 			})
-			->with('active_parking')
-			->where('category_wise_parkzone_slots.status', 1)
-			->join('parkzones', 'parkzones.id', '=', 'category_wise_parkzone_slots.parkzone_id')
-			->orderBy('parkzones.level', 'DESC')
-			->select('category_wise_parkzone_slots.*')
-			->where('category_wise_parkzone_slots.status', 1)
+			->with('parkzone')
 			->get();
-
 		return view('content.parking.slot_list')->with(['slots' => $slots, 'id' => $request->id])->render();
 	}
+
 
 	/**
 	 * End the specified parking from storage.
@@ -517,9 +520,10 @@ class ParkingController extends Controller
 		}
 	}
 	public $initialMarkers = [];
-	public function maps(){
+	public function maps()
+	{
 		$markers = Parkzone::get();
-		foreach($markers as $marker){
+		foreach ($markers as $marker) {
 			$newMarker = [
 				'position' => [
 					'lat' => $marker->lat,
@@ -530,9 +534,9 @@ class ParkingController extends Controller
 			array_push($this->initialMarkers, $newMarker);
 		}
 		$initialMarkers = $this->initialMarkers;
-        return view('client.nearby', compact('initialMarkers'));
+		return view('client.nearby', compact('initialMarkers'));
 	}
-	public function addMarker(){
-		
+	public function addMarker()
+	{
 	}
 }
