@@ -30,6 +30,20 @@
                         </div>
 
                         <div class="form-group row">
+                            <label for="cin" class="col-md-3 col-form-label text-md-right">{{ __('cin') }}<span class="tcr i-req">*</span></label>
+
+                            <div class="col-md-9">
+                                <input id="cin" type="text" class="form-control" name="cin">
+                            </div>
+                            @if ($errors->has('cin'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('cin') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                        
+
+                        <div class="form-group row">
                             <label for="email" class="col-md-3 col-form-label text-md-right"> {{ __('E-Mail Address') }}<span class="tcr i-req">*</span></label>
 
                             <div class="col-md-9">
