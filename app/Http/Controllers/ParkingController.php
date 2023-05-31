@@ -62,17 +62,19 @@ class ParkingController extends Controller
 			$parkings = $parkings->getDataForDataTable($limit, $offset, $search, $where, $with, $join, $orderBy,  $request->all());
 			return response()->json($parkings);
 		}
-
+		$chefId = auth()->user()->id;
 		$data['categories'] = Category::where('status', 1)->get();
 		$data['currently_parking'] = Parking::where('out_time', NULL)->count();
 		$data['total_slots'] = CategoryWiseParkzoneSlot::where('category_wise_parkzone_slots.status', 1)
-			->whereHas('parkzone', function ($query) {
-				$query->where('status', '1');
+			->whereHas('parkzone', function ($query) use ($chefId) {
+				$query->where('status', 1)
+					->whereHas('agent_inparkzone', function ($query) use ($chefId) {
+						$query->where('agent_id', $chefId); // Add the condition to match the chef ID in the pivot table
+					});
 			})
 			->whereHas('category', function ($query) {
 				$query->where('status', '1');
 			})->with('active_parking')->count();
-
 		return view('content.parking.list')->with($data);
 	}
 
@@ -123,12 +125,16 @@ class ParkingController extends Controller
 			$parkings = $parkings->getDataForDataTable($limit, $offset, $search, $where, $with, $join, $orderBy,  $request->all());
 			return response()->json($parkings);
 		}
+		$chefId = auth()->user()->id;
 
 		$data['categories'] = Category::where('status', 1)->get();
 		$data['currently_parking'] = Parking::where('out_time', NULL)->count();
 		$data['total_slots'] = CategoryWiseParkzoneSlot::where('category_wise_parkzone_slots.status', 1)
-			->whereHas('parkzone', function ($query) {
-				$query->where('status', '1');
+			->whereHas('parkzone', function ($query) use ($chefId) {
+				$query->where('status', 1)
+					->whereHas('agent_inparkzone', function ($query) use ($chefId) {
+						$query->where('agent_id', $chefId); // Add the condition to match the chef ID in the pivot table
+					});
 			})
 			->whereHas('category', function ($query) {
 				$query->where('status', '1');
@@ -184,12 +190,16 @@ class ParkingController extends Controller
 			$parkings = $parkings->getDataForDataTable($limit, $offset, $search, $where, $with, $join, $orderBy,  $request->all());
 			return response()->json($parkings);
 		}
+		$chefId = auth()->user()->id;
 
 		$data['categories'] = Category::where('status', 1)->get();
 		$data['currently_parking'] = Parking::where('out_time', NULL)->count();
 		$data['total_slots'] = CategoryWiseParkzoneSlot::where('category_wise_parkzone_slots.status', 1)
-			->whereHas('parkzone', function ($query) {
-				$query->where('status', '1');
+			->whereHas('parkzone', function ($query) use ($chefId) {
+				$query->where('status', 1)
+					->whereHas('agent_inparkzone', function ($query) use ($chefId) {
+						$query->where('agent_id', $chefId); // Add the condition to match the chef ID in the pivot table
+					});
 			})
 			->whereHas('category', function ($query) {
 				$query->where('status', '1');
@@ -205,16 +215,20 @@ class ParkingController extends Controller
 	 */
 	public function create()
 	{
+		$chefId = auth()->user()->id;
+
 		$data['categories'] = Category::where('status', 1)->get();
 		$data['currently_parking'] = Parking::where('out_time', NULL)->count();
 		$data['total_slots'] = CategoryWiseParkzoneSlot::where('category_wise_parkzone_slots.status', 1)
-			->whereHas('parkzone', function ($query) {
-				$query->where('status', '1');
+			->whereHas('parkzone', function ($query) use ($chefId) {
+				$query->where('status', 1)
+					->whereHas('agent_inparkzone', function ($query) use ($chefId) {
+						$query->where('agent_id', $chefId); // Add the condition to match the chef ID in the pivot table
+					});
 			})
 			->whereHas('category', function ($query) {
 				$query->where('status', '1');
 			})->with('active_parking')->count();
-
 		return view('content.parking.create')->with($data);
 	}
 
