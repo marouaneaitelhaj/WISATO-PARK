@@ -29,6 +29,7 @@ class UserFactory extends Factory
             'password' => bcrypt('123456'),
             'remember_token' => Str::random(10),
             'Phone' => '+212612345678',
+            'cin' => $this->faker->unique()->numerify('#########'), 
         ];
     }
 }

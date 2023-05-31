@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('title', ' - Create New Parkzone')
 @section('content')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css">
+
 <div class="container-fluid mb100">
 
     <div class="row justify-content-center">
