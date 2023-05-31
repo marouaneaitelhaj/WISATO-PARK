@@ -94,7 +94,8 @@ class UserController extends Controller
                 'name'     => $validated['name'],
                 'email'    => $validated['email'],
                 'password' => Hash::make($validated['password']),
-                'status'   => 1
+                'status'   => 1,
+                'cin' => $validated['cin'],
             ]);
 
             $user->roles()->attach($validated['role']);
