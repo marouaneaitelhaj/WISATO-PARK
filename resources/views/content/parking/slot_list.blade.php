@@ -14,39 +14,39 @@
                     {{ $slot->slot_name }}<br>
                     @if($slot->active_parking != NULL && $slot->active_parking->id != $id)
                     @if($slot->category->type == 'Electric Car')
-                    <i class='fa fa-car text-success' aria-hidden='true'></i>
+                    <i class='fa rounded fa-car p-1 bg-white text-success' aria-hidden='true'></i>
                     @elseif($slot->category->type == 'Electric Bike')
-                    <i class='fa fa-motorcycle text-success' aria-hidden='true'></i>
+                    <i class='fa rounded fa-motorcycle p-1 bg-white text-success' aria-hidden='true'></i>
                     @elseif($slot->category->type == 'Gasoline Car')
-                    <i class='fa fa-car text-danger' aria-hidden='true'></i>
+                    <i class='fa rounded fa-car text-danger p-1 bg-white' aria-hidden='true'></i>
                     @elseif($slot->category->type == 'Electric Truck')
-                    <i class='fa fa-truck text-success' aria-hidden='true'></i>
+                    <i class='fa rounded fa-truck p-1 bg-white text-success' aria-hidden='true'></i>
                     @elseif($slot->category->type == 'Electric Bus')
-                    <i class='fa fa-bus text-success' aria-hidden='true'></i>
+                    <i class='fa rounded fa-bus p-1 bg-white text-success' aria-hidden='true'></i>
                     @elseif($slot->category->type == 'Gasoline Bike')
-                    <i class='fa fa-motorcycle text-danger' aria-hidden='true'></i>
+                    <i class='fa rounded fa-motorcycle text-danger p-1 bg-white' aria-hidden='true'></i>
                     @elseif($slot->category->type == 'Gasoline Bus')
-                    <i class='fa fa-bus text-danger' aria-hidden='true'></i>
+                    <i class='fa rounded fa-bus text-danger p-1 bg-white' aria-hidden='true'></i>
                     @elseif($slot->category->type == 'Gasoline Truck')
-                    <i class='fa fa-truck text-danger' aria-hidden='true'></i>
+                    <i class='fa rounded fa-truck text-danger p-1 bg-white' aria-hidden='true'></i>
                     @endif
                     @else
                     @if($slot->category->type == 'Electric Car')
-                    <i class='fa fa-car text-success' aria-hidden='true'></i>
+                    <i class='fa rounded fa-car p-1 bg-white text-success' aria-hidden='true'></i>
                     @elseif($slot->category->type == 'Electric Bike')
-                    <i class='fa fa-motorcycle text-success' aria-hidden='true'></i>
+                    <i class='fa rounded fa-motorcycle p-1 bg-white text-success' aria-hidden='true'></i>
                     @elseif($slot->category->type == 'Gasoline Car')
-                    <i class='fa fa-car text-danger' aria-hidden='true'></i>
+                    <i class='fa rounded fa-car text-danger p-1 bg-white' aria-hidden='true'></i>
                     @elseif($slot->category->type == 'Electric Truck')
-                    <i class='fa fa-truck text-success' aria-hidden='true'></i>
+                    <i class='fa rounded fa-truck p-1 bg-white text-success' aria-hidden='true'></i>
                     @elseif($slot->category->type == 'Electric Bus')
-                    <i class='fa fa-bus text-success' aria-hidden='true'></i>
+                    <i class='fa rounded fa-bus p-1 bg-white text-success' aria-hidden='true'></i>
                     @elseif($slot->category->type == 'Gasoline Bike')
-                    <i class='fa fa-motorcycle text-danger' aria-hidden='true'></i>
+                    <i class='fa rounded fa-motorcycle text-danger p-1 bg-white' aria-hidden='true'></i>
                     @elseif($slot->category->type == 'Gasoline Bus')
-                    <i class='fa fa-bus text-danger' aria-hidden='true'></i>
+                    <i class='fa rounded fa-bus text-danger p-1 bg-white' aria-hidden='true'></i>
                     @elseif($slot->category->type == 'Gasoline Truck')
-                    <i class='fa fa-truck text-danger' aria-hidden='true'></i>
+                    <i class='fa rounded fa-truck text-danger p-1 bg-white' aria-hidden='true'></i>
                     @endif
                     @endif
                 </label>

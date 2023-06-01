@@ -167,9 +167,9 @@
                             </a>
                             <div class="collapse" id="ui-parking-setup">
                                 <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item">
+                                    <!-- <li class="nav-item">
                                         <a class="nav-link" href="{{ route('parking_settings.create') }}">Add Slot</a>
-                                    </li>
+                                    </li> -->
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('parking_settings.index') }}">Slot List</a>
                                     </li>
