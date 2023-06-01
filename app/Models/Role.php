@@ -12,4 +12,8 @@ class Role extends Model
 	{
 	  return $this->belongsToMany('App\User');
 	}
+	public function cameras()
+	{
+		return $this->hasMany('App\Models\camera');
+	}
 }

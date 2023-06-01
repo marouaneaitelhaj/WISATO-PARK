@@ -15,7 +15,7 @@
                     <div class="table-responsive">
 
                         <table class="table table-borderd table-condenced w-100" id="categoryDatatable">
-                          
+                        
                         </table>
                     </div>
 

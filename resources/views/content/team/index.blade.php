@@ -2,6 +2,17 @@
 @section('title', ' - Team List')
 @section('content')
 
+@if (session()->has('flash_message'))
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            icon: '{{ session('flash_message.type') }}',
+            text: '{{ session('flash_message.message') }}'
+        });
+    </script>
+@endif
+
+
 <div class="row justify-content-center">
     <div class="col-md-12">
         <div class="card">
@@ -15,7 +26,7 @@
                     <table class="table table-bordered table-condensed w-100 dataTable no-footer" id="categoryDatatable" role="grid" aria-describedby="categoryDatatable_info">
                         <thead>
                             <tr role="row">
-                                <th class="no-sort sorting_asc" rowspan="1" colspan="1" style="width: 50px;" aria-label="#SL"></th>
+                                {{-- <th class="no-sort sorting_asc" rowspan="1" colspan="1" style="width: 50px;" aria-label="#SL"></th> --}}
                                 <th>Team Leader</th>
                                 <th>Operators</th>
                                 <th>Phone</th>
@@ -26,7 +37,7 @@
                         <tbody>
                             @foreach($agentOperatorList as $index => $agentOperator)
                             <tr role="row" class="odd">
-                                <td class="no-sort sorting_1">{{ $index + 1 }}</td>
+                                {{-- <td class="no-sort sorting_1">{{ $index + 1 }}</td> --}}
                                 <td>{{ $agentOperator['agent'] }}</td>
                                 <td>
                                     <ul>
