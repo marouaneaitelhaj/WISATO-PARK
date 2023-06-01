@@ -243,6 +243,7 @@ class UserController extends Controller
             'user' => $user,
             'roles' => Role::get()
         );
+        // dd($viewData);
 
         return view('user.edit')->with($viewData);
     }
@@ -256,6 +257,7 @@ class UserController extends Controller
      */
     public function update(StoreUserInformation $request, User $user)
     {
+        // dd($request->all());
         if (!env('DEMO', false)) {
             $validated = $request->validated();
 
@@ -263,6 +265,8 @@ class UserController extends Controller
 
                 $user->name = $validated['name'];
                 $user->email = $validated['email'];
+                $user->cin = $validated['cin'];
+                $user->Phone = $validated['Phone'];
 
                 if ($validated['password']) {
                     $user->password = Hash::make($validated['password']);
