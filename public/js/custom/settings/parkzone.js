@@ -32,10 +32,20 @@ var html = "";
             return (
               '<div onclick="agentslist(' +
               row.id +
-              ')" class="d-flex justify-content-center"><i class="fa fa-users" aria-hidden="true"></i></div>'
+              ')" class="d-flex justify-content-center"><i style="cursor: pointer;" class="fa fa-users" aria-hidden="true"></i></div>'
             );
           },
         },
+        {
+          title: "Action",
+          name: "action",
+          render: function (data, type, row) {
+            let deleteUrl = route('parkzones.destroy', { 'parkzone': row.id });
+            return (
+              '<div class="d-flex justify-content-around"><a class="link-success" href="/parkzones/'+row.id+'/edit"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> | <button class="btn btn-link p-0" onclick="deleteData(\''+deleteUrl+'\', \'#parkzoneDatatableEl\')" > <i class="fa fa-trash-o" aria-hidden="true"></i></button></div>'
+            )
+          },
+        }
       ],
 
       ajax: {
@@ -64,6 +74,7 @@ var html = "";
   });
 })(jQuery);
 function agentslist(id) {
+  html = "";
   var result = arr.find((obj) => {
     return obj.id === id;
   });
