@@ -1,14 +1,12 @@
 <div class="border form-group">
     @if (session()->has('flash_message'))
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        Swal.fire({
-            icon: '{{ session('
-            flash_message.type ') }}',
-            text: '{{ session('
-            flash_message.message ') }}'
-        });
-    </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            Swal.fire({
+                icon: '{{ session('flash_message.type') }}',
+                text: '{{ session('flash_message.message') }}'
+            });
+        </script>
     @endif
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
@@ -20,58 +18,15 @@
         });
     </script>
 
-    <div class="d-flex flex-wrap border w-100 justify-content-between align-items-center">
-        <ul class="d-flex flex-wrap list-unstyled m-0">
-            @foreach ($selectedAgents as $index => $agent)
-            <li style="background-color: #2dce89;" class="px-2 m-1 py-1 rounded d-flex">
-                <div>
-                    {{ $agent['name'] }}
-                </div>
-                <a type="button" wire:click="removeAgent({{ $index }})" class="" style="color: azure"><i class="fa fa-minus-circle mx-1" aria-hidden="true"></i>
-                </a>
-                <input type="text" hidden value="{{$agent['id']}}" name="agent_id[]">
+    <select wire:model="selectedAgent" name="agent_id[]" id="operator" multiple>
+        @foreach ($agents as $agent)
+            <option value="{{ $agent->id }}">{{ $agent->name }}</option>
+        @endforeach
+    </select>
 
-            </li>
-            @endforeach
-            <input type="text" style="border: none;" wire:model="search" class="flex-grow-1">
-        </ul>
-    </div>
-    <div class="w-100">
-        <div class="border">
-
-            <div class="border">
-                @foreach ($agents as $index => $agent)
-                <div wire:click="selectAgent({{$agent->id}})" style="cursor: pointer;" class="border tags d-flex align-items-center">
-                    <span>
-                        {{$agent->name}}
-                    </span>
-                </div>
-                @endforeach
-
-            </div>
-
-        </div>
-        @if ($errors->has('agent_id'))
-        <span class="invalid-feedback" role="alert">
-            <strong>{{ $errors->first('agent_id') }}</strong>
-        </span>
-        @endif
-    </div>
 </div>
 
-<style>
-    .tags {
-        padding: 5px 10px;
-        border-radius: 5px;
-        margin: 5px;
-    }
-
-    .tags:hover {
-        background-color: #2dce89;
-        color: white;
-    }
-
-    .tags span {
-        font-size: 14px;
-    }
-</style>
+<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
+<script>
+    new MultiSelectTag('operator'); // id
+</script>
