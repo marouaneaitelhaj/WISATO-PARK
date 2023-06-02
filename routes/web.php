@@ -16,6 +16,7 @@
 Route::resource('team', ControlOperatorController::class);
 
 
+
 Route::get('operator-create', 'UserController@create2')->name('team.create2');
 
 Route::post('operator-create', 'UserController@store2')->name('team.store2');

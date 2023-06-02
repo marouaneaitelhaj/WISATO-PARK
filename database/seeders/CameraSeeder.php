@@ -26,6 +26,7 @@ class CameraSeeder extends Seeder
                 'name' => 'Camera 2',
                 'url' => 'https://example.com/camera2',
             ],
+            
         ];
 
         foreach ($cameras as $cameraData) {
