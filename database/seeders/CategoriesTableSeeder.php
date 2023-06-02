@@ -22,35 +22,35 @@ class CategoriesTableSeeder extends Seeder
         $categories = [
             [
                 'type' => 'Electric Car',
-                'description' => 'Electric Car Description'
+                'description' => 'Car'
             ],
             [
                 'type' => 'Electric Bike',
-                'description' => 'Electric Bike Description'
+                'description' => 'Bike'
             ],
             [
                 'type' => 'Electric Bus',
-                'description' => 'Electric Bus Description'
+                'description' => 'Bus'
             ],
             [
                 'type' => 'Electric Truck',
-                'description' => 'Electric Truck Description'
+                'description' => 'Truck'
             ],
             [
                 'type' => 'Gasoline Car',
-                'description' => 'Gasoline Car Description'
+                'description' => 'Car'
             ],
             [
                 'type' => 'Gasoline Bike',
-                'description' => 'Gasoline Bike Description'
+                'description' => 'Bike'
             ],
             [
                 'type' => 'Gasoline Bus',
-                'description' => 'Gasoline Bus Description'
+                'description' => 'Bus'
             ],
             [
                 'type' => 'Gasoline Truck',
-                'description' => 'Gasoline Truck Description'
+                'description' => 'Truck'
             ],
 
         ];

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Parkzone;
 use App\Models\Category;
+use App\Models\Quartier;
 use App\Models\CategoryWiseParkzoneSlot;
+
 
 use Exception;
 use Illuminate\Http\Request;
@@ -206,14 +208,14 @@ class ParkzoneController extends Controller
     public function dashboard()
     {
         $chefId = auth()->user()->id;
-        // $data = Parkzone::where('status', 1)
-        //     ->whereHas('agent_inparkzone', function ($query) use ($chefId) {
-        //         $query->where('agent_id', $chefId);
-        //     })
-        //     ->get();
-        $qua
-        // dd($data);
+        $data = Parkzone::where('status', 1)
+            ->whereHas('agent_inparkzone', function ($query) use ($chefId) {
+                $query->where('agent_id', $chefId);
+            })
+            ->with('Quartier')
+            ->get();
+        $quartiers = Quartier::all();
         $categories = Category::all();
-        return view('content.parkzones.dashboard', compact('data', 'categories'));
+        return view('content.parkzones.dashboard', compact('categories', 'data'));
     }
 }
