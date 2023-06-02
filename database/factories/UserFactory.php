@@ -28,8 +28,8 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => bcrypt('123456'),
             'remember_token' => Str::random(10),
-            'Phone' => '+212612345678',
             'cin' => $this->faker->unique()->numerify('#########'), 
+            'Phone' => '+2126'.rand(10000000, 99999999),
         ];
     }
 }

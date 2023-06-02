@@ -203,4 +203,9 @@ class ParkzoneController extends Controller
     {
         $parkzone->delete();
     }
+    public function dashboard(){
+        $parkzones = Parkzone::all();
+        $categories = Category::all();
+        return view('content.parkzones.dashboard', compact('parkzones', 'categories'));
+    }
 }
