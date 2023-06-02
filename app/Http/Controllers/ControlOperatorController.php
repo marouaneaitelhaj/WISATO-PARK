@@ -9,14 +9,9 @@ use Illuminate\Support\Collection;
 
 class ControlOperatorController extends Controller
 {
-    // public function index()
-    // {
-    //     $controlOperators = ControlOperator::all();
+ 
 
-    //     return view('content.team.index', ['controlOperators' => $controlOperators]);
-    // }
 
-  
 
     public function index()
     {
@@ -40,11 +35,27 @@ class ControlOperatorController extends Controller
 
     public function create()
     {
+
+        $controlOperators = ControlOperator::all();
+        $agents = User::whereIn('id', $controlOperators->pluck('agent'))->get();
+
+        $agentOperatorList = new Collection();
+        foreach ($agents as $agent) {
+            $operators0 = $controlOperators->where('agent', $agent->id)->pluck('operator');
+            $operatorDetails = User::whereIn('id', $operators0)->get(['name', 'Phone', 'email', 'cin']);
+
+            $agentOperatorList->push([
+                'agent' => $agent->name,
+                'operators' => $operatorDetails,
+            ]);
+        }
+
+
         $operators = User::whereHas('roles', function ($query) {
             $query->where('name', 'gardien');
         })->get();
 
-        return view('content.team.create', compact('operators'));
+        return view('content.team.create', compact('operators', 'agentOperatorList'));
     }
     // public function store(Request $request)
     // {
