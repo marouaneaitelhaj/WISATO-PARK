@@ -23,8 +23,8 @@ class UserTableSeeder extends Seeder
 
 		$faker = Faker::create();
 		$admin = new User();
-		$admin->name = 'Admin Name';
-		$admin->email = 'admin@gmail.com';
+		$admin->name = 'Saad ERRARHICHE';
+		$admin->email = 'Saaderr@gmail.com';
 		$admin->status = 1;
 		$admin->password = bcrypt('123456');
 		$admin->Phone = '0123456781';
@@ -32,8 +32,8 @@ class UserTableSeeder extends Seeder
 		$admin->save();
 	
 		$gardian = new User();
-		$gardian->name = 'Gardian Name';
-		$gardian->email = 'gardian@gmail.com';
+		$gardian->name = 'MAROUANE AIT EL HAJ';
+		$gardian->email = 'marwaneait@gmail.com';
 		$gardian->status = 1;
 		$gardian->password = bcrypt('123456');
 		$gardian->Phone = '0123456782';
@@ -41,8 +41,8 @@ class UserTableSeeder extends Seeder
 		$gardian->save();
 	
 		$chefzone = new User();
-		$chefzone->name = 'Chef Zone Name';
-		$chefzone->email = 'chefzone@gmail.com';
+		$chefzone->name = 'Amine Majidi';
+		$chefzone->email = 'aminemaj@gmail.com';
 		$chefzone->status = 1;
 		$chefzone->password = bcrypt('123456');
 		$chefzone->Phone = '0123456783';

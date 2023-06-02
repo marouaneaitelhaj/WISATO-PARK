@@ -63,6 +63,7 @@ Route::middleware(['installed', 'auth', 'xss_clean'])->group(function () {
 		Route::get('general-settings', 'SiteController@generalSettings')->name('settings.create');
 		Route::post('general-settings', 'SiteController@storeGeneralSettings')->name('settings.store');
 		Route::resource('parkzones', 'ParkzoneController')->except(['show']);
+		Route::get('parkzones-dashboard', 'ParkzoneController@dashboard')->name('parkzones.dashboard');
 		Route::get('parkzones/change-status/{parkzone}', 'ParkzoneController@statusChange')->name('parkzones.status_changes');
 		Route::resource('parking-settings', 'CategoryWiseParkzoneSlotController', ['names' => 'parking_settings']);
 		Route::get('parking-settings/change-status/{parking_setting}', 'CategoryWiseParkzoneSlotController@statusChange')->name('parking_settings.status_changes');

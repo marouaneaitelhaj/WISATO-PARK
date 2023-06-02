@@ -51,12 +51,31 @@
                     <li class="pt-2 pb-1">
                         <span class="nav-item-head">The Best Parking Solution</span>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="{{ route('home') }}">
                             <i class="mdi mdi-compass-outline menu-icon"></i>
                             <span class="menu-title">Dashboard</span>
                         </a>
-                    </li>
+                    </li> -->
+
+                    <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#ui-dashboard-management" aria-expanded="false"
+                                aria-controls="ui-dashboard-management">
+                                <i class="mdi mdi-compass-outline menu-icon"></i>
+                                <span class="menu-title">Dashboard</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="ui-dashboard-management">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('parkzones.dashboard') }}">Parkzone Dashboard</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
 
                     @if (Auth::user()->hasRole('admin'))
                         <li class="nav-item">
