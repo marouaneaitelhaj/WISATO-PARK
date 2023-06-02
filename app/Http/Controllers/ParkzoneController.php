@@ -102,7 +102,7 @@ class ParkzoneController extends Controller
 
         foreach ($request->category as $index => $category) {
             if ($category != null) {
-                for($cat = 1; $cat <= intval($category); $cat++) {
+                for ($cat = 1; $cat <= intval($category); $cat++) {
                     $category_category_wise_parkzone_slot = new CategoryWiseParkzoneSlot();
                     $category_category_wise_parkzone_slot->category_id = $index;
                     $category_category_wise_parkzone_slot->parkzone_id = $parkzone->id;
@@ -203,9 +203,17 @@ class ParkzoneController extends Controller
     {
         $parkzone->delete();
     }
-    public function dashboard(){
-        $parkzones = Parkzone::all();
+    public function dashboard()
+    {
+        $chefId = auth()->user()->id;
+        // $data = Parkzone::where('status', 1)
+        //     ->whereHas('agent_inparkzone', function ($query) use ($chefId) {
+        //         $query->where('agent_id', $chefId);
+        //     })
+        //     ->get();
+        $qua
+        // dd($data);
         $categories = Category::all();
-        return view('content.parkzones.dashboard', compact('parkzones', 'categories'));
+        return view('content.parkzones.dashboard', compact('data', 'categories'));
     }
 }

@@ -30,7 +30,7 @@ class UserTableSeeder extends Seeder
 		$admin->Phone = '0123456781';
 		$admin->cin = $faker->unique()->numerify('#########'); // Generate a unique 9-digit number
 		$admin->save();
-	
+
 		$gardian = new User();
 		$gardian->name = 'MAROUANE AIT EL HAJ';
 		$gardian->email = 'marwaneait@gmail.com';
@@ -39,7 +39,7 @@ class UserTableSeeder extends Seeder
 		$gardian->Phone = '0123456782';
 		$gardian->cin = $faker->unique()->numerify('#########');
 		$gardian->save();
-	
+
 		$chefzone = new User();
 		$chefzone->name = 'Amine Majidi';
 		$chefzone->email = 'aminemaj@gmail.com';
@@ -57,11 +57,13 @@ class UserTableSeeder extends Seeder
 
 		$allusers = User::all();
 		foreach ($allusers as $user) {
-			$value = rand(1, 2);
-			if ($value == 1) {
-				$user->roles()->attach($gardien);
-			} else {
-				$user->roles()->attach($chefzone);
+			if ($user->id != 1 && $user->id != 2 && $user->id != 3) {
+				$value = rand(1, 2);
+				if ($value == 1) {
+					$user->roles()->attach($gardien);
+				} else {
+					$user->roles()->attach($chefzone);
+				}
 			}
 		}
 	}
