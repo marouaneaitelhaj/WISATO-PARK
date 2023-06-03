@@ -9,10 +9,17 @@ class SearchAgent extends Component
 {
     public $agents = [];
     public $selectedAgents = [];
+    public $gardien = [];
+    public $selectedGardien = [];
 
     public function mount()
     {
         $this->fetchAgents();
+    }
+
+    public function updatedSelectedAgent($agentId)
+    {
+        $this->selectAgent($agentId);
     }
 
     public function selectAgent($agentId)

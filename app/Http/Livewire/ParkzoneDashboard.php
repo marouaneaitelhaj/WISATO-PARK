@@ -17,8 +17,6 @@ class ParkzoneDashboard extends Component
     public $selectedQuartier = null;
     public function mount()
     {
-        // $this->quartiers = Quartier::all();
-        // select all quartiers that has parkzones and has agent_inparkzone
         $this->quartiers = Quartier::whereHas('parkzones', function ($query) {
             $query->where('status', 1)
                 ->whereHas('agent_inparkzone', function ($query) {

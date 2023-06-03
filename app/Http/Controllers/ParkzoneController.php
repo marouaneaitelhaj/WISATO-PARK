@@ -81,7 +81,6 @@ class ParkzoneController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $validated = $request->validate([
             'name' => 'bail|required|unique:parkzones',
             'remarks' => 'bail|nullable|min:3',
@@ -108,7 +107,7 @@ class ParkzoneController extends Controller
                     $category_category_wise_parkzone_slot = new CategoryWiseParkzoneSlot();
                     $category_category_wise_parkzone_slot->category_id = $index;
                     $category_category_wise_parkzone_slot->parkzone_id = $parkzone->id;
-                    $category_category_wise_parkzone_slot->slot_name =  $index . '-' . $parkzone->id . '-' . $cat;
+                    $category_category_wise_parkzone_slot->slot_name =  $parkzone->name[0] . '-' . $index . '-' . $cat;
                     $category_category_wise_parkzone_slot->created_by = auth()->user()->id;
                     $category_category_wise_parkzone_slot->save();
                 }
