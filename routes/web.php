@@ -63,15 +63,15 @@ Route::middleware(['installed', 'auth', 'xss_clean'])->group(function () {
 		Route::get('general-settings', 'SiteController@generalSettings')->name('settings.create');
 		Route::post('general-settings', 'SiteController@storeGeneralSettings')->name('settings.store');
 		Route::resource('parkzones', 'ParkzoneController')->except(['show']);
-		Route::get('parkzones-dashboard', 'ParkzoneController@dashboard')->name('parkzones.dashboard');
+		
 		Route::get('parkzones/change-status/{parkzone}', 'ParkzoneController@statusChange')->name('parkzones.status_changes');
 		Route::resource('parking-settings', 'CategoryWiseParkzoneSlotController', ['names' => 'parking_settings']);
 		Route::get('parking-settings/change-status/{parking_setting}', 'CategoryWiseParkzoneSlotController@statusChange')->name('parking_settings.status_changes');
 	});
 
-	Route::middleware('roles:gardien|admin|chef zone')->group(function () {
+	Route::middleware('roles:admin|chef zone')->group(function () {
 
-
+		Route::get('parkzones-dashboard', 'ParkzoneController@dashboard')->name('parkzones.dashboard');
 		Route::resource('parking-crud', 'ParkingController', ['names' => 'parking'])->except(['show']);
 		Route::get('parking/get-current', 'ParkingController@currentList')->name('parking.current_list');
 		Route::get('parking/get-ended', 'ParkingController@endedList')->name('parking.ended_list');
