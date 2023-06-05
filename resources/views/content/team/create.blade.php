@@ -127,6 +127,10 @@
                                                     rowspan="1" colspan="1"
                                                     aria-label="Type: activate to sort column ascending">CIN
                                                 </th>
+                                                <th class="sorting" tabindex="0" aria-controls="categoryDatatable"
+                                                    rowspan="1" colspan="1"
+                                                    aria-label="Type: activate to sort column ascending"></th>
+                                                </th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -146,6 +150,10 @@
                                                 </td>
                                                 <td>
                                                     {{ $operator['cin'] }}
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                        data-bs-target="#addHourseModal">Add Hourse</button>
                                                 </td>
                                                 <td class=" text-end width-5-per"><a
                                                         href="http://127.0.0.1:8000/category/8/edit"><i

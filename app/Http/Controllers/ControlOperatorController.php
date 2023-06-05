@@ -59,31 +59,7 @@ class ControlOperatorController extends Controller
 
         return view('content.team.create', compact('operators', 'agentOperatorList'));
     }
-    // public function store(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'operator' => 'required|array',
-    //         'operator.*' => 'exists:users,id',
-    //         'status' => 'required',
-    //         'remark' => 'nullable',
-    //     ]);
-
-    //     $operators = $request->input('operator');
-    //     $status = $request->input('status');
-    //     $remark = $request->input('remark');
-
-    //     foreach ($operators as $operator) {
-    //         $controlOperator = new ControlOperator();
-    //         $controlOperator->operator = $operator;
-    //         $controlOperator->agent = $request->input('agent');
-    //         $controlOperator->status = $status;
-    //         $controlOperator->remark = $remark;
-    //         $controlOperator->save();
-    //     }
-
-    //     return redirect()->route('team.index')->with('success', 'Team added successfully.');
-    // }
-
+    
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -116,7 +92,7 @@ class ControlOperatorController extends Controller
     
             if (count($insertedOperators) > 0) {
                 $message = 'The following operators were added successfully: ' . implode(', ', $insertedOperators);
-                return redirect()->route('content.team.create')->with('flash_message', [
+                return redirect()->route('team.create')->with('flash_message', [
                     'type' => 'success',
                     'message' => $message,
                 ]);
