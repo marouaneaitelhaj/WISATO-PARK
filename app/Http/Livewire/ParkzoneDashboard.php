@@ -17,16 +17,33 @@ class ParkzoneDashboard extends Component
     public $selectedQuartier = null;
     public function mount()
     {
-        $this->quartiers = Quartier::whereHas('parkzones', function ($query) {
-            $query->where('status', 1)
-                ->whereHas('agent_inparkzone', function ($query) {
-                    $query->where('agent_id', auth()->user()->id);
-                });
-        })->get();
+        $user = auth()->user()->id;
+        if($user == 1){
+            $this->quartiers = Quartier::whereHas('parkzones', function ($query) {
+                $query->where('status', 1);
+            })->get();
+        }else{
+            $this->quartiers = Quartier::whereHas('parkzones', function ($query) {
+                $query->where('status', 1)
+                    ->whereHas('agent_inparkzone', function ($query) {
+                        $query->where('agent_id', auth()->user()->id);
+                    });
+            })->get();
+        }
         $this->categories = Category::all();
     }
     public function updatedSelectedQuartier($quartier_id)
     {
+        if(auth()->user()->id == 1){
+            $this->parkzones = Parkzone::where('status', 1)
+                ->where('quartier_id', $quartier_id)
+                ->with('quartier')
+                ->with(['slots' => function ($query) {
+                    $query->with('category');
+                }])
+                ->get();
+            return;
+        }
         $this->parkzones = Parkzone::where('status', 1)
             ->whereHas('agent_inparkzone', function ($query) {
                 $query->where('agent_id', auth()->user()->id);
