@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ControlOperator;
 use App\User;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class ControlOperatorController extends Controller
 {
@@ -16,21 +17,22 @@ class ControlOperatorController extends Controller
     public function index()
     {
         $controlOperators = ControlOperator::all();
-        $agents = User::whereIn('id', $controlOperators->pluck('agent'))->get();
-
+        $agents = User::whereIn('id', $controlOperators->pluck('agent',))->get();
+    
         $agentOperatorList = new Collection();
         foreach ($agents as $agent) {
             $operators = $controlOperators->where('agent', $agent->id)->pluck('operator');
             $operatorDetails = User::whereIn('id', $operators)->get(['name', 'Phone', 'email', 'cin']);
-
+    
             $agentOperatorList->push([
                 'agent' => $agent->name,
                 'operators' => $operatorDetails,
             ]);
         }
-
+        
         return view('content.team.index', compact('agentOperatorList'));
     }
+    
     
 
     public function create()
@@ -114,7 +116,7 @@ class ControlOperatorController extends Controller
     
             if (count($insertedOperators) > 0) {
                 $message = 'The following operators were added successfully: ' . implode(', ', $insertedOperators);
-                return redirect()->route('team.index')->with('flash_message', [
+                return redirect()->route('content.team.create')->with('flash_message', [
                     'type' => 'success',
                     'message' => $message,
                 ]);

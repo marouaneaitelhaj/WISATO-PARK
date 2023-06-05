@@ -8,6 +8,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\ControlOperator;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -52,4 +54,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->belongsToMany('App\Models\CategoryWiseParkzoneSlot', 'operators_in_parks', 'operator_id', 'category_wise_parkzone_slot_id');
     }
+    public function controlOperators()
+    {
+        return $this->hasMany(ControlOperator::class, 'operator');
+    }
+    
+    
 }
