@@ -15,14 +15,16 @@ class ParkzoneDashboard extends Component
     public $categories;
     public $parkzones = [];
     public $selectedQuartier = null;
+    public $totalSlots = 0;
+
     public function mount()
     {
         $user = auth()->user()->id;
-        if($user == 1){
+        if ($user == 1) {
             $this->quartiers = Quartier::whereHas('parkzones', function ($query) {
                 $query->where('status', 1);
             })->get();
-        }else{
+        } else {
             $this->quartiers = Quartier::whereHas('parkzones', function ($query) {
                 $query->where('status', 1)
                     ->whereHas('agent_inparkzone', function ($query) {
@@ -32,9 +34,10 @@ class ParkzoneDashboard extends Component
         }
         $this->categories = Category::all();
     }
+
     public function updatedSelectedQuartier($quartier_id)
     {
-        if(auth()->user()->id == 1){
+        if (auth()->user()->id == 1) {
             $this->parkzones = Parkzone::where('status', 1)
                 ->where('quartier_id', $quartier_id)
                 ->with('quartier')
@@ -55,36 +58,30 @@ class ParkzoneDashboard extends Component
             }])
             ->get();
     }
+
     public function getNumberOfSlots($parkzone_id, $category_id)
     {
         $slots = CategoryWiseParkzoneSlot::where('parkzone_id', $parkzone_id)
             ->where('category_id', $category_id)
             ->get();
-        echo count($slots);
-    }
-    public function disponible($parkzone_id, $category_id){
-        // return two things: number of available slots and number of unavailable slots
-        $slots = CategoryWiseParkzoneSlot::where('parkzone_id', $parkzone_id)
-            ->where('category_id', $category_id)
-            ->with('active_parking')
-            ->get();
         $available = 0;
         $unavailable = 0;
-        foreach($slots as $slot){
-            if($slot->active_parking == null){
+        foreach ($slots as $slot) {
+            if ($slot->active_parking == null) {
                 $available++;
-            }else{
+            } else {
                 $unavailable++;
             }
         }
-        $html = '<p class="text-success">Available: '.$available.'</p><p class="text-danger">Unavailable: '.$unavailable.'</p>';
-        $this->dispatchBrowserEvent('show-sweet-alert', [
-            'type' => 'success',
-            'message' => $html
-        ]);
+        $totalSlots = $available + $unavailable;
+        return ['totalSlots' => $totalSlots, 'available' => $available, 'unavailable' => $unavailable];
     }
+
+
     public function render()
     {
-        return view('livewire.parkzone-dashboard');
+        return view('livewire.parkzone-dashboard', [
+            'totalSlots' => $this->totalSlots,
+        ]);
     }
 }
