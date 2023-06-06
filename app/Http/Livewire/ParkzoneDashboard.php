@@ -33,6 +33,7 @@ class ParkzoneDashboard extends Component
             })->get();
         }
         $this->categories = Category::all();
+        // dd($this->categories);
     }
 
     public function updatedSelectedQuartier($quartier_id)
