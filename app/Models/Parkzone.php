@@ -40,6 +40,10 @@ class Parkzone extends Model
     {
         return $this->belongsToMany('App\User', 'agent_inparkzone', 'parkzone_id', 'agent_id');
     }
+    public function operators()
+    {
+        return $this->belongsToMany('App\User', 'operator_inparkzone', 'parkzone_id', 'operator_id');
+    }
     public function agent_inparkzone()
     {
         return $this->hasMany('App\Models\AgentInparkzone');

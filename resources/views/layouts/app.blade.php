@@ -97,27 +97,7 @@
                             </div>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="collapse" href="#ui-taem-management" aria-expanded="false"
-                                aria-controls="ui-team-management">
-                                <i class="mdi mdi-account-group menu-icon"></i>
-                                <span class="menu-title">Team</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="collapse" id="ui-taem-management">
-                                <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('team.create2') }}">Add User</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('team.create') }}">Add Team</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('team.index') }}">Team List</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                        
 
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#ui-category" aria-expanded="false"
@@ -197,6 +177,30 @@
                         </li>
                     @endif
                     @if (Auth::user()->hasRole(['admin', 'chef zone']))
+                    <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="collapse" href="#ui-taem-management" aria-expanded="false"
+                                aria-controls="ui-team-management">
+                                <i class="mdi mdi-account-group menu-icon"></i>
+                                <span class="menu-title">Team</span>
+                                <i class="menu-arrow"></i>
+                            </a>
+                            <div class="collapse" id="ui-taem-management">
+                                <ul class="nav flex-column sub-menu">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('team.create2') }}">Add User</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('team.create') }}">Add Team</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('team.index') }}">Team List</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('team.manage') }}">Manage Team</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#ui-parking" aria-expanded="false"
                                 aria-controls="ui-parking">
