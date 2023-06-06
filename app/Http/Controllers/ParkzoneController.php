@@ -6,8 +6,7 @@ use App\Models\Parkzone;
 use App\Models\Category;
 use App\Models\Quartier;
 use App\Models\CategoryWiseParkzoneSlot;
-
-
+use App\Models\Cities;
 use Exception;
 use Illuminate\Http\Request;
 use App\User;
@@ -148,11 +147,11 @@ class ParkzoneController extends Controller
      */
     public function edit(Parkzone $parkzone)
     {
+        // dd($parkzone);
         $viewData = array(
             'parkzone' => $parkzone,
-            'categories' => Category::get(),
+            'quartier' => Quartier::find($parkzone->quartier_id),
         );
-
         return view('content.parkzones.edit')->with($viewData);
     }
 
@@ -165,7 +164,22 @@ class ParkzoneController extends Controller
      */
     public function update(Request $request, Parkzone $parkzone)
     {
-        $validated = $request->validate(['name' => 'bail|required|unique:parkzones,name,' . $parkzone->id,  'remarks' => 'bail|nullable|min:3']);
+        // dd($request->all());
+        $validated = $request->validate([
+            'name' => 'bail|required|unique:parkzones,name,' . $parkzone->id,
+            'remarks' => 'bail|nullable|min:3',
+            'mode' => 'bail|required',
+            'lat' => 'bail|required',
+            'lng' => 'bail|required',
+            'type' => 'bail|required',
+            'quartier_id' => 'required',
+            'agent_id' => 'bail|required|array', // Ensure agent_id is an array
+            'agent_id.*' => 'exists:users,id',
+
+
+        ]);
+
+        $parkzone->agents()->sync($request->agent_id);
 
         $parkzone->update([
             'name'     => $validated['name'],
