@@ -81,11 +81,14 @@ class ParkzoneController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $validated = $request->validate([
             'name' => 'bail|required|unique:parkzones',
+            'type' => 'bail|required',
+            'mode' => 'bail|required',
             'remarks' => 'bail|nullable|min:3',
             'lat' => 'bail|required',
-            'category' => 'bail|required|array', // Ensure category is an array
+            // 'category' => 'bail|required|array', // Ensure category is an array
             'lng' => 'bail|required',
             'agent_id' => 'bail|required|array', // Ensure agent_id is an array
             'agent_id.*' => 'exists:users,id',
@@ -95,24 +98,26 @@ class ParkzoneController extends Controller
 
         $parkzone = new Parkzone();
         $parkzone->name = $request->name;
+        $parkzone->type = $request->type;
+        $parkzone->mode = $request->mode;
         $parkzone->remarks = $request->remarks;
         $parkzone->lat = $request->lat;
         $parkzone->lng = $request->lng;
         $parkzone->quartier_id = $request->quartier_id;
         $parkzone->save();
 
-        foreach ($request->category as $index => $category) {
-            if ($category != null) {
-                for ($cat = 1; $cat <= intval($category); $cat++) {
-                    $category_category_wise_parkzone_slot = new CategoryWiseParkzoneSlot();
-                    $category_category_wise_parkzone_slot->category_id = $index;
-                    $category_category_wise_parkzone_slot->parkzone_id = $parkzone->id;
-                    $category_category_wise_parkzone_slot->slot_name =  $parkzone->name[0] . '-' . $index . '-' . ($parkzone->id + $cat);
-                    $category_category_wise_parkzone_slot->created_by = auth()->user()->id;
-                    $category_category_wise_parkzone_slot->save();
-                }
-            }
-        }
+        // foreach ($request->category as $index => $category) {
+        //     if ($category != null) {
+        //         for ($cat = 1; $cat <= intval($category); $cat++) {
+        //             $category_category_wise_parkzone_slot = new CategoryWiseParkzoneSlot();
+        //             $category_category_wise_parkzone_slot->category_id = $index;
+        //             $category_category_wise_parkzone_slot->parkzone_id = $parkzone->id;
+        //             $category_category_wise_parkzone_slot->slot_name =  $parkzone->name[0] . '-' . $index . '-' . ($parkzone->id + $cat);
+        //             $category_category_wise_parkzone_slot->created_by = auth()->user()->id;
+        //             $category_category_wise_parkzone_slot->save();
+        //         }
+        //     }
+        // }
 
         // Attach agent_id values to the parkzone using the pivot table
         $parkzone->agents()->attach($request->agent_id);
@@ -145,6 +150,7 @@ class ParkzoneController extends Controller
     {
         $viewData = array(
             'parkzone' => $parkzone,
+            'categories' => Category::get(),
         );
 
         return view('content.parkzones.edit')->with($viewData);

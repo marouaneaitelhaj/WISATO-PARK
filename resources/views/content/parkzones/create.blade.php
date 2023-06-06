@@ -32,7 +32,7 @@
                             <div class="col-md-12 w-100">
                                 @livewire('search-agent')
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="category_id" class="text-md-right">{{ __('Category') }} <span class="tcr text-danger">*</span></label>
                                 <div class="d-flex flex-wrap justify-content-start">
                                     @foreach ($categories as $category)
@@ -46,10 +46,40 @@
                                     <strong>{{ $errors->first('category_id') }}</strong>
                                 </span>
                                 @endif
+                            </div> -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="mode" class="text-md-right">{{ __('Mode') }} <span class="tcr text-danger">*</span></label>
+                                    <!-- <input id="mode" type="text" class="form-control{{ $errors->has('mode') ? ' is-invalid' : '' }}" name="mode" value="{{ old('mode') }}" autocomplete="off" autofocus> -->
+                                    <select name="mode" class="form-select" id="mode" class="form-select">
+                                        <option value="public" selected>Public</option>
+                                        <option value="private">Private</option>
+                                    </select>
+                                    @if ($errors->has('mode'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('mode') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="name" class="text-md-right">{{ __('Remarks') }}</label>
+                                    <label for="type" class="text-md-right">{{ __('Type') }} <span class="tcr text-danger">*</span></label>
+                                    <select name="type" class="form-select" id="type">
+                                        <option value="standard" selected>Standard</option>
+                                        <option value="floor">Floor</option>
+                                        <option value="side">Side</option>
+                                    </select>
+                                    @if ($errors->has('type'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('type') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="remarks" class="text-md-right">{{ __('Remarks') }}</label>
                                     <textarea name="remarks" id="remarks" class="form-control{{ $errors->has('remarks') ? ' is-invalid' : '' }}" rows="2"></textarea>
                                     @if ($errors->has('remarks'))
                                     <span class="invalid-feedback" role="alert">
@@ -72,6 +102,8 @@
                             </div>
                             <div class="col-md-12">
                                 @livewire('quartier-city')
+                               
+                                
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group d-flex justify-content-around ">
