@@ -7,6 +7,8 @@ use Livewire\Component;
 class QuartierCity extends Component
 {
     public $quartiers = [];
+    public $quartier;
+    public $parkzone;
     public $cities = [];
     public $selectedCity = null;
     public $selectedQuartier = null;

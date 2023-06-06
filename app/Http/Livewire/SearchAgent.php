@@ -4,16 +4,20 @@ namespace App\Http\Livewire;
 
 use App\User;
 use Livewire\Component;
+use App\Models\AgentInParkzone;
 
 class SearchAgent extends Component
 {
     public $agents = [];
+    public $parkzone;
+    public $html = '';
     public $selectedAgents = [];
     public $gardien = [];
     public $selectedGardien = [];
 
     public function mount()
     {
+        $this->selectedAgents = AgentInParkzone::where('parkzone_id', $this->parkzone->id)->with('agent')->get();
         $this->fetchAgents();
     }
 

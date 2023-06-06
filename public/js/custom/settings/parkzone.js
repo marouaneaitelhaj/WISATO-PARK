@@ -132,7 +132,7 @@ function createFloor(parkzoneId) {
       const formData = new FormData();
       formData.append('parkzone_id', parkzoneId);
       formData.append('level', level);
-
+      
       return fetch('{{ route("parkzones.store2") }}', {
         method: 'POST',
         body: formData

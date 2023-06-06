@@ -2,7 +2,6 @@
 @section('title', ' - Edit ParkZone')
 @section('content')
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/css/multi-select-tag.css">
-
 <div class="container-fluid mb100">
 
     <div class="row justify-content-center">
@@ -21,7 +20,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="name" class="text-md-right">{{ __('Name') }} <span class="tcr text-danger">*</span></label>
-                                    <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ old('name') }}" autocomplete="off" autofocus>
+                                    <input id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" name="name" value="{{ $parkzone->name }}" autocomplete="off" autofocus>
                                     @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -30,29 +29,15 @@
                                 </div>
                             </div>
                             <div class="col-md-12 w-100">
-                                @livewire('search-agent')
+                                @livewire('search-agent', ['parkzone' => $parkzone])
                             </div>
-                            <!-- <div class="form-group">
-                                <label for="category_id" class="text-md-right">{{ __('Category') }} <span class="tcr text-danger">*</span></label>
-                                <div class="d-flex flex-wrap justify-content-start">
-                                    @foreach ($categories as $category)
-                                    <div class="m-1">
-                                        <input type="number"  class="form-control" placeholder="{{$category->type}}" name="category[{{$category->id}}]">
-                                    </div>
-                                    @endforeach
-                                </div>
-                                @if ($errors->has('category_id'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('category_id') }}</strong>
-                                </span>
-                                @endif
-                            </div> -->
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="mode" class="text-md-right">{{ __('Mode') }} <span class="tcr text-danger">*</span></label>
                                     <!-- <input id="mode" type="text" class="form-control{{ $errors->has('mode') ? ' is-invalid' : '' }}" name="mode" value="{{ old('mode') }}" autocomplete="off" autofocus> -->
                                     <select name="mode" class="form-select" id="mode" class="form-select">
-                                        <option value="public" selected>Public</option>
+                                        <option value="{{ $parkzone->mode }}" selected hidden>{{ $parkzone->mode }}</option>
+                                        <option value="public">Public</option>
                                         <option value="private">Private</option>
                                     </select>
                                     @if ($errors->has('mode'))
@@ -66,7 +51,8 @@
                                 <div class="form-group">
                                     <label for="type" class="text-md-right">{{ __('Type') }} <span class="tcr text-danger">*</span></label>
                                     <select name="type" class="form-select" id="type">
-                                        <option value="standard" selected>Standard</option>
+                                    <option value="{{ $parkzone->type }}" selected hidden>{{ $parkzone->type }}</option>
+                                        <option value="standard">Standard</option>
                                         <option value="floor">Floor</option>
                                         <option value="side">Side</option>
                                     </select>
@@ -80,7 +66,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="remarks" class="text-md-right">{{ __('Remarks') }}</label>
-                                    <textarea name="remarks" id="remarks" class="form-control{{ $errors->has('remarks') ? ' is-invalid' : '' }}" rows="2"></textarea>
+                                    <textarea name="remarks"  id="remarks" class="form-control{{ $errors->has('remarks') ? ' is-invalid' : '' }}" rows="2">{{ $parkzone->remarks }}</textarea>
                                     @if ($errors->has('remarks'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('remarks') }}</strong>
@@ -92,16 +78,16 @@
                                 <div class="form-group d-flex justify-content-around ">
                                     <div>
                                         {{-- <label for="name" class="text-md-right">{{ __('lng') }}</label> --}}
-                                        <input type="hidden" id="lng" name="lng" class="form-control" readonly />
+                                        <input type="hidden" id="lng" value="{{$parkzone->lng}}" name="lng" class="form-control" readonly />
                                     </div>
                                     <div>
                                         {{-- <label for="name" class="text-md-right">{{ __('lat') }}</label> --}}
-                                        <input type="hidden" id="lat" name="lat" class="form-control" readonly />
+                                        <input type="hidden" id="lat" name="lat" value="{{$parkzone->lat}}" class="form-control" readonly />
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                @livewire('quartier-city')
+                                @livewire('quartier-city', ['quartier' => $quartier->quartier_name, 'parkzone' => $parkzone])
                                
                                 
                             </div>
@@ -195,8 +181,8 @@
     function initMap() {
         map = L.map('map', {
             center: {
-                lat: 28.626137,
-                lng: 79.821603,
+                lat: "<?php echo $parkzone->lat ?>",
+                lng: "<?php echo $parkzone->lng ?>",
             },
             zoom: 15
         });

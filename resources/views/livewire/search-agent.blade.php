@@ -20,18 +20,13 @@
                 });
             });
         </script>
-        <label for="operator">Select Agent</label>
-
-        <select wire:model="selectedAgent" name="agent_id[]" class="{{ $errors->has('agent_id') ? ' is-invalid' : '' }}" id="operator" multiple>
+        <label for="operator">Agent</label>
+        <select wire:model="selectedAgent" name="agent_id[]" id="operator" multiple>
             @foreach ($agents as $agent)
             <option value="{{ $agent->id }}">{{ $agent->name }}</option>
             @endforeach
         </select>
-        @if ($errors->has('agent_id'))
-        <span class="invalid-feedback" role="alert">
-            <strong>{{ $errors->first('agent_id') }}</strong>
-        </span>
-        @endif
+        @error('agent_id') <span class="text-danger">{{ $message }}</span> @enderror
 
 
 

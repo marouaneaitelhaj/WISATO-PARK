@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
 class AgentInParkzone extends Model
 {
@@ -17,4 +18,8 @@ class AgentInParkzone extends Model
     // {
     //     return $this->belongsTo(Parkzone::class, 'parkzone_id');
     // }
+    public function agent()
+    {
+        return $this->belongsTo(User::class, 'agent_id');
+    }
 }
