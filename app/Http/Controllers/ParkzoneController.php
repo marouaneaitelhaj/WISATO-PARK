@@ -6,6 +6,8 @@ use App\Models\Parkzone;
 use App\Models\Category;
 use App\Models\Quartier;
 use App\Models\CategoryWiseParkzoneSlot;
+use App\Models\Floor;
+
 
 
 use Exception;
@@ -79,6 +81,8 @@ class ParkzoneController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+     
     public function store(Request $request)
     {
         // dd($request->all());
@@ -106,18 +110,7 @@ class ParkzoneController extends Controller
         $parkzone->quartier_id = $request->quartier_id;
         $parkzone->save();
 
-        // foreach ($request->category as $index => $category) {
-        //     if ($category != null) {
-        //         for ($cat = 1; $cat <= intval($category); $cat++) {
-        //             $category_category_wise_parkzone_slot = new CategoryWiseParkzoneSlot();
-        //             $category_category_wise_parkzone_slot->category_id = $index;
-        //             $category_category_wise_parkzone_slot->parkzone_id = $parkzone->id;
-        //             $category_category_wise_parkzone_slot->slot_name =  $parkzone->name[0] . '-' . $index . '-' . ($parkzone->id + $cat);
-        //             $category_category_wise_parkzone_slot->created_by = auth()->user()->id;
-        //             $category_category_wise_parkzone_slot->save();
-        //         }
-        //     }
-        // }
+
 
         // Attach agent_id values to the parkzone using the pivot table
         $parkzone->agents()->attach($request->agent_id);
@@ -128,6 +121,17 @@ class ParkzoneController extends Controller
             ->with(['flashMsg' => ['msg' => 'Parkzone successfully added.', 'type' => 'success']]);
     }
 
+    public function store2(Request $request)
+    {
+        $validated = $request->validate([
+            'parkzone_id' => 'required',
+            'level' => 'required',
+        ]);
+
+        Floor::create($validated);
+
+        return response()->json(['message' => 'Floor created successfully']);
+    }
 
 
     /**

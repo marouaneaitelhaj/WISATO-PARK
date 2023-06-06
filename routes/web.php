@@ -17,6 +17,8 @@ Route::resource('team', ControlOperatorController::class);
 Route::get('manage-team', 'ControlOperatorController@manage')->name('team.manage');
 Route::post('manage-team', 'ControlOperatorController@storemanage')->name('team.manage');
 
+Route::post('parkzones/store2', 'ParkzoneController@store2')->name('parkzones.store2');
+Route::resource('parkzones', 'ParkzoneController')->except(['show']);
 
 
 Route::get('operator-create', 'UserController@create2')->name('team.create2');
@@ -64,7 +66,7 @@ Route::middleware(['installed', 'auth', 'xss_clean'])->group(function () {
 		Route::get('reports/pdf', 'ReportController@pdf_report')->name('reports.pdf_report');
 		Route::get('general-settings', 'SiteController@generalSettings')->name('settings.create');
 		Route::post('general-settings', 'SiteController@storeGeneralSettings')->name('settings.store');
-		Route::resource('parkzones', 'ParkzoneController')->except(['show']);
+		// Route::resource('parkzones', 'ParkzoneController')->except(['show']);
 		
 		Route::get('parkzones/change-status/{parkzone}', 'ParkzoneController@statusChange')->name('parkzones.status_changes');
 		Route::resource('parking-settings', 'CategoryWiseParkzoneSlotController', ['names' => 'parking_settings']);

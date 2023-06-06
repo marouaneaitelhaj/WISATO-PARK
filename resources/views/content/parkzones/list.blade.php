@@ -43,5 +43,8 @@
 @endsection
 
 @push('scripts')
+
 <script src="{{ asset('js/custom/settings/parkzone.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 @endpush

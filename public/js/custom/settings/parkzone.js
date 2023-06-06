@@ -1,9 +1,12 @@
 var arr = [];
 var html = "";
+
 (function ($) {
   "use strict";
+
   let parkzoneDatatableEl = null;
   let $return;
+
   $(document).ready(function () {
     parkzoneDatatableEl = $("#parkzoneDatatable").DataTable({
       dom: '<"row"<"col-12 col-sm-6"l><"col-12 col-sm-6"f>><"row"<"col-12 col-sm-12"t><"col-12 col-sm-6"i><"col-12 col-sm-6"p>>',
@@ -11,7 +14,6 @@ var html = "";
         [10, 50, 100, 200, -1],
         [10, 50, 100, 200, "All"],
       ],
-
       buttons: [],
       columns: [
         {
@@ -25,6 +27,18 @@ var html = "";
         { title: "Quartier", name: "Quartier", data: "quartier.quartier_name" },
         { title: "lat", name: "lat", data: "lat" },
         { title: "lng", name: "lng", data: "lng" },
+        {
+          title: "type",
+          name: "type",
+          data: "type",
+          render: function (data, type, row) {
+            if (data === "floor") {
+              return '<button class="btn btn-primary" onclick="createFloor(' + row.id + ')">Create Floor</button>';
+            } else {
+              return data;
+            }
+          },
+        },
         {
           title: "Chef Zone",
           name: "chef_zone",
@@ -48,12 +62,10 @@ var html = "";
           },
         }
       ],
-
       ajax: {
         url: route("parkzones.index"),
         dataSrc: "data",
       },
-
       language: {
         paginate: {
           next: "&#8594;", // or '→'
@@ -74,6 +86,7 @@ var html = "";
     });
   });
 })(jQuery);
+
 function agentslist(id) {
   html = "";
   var result = arr.find((obj) => {
@@ -90,7 +103,61 @@ function agentslist(id) {
   Swal.fire({
     title: "Parkzone List",
     html: html,
-    // icon: "success",
     confirmButtonText: "Ok",
+  });
+}
+
+function createFloor(parkzoneId) {
+  Swal.fire({
+    title: 'Create Floor',
+    html: '<div class="form-group">' +
+      '<label for="level">Level:</label>' +
+      '<input type="number" class="form-control" id="level" name="level" required>' +
+      '</div>',
+    showCancelButton: true,
+    cancelButtonText: 'Cancel',
+    confirmButtonText: 'Create',
+    focusConfirm: false,
+    preConfirm: () => {
+      const level = Swal.getPopup().querySelector('#level').value;
+      if (!level) {
+        Swal.showValidationMessage('Please enter the level');
+      }
+      return { level: level };
+    },
+    showLoaderOnConfirm: true,
+    allowOutsideClick: () => !Swal.isLoading(),
+    preConfirm: (result) => {
+      const level = result.level;
+      const formData = new FormData();
+      formData.append('parkzone_id', parkzoneId);
+      formData.append('level', level);
+
+      return fetch('{{ route("parkzones.store2") }}', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText);
+        }
+        return response.json();
+      })
+      .catch(error => {
+        Swal.showValidationMessage('Error: ' + error);
+      });
+    }
+  }).then((result) => {
+    if (result.value) {
+      Swal.fire({
+        title: 'Floor Created',
+        text: 'The floor has been created successfully.',
+        icon: 'success',
+        confirmButtonText: 'Ok'
+      }).then(() => {
+        // Refresh the page or perform any other desired action
+        location.reload();
+      });
+    }
   });
 }
