@@ -22,6 +22,7 @@ var html = "";
         },
         { title: "Name", name: "name", data: "name" },
         { title: "Remarks", name: "remarks", data: "remarks" },
+        { title: "Quartier", name: "Quartier", data: "quartier.quartier_name" },
         { title: "lat", name: "lat", data: "lat" },
         { title: "lng", name: "lng", data: "lng" },
         {
