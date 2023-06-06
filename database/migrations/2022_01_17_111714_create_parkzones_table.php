@@ -20,6 +20,8 @@ class CreateParkzonesTable extends Migration
             $table->foreign('quartier_id')->references('id')->on('quartiers')->onDelete('cascade');
             $table->string('lng');
             $table->string('lat');
+            $table->string('mode');
+            $table->string('type');
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

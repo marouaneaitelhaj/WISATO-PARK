@@ -14,6 +14,8 @@
 
 
 Route::resource('team', ControlOperatorController::class);
+Route::get('manage-team', 'ControlOperatorController@manage')->name('team.manage');
+Route::post('manage-team', 'ControlOperatorController@storemanage')->name('team.manage');
 
 
 

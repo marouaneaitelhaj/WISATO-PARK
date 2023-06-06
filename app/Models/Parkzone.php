@@ -14,7 +14,8 @@ class Parkzone extends Model
      */
     protected $fillable = [
         'name',
-        'level',
+        'type',
+        'mode',
         'remarks',
         'quartier_id',
         'status'
@@ -39,6 +40,10 @@ class Parkzone extends Model
     public function agents()
     {
         return $this->belongsToMany('App\User', 'agent_inparkzone', 'parkzone_id', 'agent_id');
+    }
+    public function operators()
+    {
+        return $this->belongsToMany('App\User', 'operator_inparkzone', 'parkzone_id', 'operator_id');
     }
     public function agent_inparkzone()
     {
