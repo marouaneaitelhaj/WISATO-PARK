@@ -14,8 +14,8 @@ class AddOrderIdToParkzonesTable extends Migration
     public function up()
     {
         Schema::table('parkzones', function (Blueprint $table) {
-            $table->tinyInteger('level')->after('name')->default(0);
-            $table->string('remarks')->after('level')->nullable();
+            // $table->tinyInteger('level')->after('name')->default(0);
+            // $table->string('remarks')->after('level')->nullable();
         });
     }
 
@@ -27,7 +27,7 @@ class AddOrderIdToParkzonesTable extends Migration
     public function down()
     {
         Schema::table('parkzones', function (Blueprint $table) {
-            $table->dropColumn('level');
+            // $table->dropColumn('level');
             $table->dropColumn('remarks');
         });
     }

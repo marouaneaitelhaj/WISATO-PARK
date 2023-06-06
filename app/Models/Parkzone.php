@@ -14,7 +14,8 @@ class Parkzone extends Model
      */
     protected $fillable = [
         'name',
-        'level',
+        'type',
+        'mode',
         'remarks',
         'quartier_id',
         'status'
