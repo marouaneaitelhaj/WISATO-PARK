@@ -17,7 +17,7 @@ Route::resource('team', ControlOperatorController::class);
 Route::get('manage-team', 'ControlOperatorController@manage')->name('team.manage');
 Route::post('manage-team', 'ControlOperatorController@storemanage')->name('team.manage');
 
-Route::post('parkzones/store2', 'ParkzoneController@store2')->name('parkzones.store2');
+Route::post('parkzones/store', 'FloorController@store')->name('parkzones.store');
 Route::resource('parkzones', 'ParkzoneController')->except(['show']);
 
 

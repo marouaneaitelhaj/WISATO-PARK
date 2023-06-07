@@ -122,20 +122,22 @@ class ParkzoneController extends Controller
             ->with(['flashMsg' => ['msg' => 'Parkzone successfully added.', 'type' => 'success']]);
     }
 
-    public function store2(Request $request)
-    {
-        $validated = $request->validate([
-            'parkzone_id' => 'required',
-            'level' => 'required',
-        ]);
-
-        $floor = new Floor();
-        $floor->parkzone_id = $validated['parkzone_id'];
-        $floor->level = $validated['level'];
-        $floor->save();
+    // public function store2(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'parkzone_id' => 'required',
+    //         'levelUp' => 'required',
+    //         'levelDown' => 'required',
+    //     ]);
+    //     $floor = new Floor();
+    //     $floor->parkzone_id = $validated['parkzone_id'];
+    //     $floor->levelUp = $validated['levelUp'];
+    //     $floor->levelDown = $validated['levelDown'];
+    //     $floor->save();
         
-        return response()->json(['message' => 'Floor created successfully']);
-    }
+    //     return response()->json(['message' => 'Floor created successfully']);
+    // }
+    
 
 
 

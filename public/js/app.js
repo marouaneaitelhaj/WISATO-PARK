@@ -2653,8 +2653,8 @@ var Ziggy = {
       "uri": "parking\/slot\/{category_id}",
       "methods": ["GET", "HEAD", "POST"]
     },
-    "parkzones.store2": {
-      "uri": "parkzones\/store2",
+    "parkzones.store": {
+      "uri": "parkzones\/store",
       "methods": ["POST"]
     },
 

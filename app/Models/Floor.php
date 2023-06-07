@@ -8,9 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Floor extends Model
 {
     use HasFactory;
+    protected $table = 'floors';
+
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'parkzone_id',
-        'level',
+        'levelUp',
+        'levelDown',
     ];
 }

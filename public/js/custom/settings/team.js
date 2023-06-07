@@ -17,10 +17,6 @@
                   data: "id",
                   class: "no-sort",
                   width: "50px",
-                  // render: function (data, row, type, col) {
-                  //     var pageInfo = teamDataTable.page.info();
-                  //     return col.row + 1 + pageInfo.start;
-                  // },
               },
               { title: "operator", name: "operator", data: "operator_user.name" },
               { title: "agent", name: "agent", data: "agent_user.name" },

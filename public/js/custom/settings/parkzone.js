@@ -57,7 +57,7 @@ var html = "";
           render: function (data, type, row) {
             let deleteUrl = route('parkzones.destroy', { 'parkzone': row.id });
             return (
-              '<div class="d-flex justify-content-around"><a class="link-success" href="/parkzones/'+row.id+'/edit"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> | <button class="btn btn-link p-0" onclick="deleteData(\''+deleteUrl+'\', \'#parkzoneDatatableEl\')" > <i class="fa fa-trash-o" aria-hidden="true"></i></button></div>'
+              '<div class="d-flex justify-content-around"><a class="link-success" href="/parkzones/' + row.id + '/edit"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> | <button class="btn btn-link p-0" onclick="deleteData(\'' + deleteUrl + '\', \'#parkzoneDatatableEl\')" > <i class="fa fa-trash-o" aria-hidden="true"></i></button></div>'
             )
           },
         }
@@ -107,62 +107,74 @@ function agentslist(id) {
   });
 }
 
+
 function createFloor(parkzoneId) {
   Swal.fire({
     title: 'Create Floor',
     html: '<form id="floorForm">' +
       '<div class="form-group">' +
-      '<label for="level">Level:</label>' +
-      '<input type="number" class="form-control" id="level" name="level" required>' +
-      '</div>' +
-      '<button type="submit" class="btn btn-primary">Create floor</button>' +
+      '<label for="level" class="">Level:</label>' +
+      '<hr>' +
+      '<select class="form-select" id="level" name="level[]" data-placeholder="Choose anything" multiple>' +
+      '<option value="5">Fifth Floor</option>' +
+      '<option value="4">Fourth Floor</option>' +
+      '<option value="3">Third Floor</option>' +
+      '<option value="2">Second Floor</option>' +
+      '<option value="1">First Floor</option>' +
+      '<option value="0">Level 0</option>' +
+      '<option value="-1">Basement</option>' +
+      '<option value="-2">Underground</option>' +
+      '<option value="-3">Underground 2</option>' +
+      '</select>' +
       '</form>',
+
     showCancelButton: true,
     cancelButtonText: 'Cancel',
     confirmButtonText: 'Create',
     focusConfirm: false,
     preConfirm: () => {
-      const level = Swal.getPopup().querySelector('#level').value;
-      if (!level) {
-        Swal.showValidationMessage('Please enter the level');
+      const levels = Array.from(Swal.getPopup().querySelectorAll('#level option:checked'), (option) => option.value);
+      if (levels.length === 0) {
+        Swal.showValidationMessage('Please select at least one level');
       }
-      return { level: level };
+      return { levels: levels };
     }
+    
   }).then((result) => {
     if (!result.dismiss && result.value) {
-      const level = result.value.level;
+      const levels = result.value.levels;
       const formData = new FormData();
       formData.append('parkzone_id', parkzoneId);
-      formData.append('level', level);
-      
-      // Get the CSRF token value from the page
+      levels.forEach((level) => {
+        formData.append('level[]', level);
+      });
 
 
-  var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-      // Send the form data to the server
+      var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+
       $.ajax({
-        url: route("parkzones.store2"),
-      
+        url: route("parkzones.store"),
+
         method: 'POST',
         headers: {
-          'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
+          'X-CSRF-TOKEN': csrfToken
         },
         data: formData,
         processData: false,
         contentType: false,
-        success: function(response) {
+        success: function (response) {
           Swal.fire({
             title: 'Floor Created',
             text: 'The floor has been created successfully.',
             icon: 'success',
             confirmButtonText: 'Ok'
           }).then(() => {
-            // Refresh the page or perform any other desired action
-            location.reload();
+            // location.reload();
           });
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           Swal.fire({
             title: 'Error',
             text: 'An error occurred while creating the floor.',
