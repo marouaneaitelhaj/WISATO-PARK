@@ -2651,8 +2651,13 @@ var Ziggy = {
     },
     "parking.slot": {
       "uri": "parking\/slot\/{category_id}",
-      "methods": ["GET", "HEAD"]
-    }
+      "methods": ["GET", "HEAD", "POST"]
+    },
+    "parkzones.store2": {
+      "uri": "parkzones\/store2",
+      "methods": ["POST"]
+    },
+
   }
 };
 if (typeof window !== 'undefined' && typeof window.Ziggy !== 'undefined') {

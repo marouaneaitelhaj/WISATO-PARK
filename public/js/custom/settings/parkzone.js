@@ -110,10 +110,13 @@ function agentslist(id) {
 function createFloor(parkzoneId) {
   Swal.fire({
     title: 'Create Floor',
-    html: '<div class="form-group">' +
+    html: '<form id="floorForm">' +
+      '<div class="form-group">' +
       '<label for="level">Level:</label>' +
       '<input type="number" class="form-control" id="level" name="level" required>' +
-      '</div>',
+      '</div>' +
+      '<button type="submit" class="btn btn-primary">Create floor</button>' +
+      '</form>',
     showCancelButton: true,
     cancelButtonText: 'Cancel',
     confirmButtonText: 'Create',
@@ -124,39 +127,49 @@ function createFloor(parkzoneId) {
         Swal.showValidationMessage('Please enter the level');
       }
       return { level: level };
-    },
-    showLoaderOnConfirm: true,
-    allowOutsideClick: () => !Swal.isLoading(),
-    preConfirm: (result) => {
-      const level = result.level;
+    }
+  }).then((result) => {
+    if (!result.dismiss && result.value) {
+      const level = result.value.level;
       const formData = new FormData();
       formData.append('parkzone_id', parkzoneId);
       formData.append('level', level);
       
-      return fetch('{{ route("parkzones.store2") }}', {
+      // Get the CSRF token value from the page
+
+
+  var csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+      // Send the form data to the server
+      $.ajax({
+        url: route("parkzones.store2"),
+      
         method: 'POST',
-        body: formData
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(response.statusText);
+        headers: {
+          'X-CSRF-TOKEN': csrfToken // Include the CSRF token in the request headers
+        },
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+          Swal.fire({
+            title: 'Floor Created',
+            text: 'The floor has been created successfully.',
+            icon: 'success',
+            confirmButtonText: 'Ok'
+          }).then(() => {
+            // Refresh the page or perform any other desired action
+            location.reload();
+          });
+        },
+        error: function(xhr, status, error) {
+          Swal.fire({
+            title: 'Error',
+            text: 'An error occurred while creating the floor.',
+            icon: 'error',
+            confirmButtonText: 'Ok'
+          });
         }
-        return response.json();
-      })
-      .catch(error => {
-        Swal.showValidationMessage('Error: ' + error);
-      });
-    }
-  }).then((result) => {
-    if (result.value) {
-      Swal.fire({
-        title: 'Floor Created',
-        text: 'The floor has been created successfully.',
-        icon: 'success',
-        confirmButtonText: 'Ok'
-      }).then(() => {
-        // Refresh the page or perform any other desired action
-        location.reload();
       });
     }
   });

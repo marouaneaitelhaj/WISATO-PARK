@@ -83,7 +83,7 @@ class ParkzoneController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-     
+
     public function store(Request $request)
     {
         // dd($request->all());
@@ -129,10 +129,14 @@ class ParkzoneController extends Controller
             'level' => 'required',
         ]);
 
-        Floor::create($validated);
-
+        $floor = new Floor();
+        $floor->parkzone_id = $validated['parkzone_id'];
+        $floor->level = $validated['level'];
+        $floor->save();
+        
         return response()->json(['message' => 'Floor created successfully']);
     }
+
 
 
     /**
