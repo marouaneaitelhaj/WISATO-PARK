@@ -33,7 +33,17 @@ var html = "";
           data: "type",
           render: function (data, type, row) {
             if (data === "floor") {
-              return '<button class="btn btn-primary" onclick="createFloor(' + row.id + ')">Create Floor</button>';
+              return (
+                '<button class="btn btn-primary" onclick="createFloor(' +
+                row.id +
+                ')">Create Floor</button>'
+              );
+            } else if (data === "side") {
+              return (
+                '<button class="btn btn-primary" onclick="createSide(' +
+                row.id +
+                ')">Create Side</button>'
+              );
             } else {
               return data;
             }
@@ -182,6 +192,161 @@ function createFloor(parkzoneId) {
             confirmButtonText: 'Ok'
           });
         }
+      });
+    }
+  });
+}
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////// marwaneaitelhaj /////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
+function createSide(parkzoneId) {
+  Swal.fire({
+    title: "Create Side",
+    html:
+      '<div class="form-group d-flex align-items-center justify-content-around">' +
+      '<button type="button" class="btn btn-primary" onclick="openLeftSide(' +
+      parkzoneId +
+      ')">Left Side</button>' +
+      '<button type="button" class="btn btn-primary" onclick="openRightSide(' +
+      parkzoneId +
+      ')">Right Side</button>' +
+      "</div>",
+    showConfirmButton: false,
+  });
+}
+var cat = [];
+function openLeftSide(parkzoneId) {
+  var html = "";
+  for (var i = 0; i < cat.length; i++) {
+    html +=
+      '<div class="m-1"> <input type="number"  class="form-control" placeholder="' + cat[i].type + '" name="' + cat[i].id + '"> </div>';
+  }
+  Swal.fire({
+    title: "Create Left Side",
+    html:
+      '<div class="form-group">' +
+      '<form id="createSideForm">' +
+      '<label for="category_id" class="text-md-right">Category<span class="tcr text-danger">*</span></label>' +
+      '<div class="d-flex flex-wrap justify-content-center">' +
+      html +
+      "</div>" +
+      "<form />" +
+      "</div>",
+    showCancelButton: true,
+    cancelButtonText: "Cancel",
+    confirmButtonText: "Create",
+    focusConfirm: false,
+    preConfirm: () => {
+      const form = document.getElementById('createSideForm');
+    const formData = new FormData(form);
+    const formValues = Object.fromEntries(formData.entries());
+    // must be json to send to the server
+    // add parkzoneId to the form values
+    formValues.parkzone_id = parkzoneId;
+    formValues.side = 'left';
+    const jsonFormValues = JSON.stringify(formValues);
+
+    
+    // Access the form values
+    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+      
+    fetch("side", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": csrfToken
+      },
+      body: jsonFormValues,
+    })
+    },
+  }).then((result) => {
+    if (result.value) {
+      Swal.fire({
+        title: "Floor Created",
+        text: "The floor has been created successfully.",
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then(() => {
+        // Refresh the page or perform any other desired action
+        location.reload();
+      });
+    }
+  });
+}
+function readcat() {
+  fetch("read/cat", {
+    method: "GET",
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      cat = data;
+    })
+    .catch((error) => {
+      Swal.showValidationMessage("Error: " + error);
+    });
+}
+readcat();
+function openRightSide(parkzoneId) {
+  var html = "";
+  for (var i = 0; i < cat.length; i++) {
+    html +=
+      '<div class="m-1"> <input type="number"  class="form-control" placeholder="' + cat[i].type + '" name="'+ cat[i].id +'"> </div>';
+  }
+  Swal.fire({
+    title: "Create Right Side",
+    html:
+      '<div class="form-group">' +
+      '<meta name="csrf-token" content="{{ csrf_token() }}">'+
+      '<form id="createSideForm">' +
+      '<label for="category_id" class="text-md-right">Category<span class="tcr text-danger">*</span></label>' +
+      '<div class="d-flex flex-wrap justify-content-center">' +
+      html +
+      "</div>" +
+      "<form />" +
+      "</div>",
+    showCancelButton: true,
+    cancelButtonText: "Cancel",
+    confirmButtonText: "Create",
+    focusConfirm: false,
+    // if the user clicks the confirm button...
+    preConfirm: () => {
+      const form = document.getElementById('createSideForm');
+    const formData = new FormData(form);
+    const formValues = Object.fromEntries(formData.entries());
+    // must be json to send to the server
+    // add parkzoneId to the form values
+    formValues.parkzone_id = parkzoneId;
+    formValues.side = 'right';
+    const jsonFormValues = JSON.stringify(formValues);
+
+    
+    // Access the form values
+    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+      
+    fetch("side", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-TOKEN": csrfToken
+      },
+      body: jsonFormValues,
+    })
+    },
+  }).then((result) => {
+    if (result.value) {
+      Swal.fire({
+        title: "Floor Created",
+        text: "The floor has been created successfully.",
+        icon: "success",
+        confirmButtonText: "Ok",
+      }).then(() => {
+        // Refresh the page or perform any other desired action
+        location.reload();
       });
     }
   });
