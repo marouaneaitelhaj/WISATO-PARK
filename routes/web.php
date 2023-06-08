@@ -11,7 +11,8 @@
 |
 */
 
-
+Route::get('read/cat', 'CategoryController@get');
+Route::resource('side', 'SideController');
 
 Route::resource('team', ControlOperatorController::class);
 Route::get('manage-team', 'ControlOperatorController@manage')->name('team.manage');

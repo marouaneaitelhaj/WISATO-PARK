@@ -161,7 +161,7 @@
                             <a class="nav-link" data-bs-toggle="collapse" href="#ui-parking-setup" aria-expanded="false"
                                 aria-controls="ui-parking-setup">
                                 <i class="mdi mdi mdi-home-map-marker menu-icon"></i>
-                                <span class="menu-title">Parking Setup</span>
+                                <span class="menu-title">Slots Lists</span>
                                 <i class="menu-arrow"></i>
                             </a>
                             <div class="collapse" id="ui-parking-setup">
@@ -171,6 +171,9 @@
                                     </li> -->
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('parking_settings.index') }}">Slot List</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('side.index') }}">Side Slot List</a>
                                     </li>
                                 </ul>
                             </div>

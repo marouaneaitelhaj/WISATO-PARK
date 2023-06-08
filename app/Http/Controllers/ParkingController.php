@@ -261,6 +261,7 @@ class ParkingController extends Controller
 	 */
 	public function store(StoreParkingRequest $request)
 	{
+		dd($request->all());
 		$validated = $request->validated();
 
 		try {

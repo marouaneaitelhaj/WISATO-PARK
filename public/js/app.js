@@ -2414,6 +2414,10 @@ var Ziggy = {
       "uri": "category",
       "methods": ["GET", "HEAD"]
     },
+    "side.index": {
+      "uri": "side",
+      "methods": ["GET", "HEAD"]
+    },
     "team.index": {
       "uri": "team",
       "methods": ["GET", "HEAD"]

@@ -168,4 +168,8 @@ class CategoryController extends Controller
 	{
 		$category->delete();
 	}
+	public function get(){
+		$categories = Category::where('status', 1)->get();
+		return response()->json($categories);
+	}
 }
