@@ -348,42 +348,6 @@ function openRightSide(parkzoneId) {
         // Refresh the page or perform any other desired action
         location.reload();
       });
-
-
-
-      var csrfToken = $('meta[name="csrf-token"]').attr('content');
-
-
-      $.ajax({
-        url: route("parkzones.store"),
-
-        method: 'POST',
-        headers: {
-          'X-CSRF-TOKEN': csrfToken
-        },
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-          Swal.fire({
-            title: 'Floor Created',
-            text: 'The floor has been created successfully.',
-            icon: 'success',
-            confirmButtonText: 'Ok'
-          }).then(() => {
-            // location.reload();
-          });
-        },
-        error: function (xhr, status, error) {
-          Swal.fire({
-            title: 'Error',
-            text: 'An error occurred while creating the floor.',
-            icon: 'error',
-            confirmButtonText: 'Ok'
-          });
-        }
->>>>>>> fb173a53551d838a27259277777fb18f7d69f9a2
-      });
     }
   });
 }
