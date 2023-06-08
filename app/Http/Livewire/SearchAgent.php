@@ -17,7 +17,8 @@ class SearchAgent extends Component
 
     public function mount()
     {
-        if ($this->parkzone !== null) {
+
+        if ($this->parkzone != null) {
             $this->selectedAgents = AgentInParkzone::where('parkzone_id', $this->parkzone->id)->with('agent')->get();
         }
         $this->fetchAgents();
