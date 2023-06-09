@@ -23,7 +23,7 @@
                 {
                     title: "Status",
                     name: "status",
-                    data: "status",
+                    data: "is_active",
                     render: function (data, type, row) {
                         return data == 1 ? "Enable" : "Disable";
                     },
