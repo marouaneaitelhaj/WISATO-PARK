@@ -18,6 +18,7 @@ class CreateSideSlotsTable extends Migration
             $table->unsignedBigInteger('side_id');
             $table->foreign('side_id')->references('id')->on('sides')->onDelete('cascade');
             $table->unsignedBigInteger('category_id');
+            $table->string('is_active')->default(1);
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->string('name');
             $table->timestamps();

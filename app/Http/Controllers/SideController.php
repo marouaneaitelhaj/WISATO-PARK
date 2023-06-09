@@ -80,9 +80,9 @@ class SideController extends Controller
         $check = Sides::where('parkzone_id', $parkzone_id)->where('side', $side)->first();
         if ($check != null) {
             $parkzone = Parkzone::find($parkzone_id)->first();
-            if($parkzone->in_use == 0){
+            if ($parkzone->in_use == 0) {
                 $check->delete();
-            }else{
+            } else {
                 $message = 'Side already exist, and you can not delete it because the parkzone is in use';
                 return response()->json($message, 404);
             }
@@ -99,7 +99,7 @@ class SideController extends Controller
                 }
                 $Side_slot_number = new Side_slot_number;
                 $Side_slot_number->side_id = $sides->id;
-                if($value == null){
+                if ($value == null) {
                     $value = 0;
                 }
                 $Side_slot_number->slot_number = $value;
@@ -126,7 +126,8 @@ class SideController extends Controller
      */
     public function show($id)
     {
-        //
+        $side_slot = Side_slot::where('side_id', $id)->get();
+        return response()->json($side_slot, 200);
     }
 
     /**
@@ -160,7 +161,7 @@ class SideController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Sides::find($id)->first()->delete();
     }
     public function toogleactive(Request $request)
     {
@@ -195,6 +196,26 @@ class SideController extends Controller
             }
         } else {
             $message = 'notfound';
+            return response()->json($message, 404);
+        }
+    }
+    public function toogleslotside(Request $request)
+    {
+        $side_slot = Side_slot::where('id', $request->id)->first();
+        if ($side_slot != null) {
+            if ($side_slot->is_active == 1) {
+                $side_slot->is_active = 0;
+                $side_slot->save();
+                $message = 'Slot is deactivated';
+                return response()->json($message, 200);
+            } else {
+                $side_slot->is_active = 1;
+                $side_slot->save();
+                $message = 'Slot is activated';
+                return response()->json($message, 200);
+            }
+        } else {
+            $message = 'Slot not found';
             return response()->json($message, 404);
         }
     }
