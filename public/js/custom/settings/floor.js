@@ -22,7 +22,7 @@
                 { title: "Level", name: "level", data: "level" },
                 { title: "shadow", name: "shadow", data: "shadow" },
                 { title: "active", name: "status", data: "status" },
-                { 
+                {
                     title: "showfloorslots",
                     data: null,
                     render: function (data, type, row) {
@@ -146,8 +146,6 @@ function createSlots(parkzoneId) {
                         icon: "success",
                         confirmButtonText: "Ok",
                     }).then(() => {
-                        // Refresh the page or perform any other desired action
-                        location.reload();
                     });
                 })
                 .catch(error => {
@@ -188,3 +186,207 @@ function readcat() {
 }
 
 readcat();
+function showfloorslots(floorId) {
+    fetch("floorslots/" + floorId, {
+        method: "GET",
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (Array.isArray(data) && data.length > 0) {
+                let rows = "";
+                data.forEach(slot => {
+                    rows += `
+                        <tr>
+                            <td>${slot.name}</td>
+                            <td>${slot.shadow}</td>
+                            <td>${slot.status}</td>
+                            <td>
+                                <button class="btn btn-primary" onclick="updateSlot('${slot.id}')">Update</button>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                const table = `
+                <input class="form-control mr-sm-2 mb-3" type="search" id="searchInput" placeholder="Search by name" aria-label="Search">
+
+                    <div style="max-height: 300px; overflow-y: scroll;">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Shadow</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody">
+                                ${rows}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+
+                Swal.fire({
+                    title: "<span class='text-primary'>Floor Slots</span>",
+                    html: table,
+                    icon: "info",
+                    confirmButtonText: "Close",
+                    customClass: {
+                        title: "cool-title",
+                        content: "cool-content",
+                        confirmButton: "btn btn-primary"
+                    }
+                });
+
+                const searchInput = document.getElementById("searchInput");
+                const tableBody = document.getElementById("tableBody");
+
+                searchInput.addEventListener("input", () => {
+                    const searchTerm = searchInput.value.toLowerCase();
+
+                    // Filter the table rows based on the search query
+                    Array.from(tableBody.children).forEach(row => {
+                        const name = row.children[0].textContent.toLowerCase();
+
+                        if (name.includes(searchTerm)) {
+                            row.style.display = "";
+                        } else {
+                            row.style.display = "none";
+                        }
+                    });
+                });
+            } else {
+                Swal.fire({
+                    title: "<span class='text-primary'>Floor Slots</span>",
+                    text: "No floor slots available for the selected floor.",
+                    icon: "info",
+                    confirmButtonText: "Close",
+                    customClass: {
+                        title: "cool-title",
+                        content: "cool-content",
+                        confirmButton: "btn btn-primary"
+                    }
+                });
+            }
+        })
+        .catch(error => {
+            Swal.fire({
+                title: "<span class='text-danger'>Error</span>",
+                html: `Failed to retrieve floor slots: <span class='text-danger'>${error.message}</span>`,
+                icon: "error",
+                confirmButtonText: "Ok",
+                customClass: {
+                    title: "cool-title",
+                    content: "cool-content",
+                    confirmButton: "btn btn-danger"
+                }
+            });
+        });
+}
+
+function updateSlot(slotId) {
+    const form = `
+        <form>
+            <div class="d-flex justify-content-between">
+                <div class="form-group d-flex flex-column align-items-start">
+                    <label for="shadow mb-2">Shadow:</label>
+                    <div class="btn-group btn-group-toggle mt-3" data-toggle="buttons">
+                        <label for="shadow1" class="btn btn-custom active" style="background-color: #3498db; color: #fff; border-color: #3498db; box-shadow: none;">
+                            <input type="radio" name="shadow" id="shadow1" value="1" autocomplete="off" checked> Yes
+                        </label>
+                        <label for="shadow2" class="btn btn-custom" style="background-color: #3498db; color: #fff; border-color: #3498db; box-shadow: none;">
+                            <input type="radio" name="shadow" id="shadow2" value="0" autocomplete="off"> No
+                        </label>
+                    </div>
+                </div>
+            
+                <div class="form-group d-flex flex-column align-items-start">
+                    <label for="status">Active:</label>
+                    <div class="btn-group btn-group-toggle mt-3" data-toggle="buttons">
+                        <label for="status1" class="btn btn-custom active" style="background-color: #3498db; color: #fff; border-color: #3498db; box-shadow: none;">
+                            <input type="radio" name="status" id="status1" value="1" autocomplete="off" checked> Yes
+                        </label>
+                        <label for="status2" class="btn btn-custom" style="background-color: #3498db; color: #fff; border-color: #3498db; box-shadow: none;">
+                            <input type="radio" name="status" id="status2" value="0" autocomplete="off"> No
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" onclick="submitUpdate(${slotId}, event)">Update</button>
+        </form>
+    `;
+
+    Swal.fire({
+        title: "<span class='text-primary'>Update Slot</span>",
+        html: form,
+        showCancelButton: false,
+        showConfirmButton: false,
+        customClass: {
+            title: "cool-title",
+            content: "cool-content"
+        }
+    });
+}
+
+function submitUpdate(slotId, event) {
+    event.preventDefault(); // Prevent page refresh
+
+    const shadowValue = document.querySelector('input[name="shadow"]:checked').value;
+    const statusValue = document.querySelector('input[name="status"]:checked').value;
+
+    const data = {
+        shadow: shadowValue,
+        status: statusValue
+    };
+    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+
+   
+       
+
+    fetch(`/floorslots/${slotId}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken,
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then(result => {
+            Swal.fire({
+                title: "<span class='text-success'>Success</span>",
+                html: "Slot updated successfully.",
+                icon: "success",
+                confirmButtonText: "Ok",
+                customClass: {
+                    title: "cool-title",
+                    content: "cool-content",
+                    confirmButton: "btn btn-success"
+                }
+            });
+        })
+        .catch(error => {
+            Swal.fire({
+                title: "<span class='text-danger'>Error</span>",
+                html: `Failed to update slot: <span class='text-danger'>${error.message}</span>`,
+                icon: "error",
+                confirmButtonText: "Ok",
+                customClass: {
+                    title: "cool-title",
+                    content: "cool-content",
+                    confirmButton: "btn btn-danger"
+                }
+            });
+        });
+}
