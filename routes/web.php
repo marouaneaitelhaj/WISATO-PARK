@@ -14,6 +14,13 @@
 Route::get('read/cat', 'CategoryController@get');
 Route::resource('side', 'SideController');
 
+Route::resource('floorslots', 'FloorSlotController')->except(['show']);
+
+
+Route::resource('floor', 'FloorController')->except(['show']);
+
+
+
 Route::resource('team', ControlOperatorController::class);
 Route::get('manage-team', 'ControlOperatorController@manage')->name('team.manage');
 Route::post('manage-team', 'ControlOperatorController@storemanage')->name('team.manage');

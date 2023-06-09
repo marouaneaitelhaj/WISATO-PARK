@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -7,15 +8,120 @@ use App\Models\Floor;
 
 class FloorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->wantsJson()) {
+            $limit = 10;
+            $page = 1;
+            $search = [];
+            $where = [];
+            $with = ['parkzone'];
+            $orderBy = [];
+
+            if ($request->input('length')) {
+                $limit = $request->input('length');
+            }
+
+            if ($request->input('order')[0]['column'] != 0) {
+                $column_name = $request->input('columns')[$request->input('order')[0]['column']]['name'];
+                $level = $request->input('columns')[$request->input('order')[0]['column']]['level'];
+                $sort = $request->input('order')[0]['dir'];
+                $orderBy['parkzone.name'] = $sort;
+                
+            }
+
+            if ($request->input('start')) {
+                $page = floor($request->input('start') / $limit) + 1;
+            }
+
+            if ($request->input('search') && $request->input('search')['value'] != "") {
+                $search['level'] = $request->input('search')['value'];
+            }
+
+            if ($request->input('where')) {
+                $where = $request->input('where');
+            }
+
+            $query = Floor::query()->with($with);
+
+            if (!empty($search['level'])) {
+                $query->where('level', 'LIKE', '%' . $search['level'] . '%');
+            }
+
+            $totalRecords = $query->count();
+
+            foreach ($orderBy as $column => $direction) {
+                if ($column === 'parkzone.name') {
+                    $query->join('parkzones', 'floors.parkzone_id', '=', 'parkzones.id')
+                        ->orderBy('parkzones.name', $direction);
+                } else {
+                    $query->orderBy($column, $direction);
+                }
+            }
+
+            $query->limit($limit)->offset(($page - 1) * $limit);
+
+            $data = $query->get();
+
+            $formattedData = [
+                'data' => $data,
+                'recordsTotal' => $totalRecords,
+                'recordsFiltered' => $totalRecords,
+                'draw' => $request->input('draw'),
+            ];
+
+            return response()->json($formattedData);
+        }
+
+        return view('content.floor.index');
     }
+
+
+
+
+
+    // public function index(Request  $request)
+    // {
+
+    //     if ($request->wantsJson()) {
+    //         $categories = new Floor();
+    //         $limit = 10;
+    //         $offset = 0;
+    //         $search = [];
+    //         $where = [];
+    //         $with = ['parkzone'];
+    //         $join = [];
+    //         $orderBy = [];
+    
+    //         if ($request->input('length')) {
+    //             $limit = $request->input('length');
+    //         }
+    //         // dd($request->all());
+    //         if ($request->input('order')[0]['column'] != 0) {
+    //             $column_name = $request->input('columns')[$request->input('order')[0]['column']]['name'];
+    //             $sort = $request->input('order')[0]['dir'];
+    //             $orderBy[$column_name] = $sort;
+    //         }
+
+    //         if ($request->input('start')) {
+    //             $offset = $request->input('start');
+    //         }
+
+    //         if ($request->input('search') && $request->input('search')['value'] != "") {
+    //             $search['level'] = $request->input('search')['value'];
+    //         }
+
+    //         if ($request->input('where')) {
+    //             $where = $request->input('where');
+    //         }
+
+    //         $categories = $categories->getDataForDataTable($limit, $offset, $search, $where, $with, $join, $orderBy,  $request->all());
+    //         return response()->json($categories);
+    //     }
+    //     return view('content.floor.index');
+    // }
+    
+
 
     /**
      * Show the form for creating a new resource.
@@ -38,20 +144,27 @@ class FloorController extends Controller
         $validated = $request->validate([
             'parkzone_id' => 'required',
             'level' => 'required|array',
+            'shadow' => 'nullable|array',
+            'status' => 'nullable|array',
         ]);
-
+    
         $parkzoneId = $validated['parkzone_id'];
         $levels = $validated['level'];
-
-        foreach ($levels as $level) {
+        $shadows = $validated['shadow'] ?? [];
+        $statuses = $validated['status'] ?? [];
+    
+        foreach ($levels as $index => $level) {
             $floor = new Floor();
             $floor->parkzone_id = $parkzoneId;
             $floor->level = $level;
+            $floor->shadow = isset($shadows[$index]) ? $shadows[$index] : null;
+            $floor->status = isset($statuses[$index]) ? $statuses[$index] : null;
             $floor->save();
         }
-
+    
         return response()->json(['message' => 'Floors created successfully']);
     }
+    
 
 
     /**

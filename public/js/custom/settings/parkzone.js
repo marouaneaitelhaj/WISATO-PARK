@@ -117,6 +117,9 @@ function agentslist(id) {
   });
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////// majidisimo /////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////
 
 function createFloor(parkzoneId) {
   Swal.fire({
@@ -136,6 +139,23 @@ function createFloor(parkzoneId) {
       '<option value="-2">Underground</option>' +
       '<option value="-3">Underground 2</option>' +
       '</select>' +
+      '</div>' +
+      '<div class="form-group">' +
+      '<label for="shadow" class="">Shadow:</label>' +
+      '<hr>' +
+      '<select class="form-select" id="shadow" name="shadow">' +
+      '<option value="yes">No Shadow</option>' +
+      '<option value="no">Shadow</option>' +
+      '</select>' +
+      '</div>' +
+      '<div class="form-group">' +
+      '<label for="status" class="">Status:</label>' +
+      '<hr>' +
+      '<select class="form-select" id="status" name="status">' +
+      '<option value="yes">Inactive</option>' +
+      '<option value="no">Active</option>' +
+      '</select>' +
+      '</div>' +
       '</form>',
 
     showCancelButton: true,
@@ -147,26 +167,31 @@ function createFloor(parkzoneId) {
       if (levels.length === 0) {
         Swal.showValidationMessage('Please select at least one level');
       }
-      return { levels: levels };
+      return {
+        levels: levels,
+        shadow: Swal.getPopup().querySelector('#shadow').value,
+        status: Swal.getPopup().querySelector('#status').value
+      };
     }
     
   }).then((result) => {
     if (!result.dismiss && result.value) {
       const levels = result.value.levels;
+      const shadow = result.value.shadow;
+      const status = result.value.status;
+      
       const formData = new FormData();
       formData.append('parkzone_id', parkzoneId);
       levels.forEach((level) => {
         formData.append('level[]', level);
+        formData.append('shadow[]', shadow);
+        formData.append('status[]', status);
       });
-
-
 
       var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-
       $.ajax({
         url: route("parkzones.store"),
-
         method: 'POST',
         headers: {
           'X-CSRF-TOKEN': csrfToken
@@ -196,6 +221,9 @@ function createFloor(parkzoneId) {
     }
   });
 }
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////// marwaneaitelhaj /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -250,7 +278,7 @@ function openLeftSide(parkzoneId) {
     // Access the form values
     const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
       
-    fetch("side", {
+    fetch("floor.store", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

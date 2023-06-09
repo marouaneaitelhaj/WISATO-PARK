@@ -2422,6 +2422,14 @@ var Ziggy = {
       "uri": "team",
       "methods": ["GET", "HEAD"]
     },
+    "floor.index": {
+      "uri": "floor",
+      "methods": ["GET", "HEAD"]
+    },
+    "floorslots.store": {
+      "uri": "floorslots",
+      "methods": ["POST"],
+    },
     "category.create": {
       "uri": "category\/create",
       "methods": ["GET", "HEAD"]
@@ -2661,7 +2669,7 @@ var Ziggy = {
       "uri": "parkzones\/store",
       "methods": ["POST"]
     },
-
+    
   }
 };
 if (typeof window !== 'undefined' && typeof window.Ziggy !== 'undefined') {
