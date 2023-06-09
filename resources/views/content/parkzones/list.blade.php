@@ -6,7 +6,7 @@
 
 
 @section('content')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<input type="checkbox" checked data-toggle="toggle">
 <div class="container-fluid mb100">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -43,9 +43,12 @@
         </div>
     </div>
 </div>
+
+
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/custom/settings/parkzone.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="{{ asset('js/custom/settings/parkzone.js') }}"></script>
 @endpush

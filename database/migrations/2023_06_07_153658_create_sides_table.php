@@ -18,7 +18,9 @@ class CreateSidesTable extends Migration
             $table->unsignedBigInteger('parkzone_id');
             $table->foreign('parkzone_id')->references('id')->on('parkzones')->onDelete('cascade');
             $table->string('side');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
+            $table->unique(['parkzone_id', 'side']);
         });
     }
 
