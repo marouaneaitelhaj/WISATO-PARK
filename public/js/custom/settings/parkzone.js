@@ -1,3 +1,4 @@
+
 var arr = [];
 var html = "";
 
@@ -241,22 +242,30 @@ function createSide(parkzoneId) {
     title: "Create Side",
     html:
       '<meta name="csrf-token" content="{{ csrf_token() }}">' +
-      '<div class="form-group d-flex align-items-center justify-content-around">' +
-      '<div class=" form-check form-switch align-items-center form-group d-flex  flex-column">' +
+      '<div class="form-group d-flex flex-column align-items-center justify-content-around">' +
+      '<div class="  align-items-center form-group d-flex">' +
+      "<div>" +
       '<button type="button" class="btn btn-primary" onclick="openLeftSide(' +
       parkzoneId +
       ')">Left Side</button>' +
+      "</div>" +
+      '<div class=" form-switch">' +
       '<input type="checkbox" id="leftactive" disabled onchange="leftactive(' +
       parkzoneId +
       ')" class="form-check-input" checked data-toggle="toggle">' +
       "</div>" +
-      '<div class="form-group  form-check form-switch align-items-center d-flex flex-column">' +
+      "</div>" +
+      '<div class="form-group   align-items-center d-flex ">' +
+      "<div>" +
       '<button type="button" class="btn btn-primary" onclick="openRightSide(' +
       parkzoneId +
       ')">Right Side</button>' +
+      "</div>" +
+      '<div class=" form-switch">' +
       '<input class="form-check-input"  onchange="rightactive(' +
       parkzoneId +
       ')"  id="rightactive"  disabled type="checkbox" checked data-toggle="toggle">' +
+      "</div>" +
       "</div>" +
       "</div>",
     showConfirmButton: false,
@@ -302,27 +311,40 @@ function openLeftSide(parkzoneId) {
         'meta[name="csrf-token"]'
       ).content;
 
-      fetch("side", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-TOKEN": csrfToken,
-        },
-        body: jsonFormValues,
-      });
+      // fetch("side", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     "X-CSRF-TOKEN": csrfToken,
+      //   },
+      //   body: jsonFormValues,
+      // });
+      axios
+        .post("side", jsonFormValues, {
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken,
+          },
+        })
+        .then(function (response) {
+          console.log(response);
+          Swal.fire({
+            title: "Side Created",
+            text: "The side has been created successfully.",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+          Swal.fire({
+            title: "Error",
+            text: "An error occurred while creating the side.",
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
+        });
     },
-  }).then((result) => {
-    if (result.value) {
-      Swal.fire({
-        title: "Floor Created",
-        text: "The floor has been created successfully.",
-        icon: "success",
-        confirmButtonText: "Ok",
-      }).then(() => {
-        // Refresh the page or perform any other desired action
-        location.reload();
-      });
-    }
   });
 }
 function readcat() {
@@ -384,28 +406,32 @@ function openRightSide(parkzoneId) {
       const csrfToken = document.head.querySelector(
         'meta[name="csrf-token"]'
       ).content;
-
-      fetch("side", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-TOKEN": csrfToken,
-        },
-        body: jsonFormValues,
-      });
+      axios
+        .post("side", jsonFormValues, {
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken,
+          },
+        })
+        .then(function (response) {
+          console.log(response);
+          Swal.fire({
+            title: "Side Created",
+            text: "The side has been created successfully.",
+            icon: "success",
+            confirmButtonText: "Ok",
+          });
+        })
+        .catch(function (error) {
+          console.log(error);
+          Swal.fire({
+            title: "Error",
+            text: "An error occurred while creating the side.",
+            icon: "error",
+            confirmButtonText: "Ok",
+          });
+        });
     },
-  }).then((result) => {
-    if (result.value) {
-      Swal.fire({
-        title: "Floor Created",
-        text: "The floor has been created successfully.",
-        icon: "success",
-        confirmButtonText: "Ok",
-      }).then(() => {
-        // Refresh the page or perform any other desired action
-        location.reload();
-      });
-    }
   });
 }
 function leftactive(parkzoneId) {

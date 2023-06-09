@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Parkzone;
 use Illuminate\Http\Request;
 use App\Models\Sides;
 use App\Models\Side_slot;
@@ -76,17 +77,34 @@ class SideController extends Controller
     {
         $parkzone_id = $request->parkzone_id;
         $side = $request->side;
+        $check = Sides::where('parkzone_id', $parkzone_id)->where('side', $side)->first();
+        if ($check != null) {
+            $parkzone = Parkzone::find($parkzone_id)->first();
+            if($parkzone->in_use == 0){
+                $check->delete();
+            }else{
+                $message = 'Side already exist, and you can not delete it because the parkzone is in use';
+                return response()->json($message, 404);
+            }
+        }
         $sides = new Sides;
         $sides->parkzone_id = $parkzone_id;
         $sides->side = $side;
         $sides->save();
         foreach ($request->all() as $index => $value) {
-            $Side_slot_number = new Side_slot_number;
-            $Side_slot_number->side_id = $sides->id;
-            $Side_slot_number->slot_number = $value;
-            $Side_slot_number->category_id = $index;
-            $Side_slot_number->save();
             if ($index !== 'parkzone_id' && $index !== 'side') {
+                $check = Side_slot_number::where('side_id', $sides->id)->where('category_id', $index)->first();
+                if ($check != null) {
+                    $check->delete();
+                }
+                $Side_slot_number = new Side_slot_number;
+                $Side_slot_number->side_id = $sides->id;
+                if($value == null){
+                    $value = 0;
+                }
+                $Side_slot_number->slot_number = $value;
+                $Side_slot_number->category_id = $index;
+                $Side_slot_number->save();
                 for ($i = 0; $i < $value; $i++) {
                     $side_slot = new Side_slot;
                     $side_slot->side_id = $sides->id;
@@ -96,6 +114,8 @@ class SideController extends Controller
                 }
             }
         }
+        $message = 'Side is created';
+        return response()->json($message, 200);
     }
 
     /**
@@ -145,7 +165,7 @@ class SideController extends Controller
     public function toogleactive(Request $request)
     {
         $sides =  Sides::where('side', $request->side)->where('parkzone_id', $request->parkzoneId)->first();
-        if($sides != null){
+        if ($sides != null) {
             if ($sides->is_active == 1) {
                 $sides->is_active = 0;
                 $sides->save();
@@ -157,22 +177,23 @@ class SideController extends Controller
                 $message = 'Side is activated';
                 return response()->json($message, 200);
             }
-        }else{
+        } else {
             $message = 'Side not found';
             return response()->json($message, 404);
         }
     }
-    public function check_if_side_is_activ(Request $request){
+    public function check_if_side_is_activ(Request $request)
+    {
         $side = Sides::where('side', $request->side)->where('parkzone_id', $request->parkzoneId)->first();
-        if($side != null){
-            if($side->is_active == 1){
+        if ($side != null) {
+            if ($side->is_active == 1) {
                 $message = 'active';
                 return response()->json($message, 200);
-            }else{
+            } else {
                 $message = 'notactive';
                 return response()->json($message, 200);
             }
-        }else{
+        } else {
             $message = 'notfound';
             return response()->json($message, 404);
         }
