@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Sides;
 use App\Models\Side_slot;
+use App\Models\Side_slot_number;
 
 class SideController extends Controller
 {
@@ -22,7 +23,7 @@ class SideController extends Controller
             $offset = 0;
             $search = [];
             $where = [];
-            $with = ['side_slots'];
+            $with = ['side_slots', 'parkzone', 'side_slot_numbers'];
             $join = [];
             $orderBy = [];
 
@@ -79,8 +80,12 @@ class SideController extends Controller
         $sides->parkzone_id = $parkzone_id;
         $sides->side = $side;
         $sides->save();
-
         foreach ($request->all() as $index => $value) {
+            $Side_slot_number = new Side_slot_number;
+            $Side_slot_number->side_id = $sides->id;
+            $Side_slot_number->slot_number = $value;
+            $Side_slot_number->category_id = $index;
+            $Side_slot_number->save();
             if ($index !== 'parkzone_id' && $index !== 'side') {
                 for ($i = 0; $i < $value; $i++) {
                     $side_slot = new Side_slot;
@@ -136,5 +141,40 @@ class SideController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function toogleactive(Request $request)
+    {
+        $sides =  Sides::where('side', $request->side)->where('parkzone_id', $request->parkzoneId)->first();
+        if($sides != null){
+            if ($sides->is_active == 1) {
+                $sides->is_active = 0;
+                $sides->save();
+                $message = 'Side is deactivated';
+                return response()->json($message, 200);
+            } else {
+                $sides->is_active = 1;
+                $sides->save();
+                $message = 'Side is activated';
+                return response()->json($message, 200);
+            }
+        }else{
+            $message = 'Side not found';
+            return response()->json($message, 404);
+        }
+    }
+    public function check_if_side_is_activ(Request $request){
+        $side = Sides::where('side', $request->side)->where('parkzone_id', $request->parkzoneId)->first();
+        if($side != null){
+            if($side->is_active == 1){
+                $message = 'active';
+                return response()->json($message, 200);
+            }else{
+                $message = 'notactive';
+                return response()->json($message, 200);
+            }
+        }else{
+            $message = 'notfound';
+            return response()->json($message, 404);
+        }
     }
 }

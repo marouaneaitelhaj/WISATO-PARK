@@ -23,4 +23,8 @@ class Sides extends Model
     {
         return $this->hasMany(Side_slot::class, 'side_id');
     }
+    public function side_slot_numbers()
+    {
+        return $this->hasMany(Side_slot_number::class, 'side_id');
+    }
 }

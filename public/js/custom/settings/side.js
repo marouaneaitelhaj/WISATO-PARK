@@ -18,8 +18,8 @@
                     class: "no-sort",
                     width: "50px",
                 },
-                { title: "Type", name: "type", data: "type" },
-                { title: "Description", name: "description", data: "description" },
+                { title: "side", name: "side", data: "side" },
+                { title: "parkzone", name: "parkzone", data: "parkzone.name" },
                 {
                     title: "Status",
                     name: "status",
@@ -30,8 +30,10 @@
                 },
                 {
                     title: "Option",
-                    data: "id",
-                    class: "text-end width-5-per",
+                    render: function (data, type, row) {
+                        let $return = "";
+                        
+                    },
                 },
             ],
 
