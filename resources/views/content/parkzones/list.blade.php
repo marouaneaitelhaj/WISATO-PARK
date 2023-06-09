@@ -26,6 +26,8 @@
     </div>
 </div>
 
+
+
 <div id="exampleModalLive" class="d-none modal fade show" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" style="padding-right: 17px; display: block;">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

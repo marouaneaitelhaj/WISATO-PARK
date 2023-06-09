@@ -56,6 +56,9 @@ class Parkzone extends Model
     {
         return $this->hasMany('App\Models\AgentInparkzone');
     }
-    
+    public function floor()
+    {
+        return $this->hasMany('App\Models\Floor');
+    }
 
 }
