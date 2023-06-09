@@ -2430,6 +2430,14 @@ var Ziggy = {
       "uri": "floorslots",
       "methods": ["POST"],
     },
+    "floorslots.show": {
+      "uri": "floorslots}",
+      "methods": ["GET", "HEAD"],
+    },
+    "floorslots.update": {
+      "uri": "floorslots/{slotId}",
+      "methods": ["PUT", "PATCH"],
+    },
     "category.create": {
       "uri": "category\/create",
       "methods": ["GET", "HEAD"]

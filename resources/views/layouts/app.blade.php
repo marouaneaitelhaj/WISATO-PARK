@@ -33,6 +33,7 @@
         <link rel="stylesheet" href="{{ asset('css/site.css') }}" />
         <!-- End layout styles -->
         <link rel="icon" type="image/png" href="{{ asset('img/park.png') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
 
 
         @stack('css')

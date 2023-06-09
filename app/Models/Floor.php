@@ -24,5 +24,10 @@ class Floor extends Model
     {
         return $this->belongsTo(Parkzone::class, 'parkzone_id');
     }
+    public function floorSlots()
+{
+    return $this->hasMany(FloorSlot::class);
+}
+
 
 }

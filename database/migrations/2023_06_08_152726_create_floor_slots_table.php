@@ -13,6 +13,8 @@ class CreateFloorSlotsTable extends Migration
             $table->unsignedBigInteger('floor_id');
             $table->unsignedBigInteger('categorie_id');
             $table->string('name');
+            $table->string('shadow')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
 
             $table->foreign('floor_id')->references('id')->on('floors')->onDelete('cascade');

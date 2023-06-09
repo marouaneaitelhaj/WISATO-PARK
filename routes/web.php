@@ -17,7 +17,7 @@ Route::post('toogleactive', 'SideController@toogleactive');
 Route::post('toogleslotside', 'SideController@toogleslotside');
 Route::post('check_if_side_is_activ', 'SideController@check_if_side_is_activ');
 
-Route::resource('floorslots', 'FloorSlotController')->except(['show']);
+Route::resource('floorslots', 'FloorSlotController');
 
 
 Route::resource('floor', 'FloorController')->except(['show']);

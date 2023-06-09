@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\FloorSlot;
 use App\Models\CountFloorCat;
+use App\Models\Floor;
 
 class FloorSlotController extends Controller
 {
@@ -77,7 +78,14 @@ class FloorSlotController extends Controller
     
         return response()->json(['message' => 'Floor slots created successfully', 'floors' => $floors]);
     }
-    
+//     public function showSlots($floorId)
+// {
+//     $floor = Floor::findOrFail($floorId);
+//     $slots = $floor->floorSlots;
+
+//     return response()->json($slots);
+// }
+
 
 
     
@@ -88,9 +96,17 @@ class FloorSlotController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($floorId)
     {
-        //
+        $floor = Floor::findOrFail($floorId);
+    $slots = $floor->floorSlots;
+
+    if ($slots) {
+        return response()->json($slots->toArray());
+    } else {
+        return response()->json([]);
+    }
+
 
     }
 
@@ -114,7 +130,12 @@ class FloorSlotController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $slot = FloorSlot::findOrFail($id);
+        $slot->shadow = $request->input('shadow');
+        $slot->status = $request->input('status');
+        $slot->save();
+
+        return response()->json(['message' => 'Slot updated successfully', 'slot' => $slot]);
     }
 
     /**
