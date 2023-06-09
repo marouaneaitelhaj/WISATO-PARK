@@ -22,8 +22,8 @@ class CreateControlOperatorsTable extends Migration
             $table->timestamps();
             
             // Foreign key constraints
-            $table->foreign('operator')->references('id')->on('users');
-            $table->foreign('agent')->references('id')->on('users');
+            $table->foreign('operator')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('agent')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -23,8 +23,8 @@ class CreateCountFloorCatTable extends Migration
             $table->timestamps();
 
             // Define foreign key constraints if necessary
-            $table->foreign('floor_id')->references('id')->on('floors');
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreign('floor_id')->references('id')->on('floors')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 
