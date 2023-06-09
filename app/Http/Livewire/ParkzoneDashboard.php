@@ -14,7 +14,9 @@ class ParkzoneDashboard extends Component
     public $quartiers;
     public $categories;
     public $parkzones = [];
+    public $parkzone = [];
     public $selectedQuartier = null;
+    public $selectedParkzone = null;
     public $totalSlots = 0;
 
     public function mount()
@@ -42,9 +44,6 @@ class ParkzoneDashboard extends Component
             $this->parkzones = Parkzone::where('status', 1)
                 ->where('quartier_id', $quartier_id)
                 ->with('quartier')
-                ->with(['slots' => function ($query) {
-                    $query->with('category');
-                }])
                 ->get();
             return;
         }
@@ -54,10 +53,8 @@ class ParkzoneDashboard extends Component
             })
             ->where('quartier_id', $quartier_id)
             ->with('quartier')
-            ->with(['slots' => function ($query) {
-                $query->with('category');
-            }])
             ->get();
+        $this->parkzone = $this->parkzones[0];
     }
 
     public function getNumberOfSlots($parkzone_id, $category_id)
@@ -76,6 +73,18 @@ class ParkzoneDashboard extends Component
         }
         $totalSlots = $available + $unavailable;
         return ['totalSlots' => $totalSlots, 'available' => $available, 'unavailable' => $unavailable];
+    }
+
+    // if selectedParkzone is changed
+    public function updatedSelectedParkzone($index)
+    {
+        $parkzone_id = $this->parkzones[$index]->id;
+        $type = $this->parkzones[$index]->type;
+        $this->parkzone = Parkzone::where('id', $parkzone_id)
+            ->with('quartier')
+            ->first();
+        $this->parkzone->slots = $this->parkzone->slots($type)->get();
+        dd($this->parkzone->slots);
     }
 
 

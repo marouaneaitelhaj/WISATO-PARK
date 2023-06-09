@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Mockery\Matcher\Type;
 
 class Parkzone extends Model
 {
@@ -26,9 +27,13 @@ class Parkzone extends Model
     public function category(){
         return $this->hasMany('App\Models\Category', 'category_wise_parkzone_slot', 'parkzone_id', 'category_id');
     }
-    public function slots()
+    public function slots($type = 'standard')
     {
-        return $this->hasMany('App\Models\CategoryWiseParkzoneSlot');
+        if ($type == 'standard') {
+            return $this->hasMany('App\Models\CategoryWiseParkzoneSlot');
+        } else {
+            return $this->sides();
+        }
     }
     public function Quartier()
     {
