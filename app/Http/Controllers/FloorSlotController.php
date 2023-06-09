@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FloorSlot;
+use App\Models\CountFloorCat;
 
 class FloorSlotController extends Controller
 {
@@ -33,30 +34,50 @@ class FloorSlotController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-public function store(Request $request)
-{
-    $categories = $request->input('categories', []);
-    $floors = [];
-
-    $startNumber = 1;
-
-    foreach ($categories as $category) {
-        $floorSlot = new FloorSlot();
-        $floorSlot->floor_id = $category['floor_id'];
-        $floorSlot->categorie_id = $category['category_id'];
-        
-        $name = sprintf('%02d', $startNumber);
-        $floorSlot->name = $name;
-        $startNumber++;
-
-        $floorSlot->save();
-
-        $floors[] = $floorSlot;
+    public function store(Request $request)
+    {
+        $categories = $request->input('categories', []);
+        $floors = [];
+    
+        $startNumber = 1;
+    
+        foreach ($categories as $category) {
+            $floorSlot = new FloorSlot();
+            $floorSlot->floor_id = $category['floor_id'];
+            $floorSlot->categorie_id = $category['category_id'];
+            
+            $name = sprintf('%02d', $startNumber);
+            $floorSlot->name = $name;
+            $startNumber++;
+    
+            $floorSlot->save();
+    
+            $floors[] = $floorSlot;
+        }
+    
+        foreach ($categories as $category) {
+            $categoryID = $category['category_id'];
+            $count = FloorSlot::where('categorie_id', $categoryID)->count();
+    
+            $existingEntry = CountFloorCat::where('floor_id', $category['floor_id'])
+                ->where('category_id', $categoryID)
+                ->first();
+    
+            if ($existingEntry) {
+                $existingEntry->count = $count;
+                $existingEntry->save();
+            } else {
+                CountFloorCat::create([
+                    'floor_id' => $category['floor_id'],
+                    'category_id' => $categoryID,
+                    'count' => $count,
+                ]);
+            }
+        }
+    
+        return response()->json(['message' => 'Floor slots created successfully', 'floors' => $floors]);
     }
-
-    return response()->json(['message' => 'Floor slots created successfully', 'floors' => $floors]);
-}
-
+    
 
 
     
@@ -70,11 +91,7 @@ public function store(Request $request)
     public function show($id)
     {
         //
-                // $validatedData = $request->validate([
-        //     'floor_id' => 'required',
-        //     'categorie_id' => 'required',
-        //     'name' => 'required',
-        // ]);
+
     }
 
     /**

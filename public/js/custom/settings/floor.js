@@ -22,6 +22,17 @@
                 { title: "Level", name: "level", data: "level" },
                 { title: "shadow", name: "shadow", data: "shadow" },
                 { title: "active", name: "status", data: "status" },
+                { 
+                    title: "showfloorslots",
+                    data: null,
+                    render: function (data, type, row) {
+                        return (
+                            '<button class="btn btn-primary" onclick="showfloorslots(\'' +
+                            row.id +
+                            "')\">Show Floor Slots</button>"
+                        );
+                    }
+                },
                 {
                     title: "Actions",
                     data: null,
