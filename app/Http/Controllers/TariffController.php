@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreTariffRequest;
 use App\Http\Requests\UpdateTariffRequest;
 use App\Models\Parking;
+use App\Models\Parkzone;
+use App\Models\Quartier;
+
+
 
 class TariffController extends Controller
 {
@@ -68,9 +72,13 @@ class TariffController extends Controller
      */
     public function create()
     {
-        $categories = Category::where('status',1)->get();
-        return view('content.tariff.create',['categories' => $categories]);
+        $categories = Category::where('status', 1)->get();
+        $parkzones = Parkzone::all();
+        $quartiers = Quartier::all(); // Fetch all quartiers
+        return view('content.tariff.create', ['categories' => $categories, 'parkzones' => $parkzones, 'quartiers' => $quartiers]);
     }
+    
+    
 
     /**
      * Store a newly created resource in storage.
