@@ -27,7 +27,7 @@ class CategoryWiseParkzoneSlotController extends Controller
             $offset = 0;
             $search = [];
             $where = [];
-            $with = ['createBy', 'parkzone' , 'category'];
+            $with = ['createBy', 'parkzone', 'category'];
             $join = [];
             $orderBy = [];
 
@@ -81,56 +81,18 @@ class CategoryWiseParkzoneSlotController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-        $validator = Validator::make($request->all(), [
-            'slot_name' => 'bail|required|min:1|max:5',
-            'identity' => 'bail|nullable|min:5',
-            'remarks' => 'bail|nullable|min:5',
-            'operator' => 'bail|required',
-        ]);
-
-        $validator->after(function ($validator) use ($request) {
-            $oldSlot =  CategoryWiseParkzoneSlot::where(['parkzone_id' => $request->parkzone_id, 'slot_name' => $request->slot_name])->count();
-            if ($oldSlot) {
-                $validator->errors()->add('slot_name', 'This slot name has been used.');
+        foreach ($request->all() as $key => $value) {
+            if ($key !== 'parkzone_id' && $key !== 'side') {
+                for ($i = 0; $i < $value; $i++) {
+                    $CategoryWiseParkzoneSlot = new CategoryWiseParkzoneSlot();
+                    $CategoryWiseParkzoneSlot->parkzone_id = $request->parkzone_id;
+                    $CategoryWiseParkzoneSlot->category_id = $key;
+                    $CategoryWiseParkzoneSlot->slot_name = $key . '-' . $i . '-' . $request->parkzone_id;
+                    $CategoryWiseParkzoneSlot->created_by = auth()->user()->id;
+                    $CategoryWiseParkzoneSlot->save();
+                }
             }
-        });
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
         }
-
-        // Create a new record in category_wise_parkzone_slots
-        $categoryWiseParkzoneSlot = new CategoryWiseParkzoneSlot();
-        $categoryWiseParkzoneSlot->identity = $request->identity;
-        $categoryWiseParkzoneSlot->remarks = $request->remarks;
-        $categoryWiseParkzoneSlot->parkzone_id = $request->parkzone_id;
-        $categoryWiseParkzoneSlot->slot_name = $request->slot_name;
-        $categoryWiseParkzoneSlot->slotId = random_int(10000, 99999);
-        $categoryWiseParkzoneSlot->created_by = auth()->id();
-        $categoryWiseParkzoneSlot->save();
-        // dd($request);
-        // Create a new record in operators_in_parks
-        foreach ($request->operator as $operatorId) {
-            $operatorInPark = new OperatorsInPark();
-            $operatorInPark->category_wise_parkzone_slot_id = $categoryWiseParkzoneSlot->id;
-            $operatorInPark->operator_id = $operatorId;
-            $operatorInPark->save();
-        }
-        // foreach ($request->category as $index => $category) {
-        //     if ($category != null) {
-        //         for ($i = 0; $i < intval($category); $i++) {
-        //             $category_category_wise_parkzone_slot = new CategoryWiseParkzoneSlot();
-        //             $category_category_wise_parkzone_slot->category_id = $cat;
-        //             $category_category_wise_parkzone_slot->slot_id = $categoryWiseParkzoneSlot->id;
-        //             $category_category_wise_parkzone_slot->save();
-        //         }
-        //     }
-        // }
-
-        return redirect()
-            ->route('parking_settings.index')
-            ->with(['flashMsg' => ['msg' => 'Parking slot successfully added.', 'type' => 'success']]);
     }
 
     /**

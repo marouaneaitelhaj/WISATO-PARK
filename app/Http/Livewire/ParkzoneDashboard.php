@@ -8,6 +8,9 @@ use App\Models\Parkzone;
 use App\Models\Category;
 use App\Models\Quartier;
 use App\Models\CategoryWiseParkzoneSlot;
+use App\Models\Side_slot;
+use App\Models\Sides;
+use App\View\Components\side;
 
 class ParkzoneDashboard extends Component
 {
@@ -57,34 +60,46 @@ class ParkzoneDashboard extends Component
         $this->parkzone = $this->parkzones[0];
     }
 
-    public function getNumberOfSlots($parkzone_id, $category_id)
+    public function getNumberOfSlots($parkzone_id, $parkzone_type, $category_id, $side = null)
     {
-        $slots = CategoryWiseParkzoneSlot::where('parkzone_id', $parkzone_id)
-            ->where('category_id', $category_id)
-            ->get();
-        $available = 0;
-        $unavailable = 0;
-        foreach ($slots as $slot) {
-            if ($slot->active_parking == null) {
-                $available++;
-            } else {
-                $unavailable++;
+        $this->selectedParkzone = -9;
+        if ($parkzone_type == 'standard') {
+            $slots = CategoryWiseParkzoneSlot::where('parkzone_id', $parkzone_id)
+                ->where('category_id', $category_id)
+                ->get();
+            $available = 0;
+            $unavailable = 0;
+            foreach ($slots as $slot) {
+                if ($slot->active_parking == null) {
+                    $available++;
+                } else {
+                    $unavailable++;
+                }
             }
+            $totalSlots = $available + $unavailable;
+            return ['totalSlots' => $totalSlots, 'available' => $available, 'unavailable' => $unavailable];
+        } elseif ($parkzone_type == 'side') {
+            $slots = Sides::where('parkzone_id', $parkzone_id)
+                ->where('side', $side)
+                ->with('side_slots')
+                ->get();
+            dd($side);
+            return ['totalSlots' => 0, 'available' => 0, 'unavailable' => 0];
+        } elseif ($parkzone_type == 'floor') {
         }
-        $totalSlots = $available + $unavailable;
-        return ['totalSlots' => $totalSlots, 'available' => $available, 'unavailable' => $unavailable];
     }
 
     // if selectedParkzone is changed
     public function updatedSelectedParkzone($index)
     {
+        $this->selectedParkzone = -9;
         $parkzone_id = $this->parkzones[$index]->id;
         $type = $this->parkzones[$index]->type;
         $this->parkzone = Parkzone::where('id', $parkzone_id)
             ->with('quartier')
             ->first();
         $this->parkzone->slots = $this->parkzone->slots($type)->get();
-        dd($this->parkzone->slots);
+        // dd($this->parkzone->slots);
     }
 
 

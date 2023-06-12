@@ -13,4 +13,8 @@ class Side_slot_number extends Model
         'slot_number',
         'category_id'
     ];
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
