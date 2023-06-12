@@ -72,8 +72,8 @@
             },
             language: {
                 paginate: {
-                    next: "&#8594;", // or '→'
-                    previous: "&#8592;", // or '←'
+                    next: "&#8594;", 
+                    previous: "&#8592;", 
                 },
             },
             columnDefs: [
