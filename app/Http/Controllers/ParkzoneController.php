@@ -64,6 +64,10 @@ class ParkzoneController extends Controller
 
         return view('content.parkzones.list');
     }
+    public function readApi(){
+        $parkzones = Parkzone::all();
+        return response()->json($parkzones);
+    }
 
     /**
      * Show the form for creating a new resource.

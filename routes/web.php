@@ -10,11 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+// web.php
 Route::get('read/cat', 'CategoryController@get');
 Route::resource('side', 'SideController');
 Route::post('toogleactive', 'SideController@toogleactive');
 Route::post('toogleslotside', 'SideController@toogleslotside');
+//showSide
+Route::get('showSide/{id}', 'SideController@showSide');
 Route::post('check_if_side_is_activ', 'SideController@check_if_side_is_activ');
 
 Route::resource('floorslots', 'FloorSlotController');
@@ -126,3 +128,4 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 // Route::get('/team', function () {
 // 	return view('content.team.create');
 // })->name('team');
+// api

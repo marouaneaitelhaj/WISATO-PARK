@@ -40,6 +40,11 @@
               '<i class="fa fa-trash" onclick="deleteside(' +
               row.id +
               ')" id="deleteSide" style="cursor:pointer;"></i>';
+            // shadow icon
+            html +=
+              '<i class="fa fa-sun" onclick="viewside(' +
+              row.id +
+              ')" id="viewSide" style="cursor:pointer;margin-left:10px;"></i>';
             return html;
           },
         },
@@ -117,10 +122,10 @@ function editside(id) {
         ')"  value="' +
         response.data[i].id +
         '" ';
-        if (response.data[i].is_active == 1) {
-            html += 'checked';
-        }
-        html +='></td></tr>';
+      if (response.data[i].is_active == 1) {
+        html += "checked";
+      }
+      html += "></td></tr>";
     }
     html += "</tbody></table>";
     Swal.fire({
@@ -148,4 +153,21 @@ function toogleactive(id) {
         timer: 1500,
       });
     });
+}
+function viewside(id) {
+  axios.get("showSide/" + id).then((response) => {
+    var html = "";
+    html +=
+      '<table class="table table-striped"> <thead> <tr> <th>Category</th> <th>Shadow</th><tbody id="tableBody">';
+    for (var i = 0; i < response.data.side_slot_numbers.length; i++) {
+            html += '<tr><td>' + response.data.side_slot_numbers[i].category.type + '</td><td>'+
+            
+            '</td></tr>';
+    }
+    html += "</tbody></table>";
+    Swal.fire({
+        title: "View Side",
+        html: html,
+    });
+  });
 }

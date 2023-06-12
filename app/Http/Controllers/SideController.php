@@ -129,6 +129,11 @@ class SideController extends Controller
         $side_slot = Side_slot::where('side_id', $id)->get();
         return response()->json($side_slot, 200);
     }
+    public function showSide($id)
+    {
+        $side = Sides::where('parkzone_id', $id)->with('side_slot_numbers')->first();
+        return response()->json($side, 200);
+    }
 
     /**
      * Show the form for editing the specified resource.
