@@ -33,9 +33,7 @@
     </div>
 
     <div class="w-100">
-
         @if($parkzone != null)
-        {{$parkzone->type}}
         @if($parkzone->type == 'standard')
         @component('components.standard', ['parkzone' => $parkzone, 'categories' => $categories])
         @endcomponent

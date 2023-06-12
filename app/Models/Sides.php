@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sides extends Model
 {
     use HasFactory;
-	use ModelCommonMethodTrait;
+    use ModelCommonMethodTrait;
     // table name
     protected $table = 'sides';
     protected $fillable = [
@@ -19,9 +19,13 @@ class Sides extends Model
     {
         return $this->belongsTo(Parkzone::class);
     }
-    public function side_slots()
+    public function side_slots($Category = null)
     {
-        return $this->hasMany(Side_slot::class, 'side_id');
+        if ($Category == null) {
+            return $this->hasMany(Side_slot::class, 'side_id');
+        }else{
+            return $this->hasMany(Side_slot::class, 'side_id')->where('category_id', $Category);
+        }
     }
     public function side_slot_numbers()
     {

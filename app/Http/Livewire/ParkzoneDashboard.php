@@ -8,6 +8,7 @@ use App\Models\Parkzone;
 use App\Models\Category;
 use App\Models\Quartier;
 use App\Models\CategoryWiseParkzoneSlot;
+use App\Models\Floor;
 use App\Models\Side_slot;
 use App\Models\Sides;
 use App\View\Components\side;
@@ -39,6 +40,11 @@ class ParkzoneDashboard extends Component
         }
         $this->categories = Category::all();
         // dd($this->categories);
+    }
+    public function getfloors($parkzone_id)
+    {
+        $floor = Floor::where('parkzone_id', $parkzone_id)->get();
+        return $floor;
     }
 
     public function updatedSelectedQuartier($quartier_id)
@@ -81,11 +87,23 @@ class ParkzoneDashboard extends Component
         } elseif ($parkzone_type == 'side') {
             $slots = Sides::where('parkzone_id', $parkzone_id)
                 ->where('side', $side)
-                ->with('side_slots')
-                ->get();
-            dd($side);
-            return ['totalSlots' => 0, 'available' => 0, 'unavailable' => 0];
+                ->first();
+
+            if ($slots == null) {
+                return ['totalSlots' => 0, 'available' => 0, 'unavailable' => 0];
+            }
+            // dd();
+            return ['totalSlots' => count($slots->side_slots($category_id)->get()), 'available' => 0, 'unavailable' => 0];
         } elseif ($parkzone_type == 'floor') {
+            $slots = Floor::where('parkzone_id', $parkzone_id)
+                ->with('floorSlots', function ($query) use ($category_id) {
+                    $query->where('categorie_id', $category_id);
+                })
+                ->first();
+            if ($slots == null) {
+                return ['totalSlots' => 0, 'available' => 0, 'unavailable' => 0];
+            }
+            return ['totalSlots' => count($slots->floorSlots), 'available' => 0, 'unavailable' => 0];
         }
     }
 
