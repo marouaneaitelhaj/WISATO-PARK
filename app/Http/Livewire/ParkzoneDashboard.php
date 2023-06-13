@@ -66,7 +66,7 @@ class ParkzoneDashboard extends Component
         $this->parkzone = $this->parkzones[0];
     }
 
-    public function getNumberOfSlots($parkzone_id, $parkzone_type, $category_id, $side = null)
+    public function getNumberOfSlots($parkzone_id, $parkzone_type, $category_id, $side = null, $floor_id = null)
     {
         $this->selectedParkzone = -9;
         if ($parkzone_type == 'standard') {
@@ -96,10 +96,12 @@ class ParkzoneDashboard extends Component
             return ['totalSlots' => count($slots->side_slots($category_id)->get()), 'available' => 0, 'unavailable' => 0];
         } elseif ($parkzone_type == 'floor') {
             $slots = Floor::where('parkzone_id', $parkzone_id)
-                ->with('floorSlots', function ($query) use ($category_id) {
-                    $query->where('categorie_id', $category_id);
+                ->with('floorSlots', function ($query) use ($category_id, $floor_id) {
+                    $query->where('floor_id', $floor_id)
+                        ->where('categorie_id', $category_id);
                 })
                 ->first();
+            echo '<script>console.log(' . $floor_id . ')</script>';
             if ($slots == null) {
                 return ['totalSlots' => 0, 'available' => 0, 'unavailable' => 0];
             }
