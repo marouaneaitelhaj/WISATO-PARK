@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 
 use App\Models\Parkzone;
+use App\Models\FloorSlot;
 use App\Models\Category;
 use App\Models\Quartier;
 use App\Models\CategoryWiseParkzoneSlot;
@@ -94,18 +95,11 @@ class ParkzoneDashboard extends Component
             }
             // dd();
             return ['totalSlots' => count($slots->side_slots($category_id)->get()), 'available' => 0, 'unavailable' => 0];
-        } elseif ($parkzone_type == 'floor') {
-            $slots = Floor::where('parkzone_id', $parkzone_id)
-                ->with('floorSlots', function ($query) use ($category_id, $floor_id) {
-                    $query->where('floor_id', $floor_id)
-                        ->where('categorie_id', $category_id);
-                })
-                ->first();
-            echo '<script>console.log(' . $floor_id . ')</script>';
-            if ($slots == null) {
-                return ['totalSlots' => 0, 'available' => 0, 'unavailable' => 0];
-            }
-            return ['totalSlots' => count($slots->floorSlots), 'available' => 0, 'unavailable' => 0];
+        } else {
+            $slots = FloorSlot::where('categorie_id', $category_id)
+                ->where('floor_id', $floor_id)
+                ->get();
+            return ['totalSlots' => count($slots), 'available' => 0, 'unavailable' => 0];
         }
     }
 
