@@ -30,6 +30,7 @@
                 { title: "Per Hour", name: "amount", data: "amount" },
                 { title: "Total Amount", name: "total_amount", data: "total_amount" },
                 { title: "Shadow Amount", name: "shadow_amount", data: "shadow_amount" },
+                { title: "Number of Hours", name: "number_hour", data: "number_hour" },
 
                 
 

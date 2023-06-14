@@ -121,19 +121,23 @@
                         
 
 
+                        
+
+
                         <div class="form-group row">
-                            <label for="24h_amount" class="col-md-4 col-form-label text-md-right"> {{ __('Toltal Amount for 24h') }} <span class="tcr i-req">*</span></label>
+                            <label for="amount" class="col-md-4 col-form-label text-md-right">{{ __('Amount') }}<span class="tcr i-req">*</span>  <i class="f-12"> (Per/hour)</i></label>
 
                             <div class="col-md-8">
-                                <input id="24h_amount" type="number" step="any" class="form-control {{ $errors->has('24h_amount') ? ' is-invalid' : '' }}" name="24h_amount" value="{{ old('24h_amount') }}" autocomplete="off">
+                                <input id="amount" type="number" step="any" class="form-control {{ $errors->has('amount') ? ' is-invalid' : '' }}" name="amount" value="{{ old('amount') }}" autocomplete="off" required>
 
-                                @if ($errors->has('24h_amount'))
+                                @if ($errors->has('amount'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('24h_amount') }}</strong>
+                                        <strong>{{ $errors->first('amount') }}</strong>
                                     </span>
                                 @endif
                             </div>                            
                         </div>
+
 
                         <div class="form-group row">
                             <label for="shadow_amount" class="col-md-4 col-form-label text-md-right"> {{ __('Shadow Amount') }} <span class="tcr i-req">*</span></label>
@@ -150,14 +154,14 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="amount" class="col-md-4 col-form-label text-md-right">{{ __('Amount') }}<span class="tcr i-req">*</span>  <i class="f-12"> (Per/hour)</i></label>
+                            <label for="24h_amount" class="col-md-4 col-form-label text-md-right"> {{ __('Total Amount for 24h') }} <span class="tcr i-req">*</span></label>
 
                             <div class="col-md-8">
-                                <input id="amount" type="number" step="any" class="form-control {{ $errors->has('amount') ? ' is-invalid' : '' }}" name="amount" value="{{ old('amount') }}" autocomplete="off" required>
+                                <input id="24h_amount" type="number" step="any" class="form-control {{ $errors->has('24h_amount') ? ' is-invalid' : '' }}" name="24h_amount" value="{{ old('24h_amount') }}" autocomplete="off">
 
-                                @if ($errors->has('amount'))
+                                @if ($errors->has('24h_amount'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('amount') }}</strong>
+                                        <strong>{{ $errors->first('24h_amount') }}</strong>
                                     </span>
                                 @endif
                             </div>                            
