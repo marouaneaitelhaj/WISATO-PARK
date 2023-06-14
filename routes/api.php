@@ -17,3 +17,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::get('readparkzones', 'ParkzoneController@readApi');
+Route::get('readparkzones/{id}', 'ParkzoneController@readApiById');

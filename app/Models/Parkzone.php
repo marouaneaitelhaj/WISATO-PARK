@@ -25,12 +25,22 @@ class Parkzone extends Model
     {
         return $this->hasMany('App\Models\Sides');
     }
+    public function Side_slot()
+    {
+        return $this->hasMany('App\Models\Side_slot');
+    }
+    public function sides_number()
+    {
+        return $this->hasMany('App\Models\Side_slot_number');
+    }
     public function category()
     {
         return $this->hasMany('App\Models\Category', 'category_wise_parkzone_slot', 'parkzone_id', 'category_id');
     }
-    public function slots($type = 'standard')
+    public function slots()
     {
+        $type = $this->type;
+
         if ($type == 'standard') {
             return $this->hasMany('App\Models\CategoryWiseParkzoneSlot');
         } elseif ($type == 'floor') {
@@ -39,6 +49,7 @@ class Parkzone extends Model
             return $this->sides();
         }
     }
+
     public function Quartier()
     {
         return $this->belongsTo('App\Models\Quartier');

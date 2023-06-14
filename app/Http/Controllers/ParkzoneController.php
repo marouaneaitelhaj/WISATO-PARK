@@ -64,10 +64,7 @@ class ParkzoneController extends Controller
 
         return view('content.parkzones.list');
     }
-    public function readApi(){
-        $parkzones = Parkzone::all();
-        return response()->json($parkzones);
-    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -138,10 +135,10 @@ class ParkzoneController extends Controller
     //     $floor->levelUp = $validated['levelUp'];
     //     $floor->levelDown = $validated['levelDown'];
     //     $floor->save();
-        
+
     //     return response()->json(['message' => 'Floor created successfully']);
     // }
-    
+
 
 
 
@@ -252,5 +249,30 @@ class ParkzoneController extends Controller
         $quartiers = Quartier::all();
         $categories = Category::all();
         return view('content.parkzones.dashboard', compact('categories', 'data'));
+    }
+    public function readApi()
+    {
+        $data = [];
+        $parkzones = Parkzone::all();
+        foreach ($parkzones as $index => $parkzone) {
+            if ($parkzone->type == 'standard') {
+                $categories = Category::all();
+                foreach ($categories as $category) {
+                    $parkzones[$category->name] = CategoryWiseParkzoneSlot::where('category_id', $category->id)->count();
+                }
+            } elseif ($parkzone->type == 'floor') {
+                $parkzones[$index]->slots = $parkzone->floor;
+            } elseif ($parkzone->type == 'side') {
+                foreach ($parkzone->sides as $side) {
+                    $parkzones[$index]->slots = $side->side_slots;
+                }
+            }
+        }
+        return response()->json($parkzones);
+    }
+    public function readApiById($id)
+    {
+        $parkzones = CategoryWiseParkzoneSlot::where('parkzone_id', $id)->with('category')->get();
+        return response()->json($parkzones);
     }
 }
