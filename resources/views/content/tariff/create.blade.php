@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('title', ' - Add Tariff')
 @section('content')
+@livewireStyles
+
 <link rel="stylesheet" href="{{ asset('css/custom/tariff.css') }}" />
 <div class="container-fluid mb100">
    
@@ -63,7 +65,24 @@
                                 <div class="mx-5"><input id="day" type="radio" name="day" value="evening"> Evening <span class="tcr i-req">*</span></div>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="category_id" class="col-md-4 col-form-label text-md-right"> {{ __('Type') }} <span class="tcr i-req">*</span></label>
+                            <div class="col-md-8">
+                                <select name="category_id" id="category_id" class="select2 form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}" required>
+                                    <?php
+                                    foreach ($categories as $key => $value) {
+                                        echo '<option value="'.$value->id.'">'.$value->type.'</option>';
+                                    }
+                                    ?>
+                                </select>
 
+                                @if ($errors->has('category_id'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('category_id') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
 
 
                         <div class="form-group row">
@@ -93,66 +112,24 @@
                             </div>                            
                         </div>
                         
-                        <div class="form-group row">
-                            <label for="quartier" class="col-md-4 col-form-label text-md-right">Quartier</label>
-                        
-                            <div class="col-md-8">
-                                <select class="form-control" id="quartier" name="quartier">
-                                    <option value="">Select Quartier</option>
-                                    @foreach ($quartiers as $quartier)
-                                        <option value="{{ $quartier->id }}">{{ $quartier->quartier_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
                         
 
-                        <div class="form-group row">
-                            <label for="parkzone" class="col-md-4 col-form-label text-md-right"> {{ __('Parkzone') }} <span class="tcr i-req">*</span></label>
-                            <div class="col-md-8">
-                                <select name="parkzone" id="parkzone" class="select2 form-control{{ $errors->has('parkzone') ? ' is-invalid' : '' }}" required>
-                                    <?php
-                                    foreach ($parkzones as $key => $value) {
-                                        echo '<option value="'.$value->id.'">'.$value->name.'</option>';
-                                    }
-                                    ?>
-                                </select>
+                        
 
-                                @if ($errors->has('parkzone'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('parkzone') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
+                        @livewire('tariff')
+                        
+
+
 
                         <div class="form-group row">
-                            <label for="category_id" class="col-md-4 col-form-label text-md-right"> {{ __('Type') }} <span class="tcr i-req">*</span></label>
-                            <div class="col-md-8">
-                                <select name="category_id" id="category_id" class="select2 form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}" required>
-                                    <?php
-                                    foreach ($categories as $key => $value) {
-                                        echo '<option value="'.$value->id.'">'.$value->type.'</option>';
-                                    }
-                                    ?>
-                                </select>
-
-                                @if ($errors->has('category_id'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('category_id') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="min_amount" class="col-md-4 col-form-label text-md-right"> {{ __('Min Amount') }} <span class="tcr i-req">*</span></label>
+                            <label for="total_amount" class="col-md-4 col-form-label text-md-right"> {{ __('Toltal Amount') }} <span class="tcr i-req">*</span></label>
 
                             <div class="col-md-8">
-                                <input id="min_amount" type="number" step="any" class="form-control {{ $errors->has('min_amount') ? ' is-invalid' : '' }}" name="min_amount" value="{{ old('min_amount') }}" autocomplete="off" required>
+                                <input id="total_amount" type="number" step="any" class="form-control {{ $errors->has('total_amount') ? ' is-invalid' : '' }}" name="total_amount" value="{{ old('total_amount') }}" autocomplete="off" required>
 
-                                @if ($errors->has('min_amount'))
+                                @if ($errors->has('total_amount'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('min_amount') }}</strong>
+                                        <strong>{{ $errors->first('total_amount') }}</strong>
                                     </span>
                                 @endif
                             </div>                            
@@ -219,4 +196,6 @@
         </div>
     </div>
 </div> 
+@livewireScripts
+
 @endsection
