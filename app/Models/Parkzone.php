@@ -75,4 +75,8 @@ class Parkzone extends Model
     {
         return $this->hasMany('App\Models\Floor');
     }
+    public function tariff()
+    {
+        return $this->hasMany('App\Models\Tariff');
+    }
 }

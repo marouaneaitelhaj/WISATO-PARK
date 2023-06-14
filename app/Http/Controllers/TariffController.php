@@ -10,6 +10,10 @@ use App\Http\Requests\UpdateTariffRequest;
 use App\Models\Parking;
 use App\Models\Parkzone;
 use App\Models\Quartier;
+use App\Models\Slot;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
+
 
 
 
@@ -28,7 +32,7 @@ class TariffController extends Controller
             $offset = 0;
             $search = [];
             $where = [];
-            $with = ['category'];
+            $with = ['category','quartier','parkzone'];
             $join = [];
             $orderBy = [];
 
@@ -77,8 +81,8 @@ class TariffController extends Controller
         $quartiers = Quartier::all(); // Fetch all quartiers
         return view('content.tariff.create', ['categories' => $categories, 'parkzones' => $parkzones, 'quartiers' => $quartiers]);
     }
-    
-    
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -86,36 +90,92 @@ class TariffController extends Controller
      * @param  \Illuminate\Http\StoreTariffRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreTariffRequest $request)
-    {
-        $validated = $request->validated();
 
-        try{
 
+
+
+
+
+
+
+
+    public function store(Request $request)
+{
+    try {
+        $start = Carbon::parse($request->input('start_date'));
+        $end = Carbon::parse($request->input('end_date'));
+        $interval = CarbonInterval::hour();
+
+        $tariffs = collect();
+        $amount = $request->input('amount');
+        $numberHour = 1;
+
+        for ($i = 0; $i < $end->diffInHours($start); $i++) {
             $tariff = Tariff::create([
-                'name'          => $validated['name'],
-                'category_id'   => $validated['category_id'],
-                'start_date'    => $validated['start_date'],
-                'end_date'      => $validated['end_date'],                
-                'min_amount'    => $validated['min_amount'],                
-                'amount'        => $validated['amount'],                
-                'status'        => $validated['status'],                
-                'created_by'    => $request->user()->id,
-                'modified_by'   => $request->user()->id
+                'name'                => $request->input('name'),
+                'category_id'         => $request->input('category_id'),
+                'start_date'          => $start,
+                'end_date'            => $end,
+                'min_amount'          => $request->input('min_amount'),
+                'amount'              => $amount,
+                'status'              => $request->input('status'),
+                'created_by'          => $request->user()->id,
+                'modified_by'         => $request->user()->id,
+                'validate_start_date' => $request->input('validate_start_date'),
+                'validate_end_date'   => $request->input('validate_end_date'),
+                'day'                 => $request->input('day'),
+                'quartier_id'         => $request->input('quartier_id'),
+                'parkzone_id'         => $request->input('parkzone_id'),
+                'shadow_amount'       => $request->input('shadow_amount'),
+                'number_hour'         => $numberHour,
+                'total_amount'        => $amount * $numberHour,
             ]);
 
-        } catch(\PDOException $e) {
-
-            return redirect()
-                            ->back()
-                            ->withInput()
-                            ->with(['flashMsg' => ['msg' => $this->getMessage($e), 'type' => 'error']]);
+            $tariffs->push($tariff);
+            $numberHour++;
         }
 
+        $tariff24 = Tariff::create([
+            'name'                => $request->input('name'),
+            'category_id'         => $request->input('category_id'),
+            'start_date'          => $start,
+            'end_date'            => $end,
+            'min_amount'          => $request->input('min_amount'),
+            'amount'              => $amount,
+            'status'              => $request->input('status'),
+            'created_by'          => $request->user()->id,
+            'modified_by'         => $request->user()->id,
+            'validate_start_date' => $request->input('validate_start_date'),
+            'validate_end_date'   => $request->input('validate_end_date'),
+            'day'                 => $request->input('day'),
+            'quartier_id'         => $request->input('quartier_id'),
+            'parkzone_id'         => $request->input('parkzone_id'),
+            'shadow_amount'       => $request->input('shadow_amount'),
+            'number_hour'         => 24,
+            'total_amount'        => $request->input('24h_amount') ?: ($amount * 24),
+        ]);
+
+        $tariffs->push($tariff24);
+    } catch (\PDOException $e) {
         return redirect()
-                        ->route('tariff.index')
-                        ->with(['flashMsg' => ['msg' => 'Tariff successfully added.', 'type' => 'success']]);
+            ->back()
+            ->withInput()
+            ->with(['flashMsg' => ['msg' => $e->getMessage(), 'type' => 'error']]);
     }
+
+    return redirect()
+        ->route('tariff.index')
+        ->with(['flashMsg' => ['msg' => 'Tariff successfully added.', 'type' => 'success']]);
+}
+
+
+
+
+
+
+
+
+
 
     /**
      * Display the specified resource.
@@ -136,7 +196,7 @@ class TariffController extends Controller
      */
     public function edit(Tariff $tariff)
     {
-        $categories = Category::where('status',1)->get();
+        $categories = Category::where('status', 1)->get();
         return view('content.tariff.edit')->with(['tariff' => $tariff, 'categories' => $categories]);
     }
 
@@ -151,31 +211,30 @@ class TariffController extends Controller
     {
         $validated = $request->validated();
 
-        try{
+        try {
 
             $tariff = Tariff::where('id', $tariff->id)->update([
 
                 'name'          => $validated['name'],
                 'category_id'   => $validated['category_id'],
                 'start_date'    => $validated['start_date'],
-                'end_date'      => $validated['end_date'],                
-                'min_amount'    => $validated['min_amount'],                
-                'amount'        => $validated['amount'],                
-                'status'        => $validated['status'],             
+                'end_date'      => $validated['end_date'],
+                'min_amount'    => $validated['min_amount'],
+                'amount'        => $validated['amount'],
+                'status'        => $validated['status'],
                 'modified_by'   => $request->user()->id
             ]);
+        } catch (\PDOException $e) {
 
-        } catch(\PDOException $e) {
-            
             return redirect()
-                            ->back()
-                            ->withInput()
-                            ->with(['flashMsg' => ['msg' => $this->getMessage($e), 'type' => 'error']]);
+                ->back()
+                ->withInput()
+                ->with(['flashMsg' => ['msg' => $this->getMessage($e), 'type' => 'error']]);
         }
 
         return redirect()
-                        ->route('tariff.index')
-                        ->with(['flashMsg' => ['msg' => 'Tariff successfully updated.', 'type' => 'success']]);
+            ->route('tariff.index')
+            ->with(['flashMsg' => ['msg' => 'Tariff successfully updated.', 'type' => 'success']]);
     }
 
     /**

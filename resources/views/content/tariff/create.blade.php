@@ -1,6 +1,8 @@
 @extends('layouts.app')
 @section('title', ' - Add Tariff')
 @section('content')
+@livewireStyles
+
 <link rel="stylesheet" href="{{ asset('css/custom/tariff.css') }}" />
 <div class="container-fluid mb100">
    
@@ -28,7 +30,143 @@
                                 @endif
                             </div>                            
                         </div>
+                        @livewire('tariff')
+
+ 
+
+                        
                         <div class="form-group row">
+                            <label for="category_id" class="col-md-4 col-form-label text-md-right"> {{ __('Type') }} <span class="tcr i-req">*</span></label>
+                            <div class="col-md-8">
+                                <select name="category_id" id="category_id" class="select2 form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}" required>
+                                    <?php
+                                    foreach ($categories as $key => $value) {
+                                        echo '<option value="'.$value->id.'">'.$value->type.'</option>';
+                                    }
+                                    ?>
+                                </select>
+
+                                @if ($errors->has('category_id'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('category_id') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="day" class="col-md-4 col-form-label text-md-right"> {{ __('Day') }} <span class="tcr i-req">*</span></label>
+
+                            <div class="col-md-8 d-flex">
+                                <div class=""><input id="day" type="radio" name="day" value="morning"> Morning <span class="tcr i-req">*</span></div>
+                                <div class="mx-5"><input id="day" type="radio" name="day" value="evening"> Evening <span class="tcr i-req">*</span></div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+                        <div class="d-flex flex-row">
+                            <div class="form-group w-100 d-flex align-items-center">
+                                <label class="col-md-6 col-form-label text-md-right" for="start_date">{{ __('Start Date') }}<span class="tcr i-req">*</span></label>
+                                <input id="start_date" type="text" class="mx-2 form-control dateTimePicker{{ $errors->has('start_date') ? ' is-invalid' : '' }}" name="start_date" value="{{ old('start_date') }}" autocomplete="off" required>
+                                @if ($errors->has('start_date'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('start_date') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        
+                            <div class="form-group w-50 d-flex align-items-center">
+                                <label class="mx-2" for="end_date">{{ __('End Date') }}<span class="tcr i-req">*</span></label>
+                                <input id="end_date" type="text" class="form-control dateTimePicker{{ $errors->has('end_date') ? ' is-invalid' : '' }}" name="end_date" value="{{ old('end_date') }}" autocomplete="off" required>
+                                @if ($errors->has('end_date'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('end_date') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+                        
+                        
+                        
+
+                        
+                        
+
+                        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        
+                        {{-- <div class="form-group">
+                            <label for="24h_amount">Tariff 24 Amount</label>
+                            <input type="text" name="24h_amount" class="form-control" id="24h_amount" value="{{ old('24h_amount') }}">
+                        </div> --}}
+                        
+
+
+                        
+
+
+                        <div class="form-group row">
+                            <label for="amount" class="col-md-4 col-form-label text-md-right">{{ __('Amount') }}<span class="tcr i-req">*</span>  <i class="f-12"> (Per/hour)</i></label>
+
+                            <div class="col-md-8">
+                                <input id="amount" type="number" step="any" class="form-control {{ $errors->has('amount') ? ' is-invalid' : '' }}" name="amount" value="{{ old('amount') }}" autocomplete="off" required>
+
+                                @if ($errors->has('amount'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('amount') }}</strong>
+                                    </span>
+                                @endif
+                            </div>                            
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="shadow_amount" class="col-md-4 col-form-label text-md-right"> {{ __('Shadow Amount') }} <span class="tcr i-req">*</span></label>
+
+                            <div class="col-md-8">
+                                <input id="Shadow_amount" type="number" step="any" class="form-control {{ $errors->has('shadow_amount') ? ' is-invalid' : '' }}" name="shadow_amount" value="{{ old('shadow_amount') }}" autocomplete="off" required>
+
+                                @if ($errors->has('shadow_amount'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('shadow_amount') }}</strong>
+                                    </span>
+                                @endif
+                            </div>                            
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="24h_amount" class="col-md-4 col-form-label text-md-right"> {{ __('Total Amount for 24h') }} <span class="tcr i-req">*</span></label>
+
+                            <div class="col-md-8">
+                                <input id="24h_amount" type="number" step="any" class="form-control {{ $errors->has('24h_amount') ? ' is-invalid' : '' }}" name="24h_amount" value="{{ old('24h_amount') }}" autocomplete="off">
+
+                                @if ($errors->has('24h_amount'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('24h_amount') }}</strong>
+                                    </span>
+                                @endif
+                            </div>                            
+                        </div>
+                        {{-- <div class="form-group row">
                             <label for="validate_start_date" class="col-md-4 col-form-label text-md-right"> {{ __('Validate Start Date') }} <span class="tcr i-req">*</span></label>
                             
                             <div class="col-md-8">
@@ -53,138 +191,31 @@
                                     </span>
                                 @endif
                             </div>
-                        </div>     
+                        </div>     --}}
 
-                        <div class="form-group row">
-                            <label for="day" class="col-md-4 col-form-label text-md-right"> {{ __('Day') }} <span class="tcr i-req">*</span></label>
-
-                            <div class="col-md-8 d-flex">
-                                <div class=""><input id="day" type="radio" name="day" value="morning"> Morning <span class="tcr i-req">*</span></div>
-                                <div class="mx-5"><input id="day" type="radio" name="day" value="evening"> Evening <span class="tcr i-req">*</span></div>
+                        <div class="d-flex flex-row">
+                            <div class="form-group w-100 d-flex align-items-center">
+                                <label class="col-md-6 col-form-label text-md-right" for="validate_start_date">{{ __('Validate Start Date') }}<span class="tcr i-req">*</span></label>
+                                <input id="validate_start_date" type="text" class="mx-2 form-control dateTimePicker{{ $errors->has('validate_start_date') ? ' is-invalid' : '' }}" name="validate_start_date" value="{{ old('validate_start_date') }}" autocomplete="off" required>
+                                @if ($errors->has('validate_start_date'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('validate_start_date') }}</strong>
+                                    </span>
+                                @endif
                             </div>
-                        </div>
-
-
-
-                        <div class="form-group row">
-                            <label for="start_date" class="col-md-4 col-form-label text-md-right"> {{ __('Start Date') }} <span class="tcr i-req">*</span></label>
-
-                            <div class="col-md-8">
-                                <input id="start_date" type="text" class="form-control dateTimePicker {{ $errors->has('start_date') ? ' is-invalid' : '' }}" name="start_date" value="{{ old('start_date') }}" autocomplete="off" required>
-
-                                @if ($errors->has('start_date'))
+                        
+                            <div class="form-group w-50 d-flex align-items-center">
+                                <label class="mx-2" for="validate_end_date">{{ __('Validate End Date') }}<span class="tcr i-req">*</span></label>
+                                <input id="validate_end_date" type="text" class="form-control dateTimePicker{{ $errors->has('validate_end_date') ? ' is-invalid' : '' }}" name="validate_end_date" value="{{ old('validate_end_date') }}" autocomplete="off" required>
+                                @if ($errors->has('validate_end_date'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('start_date') }}</strong>
+                                        <strong>{{ $errors->first('validate_end_date') }}</strong>
                                     </span>
                                 @endif
-                            </div>                            
-                        </div>
-                        <div class="form-group row">
-                            <label for="end_date" class="col-md-4 col-form-label text-md-right">{{ __('End Date') }} <span class="tcr i-req">*</span> </label>
-
-                            <div class="col-md-8">
-                                <input id="end_date"  type="text" class="form-control dateTimePicker{{ $errors->has('end_date') ? ' is-invalid' : '' }}" name="end_date" value="{{ old('end_date') }}" autocomplete="off" required>
-
-                                @if ($errors->has('end_date'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('end_date') }}</strong>
-                                    </span>
-                                @endif
-                            </div>                            
-                        </div>
-                        
-                        <div class="form-group row">
-                            <label for="quartier" class="col-md-4 col-form-label text-md-right">Quartier</label>
-                        
-                            <div class="col-md-8">
-                                <select class="form-control" id="quartier" name="quartier">
-                                    <option value="">Select Quartier</option>
-                                    @foreach ($quartiers as $quartier)
-                                        <option value="{{ $quartier->id }}">{{ $quartier->quartier_name }}</option>
-                                    @endforeach
-                                </select>
                             </div>
                         </div>
                         
 
-                        <div class="form-group row">
-                            <label for="parkzone" class="col-md-4 col-form-label text-md-right"> {{ __('Parkzone') }} <span class="tcr i-req">*</span></label>
-                            <div class="col-md-8">
-                                <select name="parkzone" id="parkzone" class="select2 form-control{{ $errors->has('parkzone') ? ' is-invalid' : '' }}" required>
-                                    <?php
-                                    foreach ($parkzones as $key => $value) {
-                                        echo '<option value="'.$value->id.'">'.$value->name.'</option>';
-                                    }
-                                    ?>
-                                </select>
-
-                                @if ($errors->has('parkzone'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('parkzone') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="category_id" class="col-md-4 col-form-label text-md-right"> {{ __('Type') }} <span class="tcr i-req">*</span></label>
-                            <div class="col-md-8">
-                                <select name="category_id" id="category_id" class="select2 form-control{{ $errors->has('category_id') ? ' is-invalid' : '' }}" required>
-                                    <?php
-                                    foreach ($categories as $key => $value) {
-                                        echo '<option value="'.$value->id.'">'.$value->type.'</option>';
-                                    }
-                                    ?>
-                                </select>
-
-                                @if ($errors->has('category_id'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('category_id') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="min_amount" class="col-md-4 col-form-label text-md-right"> {{ __('Min Amount') }} <span class="tcr i-req">*</span></label>
-
-                            <div class="col-md-8">
-                                <input id="min_amount" type="number" step="any" class="form-control {{ $errors->has('min_amount') ? ' is-invalid' : '' }}" name="min_amount" value="{{ old('min_amount') }}" autocomplete="off" required>
-
-                                @if ($errors->has('min_amount'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('min_amount') }}</strong>
-                                    </span>
-                                @endif
-                            </div>                            
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="shadow_amount" class="col-md-4 col-form-label text-md-right"> {{ __('Shadow Amount') }} <span class="tcr i-req">*</span></label>
-
-                            <div class="col-md-8">
-                                <input id="Shadow_amount" type="number" step="any" class="form-control {{ $errors->has('shadow_amount') ? ' is-invalid' : '' }}" name="shadow_amount" value="{{ old('shadow_amount') }}" autocomplete="off" required>
-
-                                @if ($errors->has('shadow_amount'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('shadow_amount') }}</strong>
-                                    </span>
-                                @endif
-                            </div>                            
-                        </div>
-
-                        <div class="form-group row">
-                            <label for="amount" class="col-md-4 col-form-label text-md-right">{{ __('Amount') }}<span class="tcr i-req">*</span>  <i class="f-12"> (Per/hour)</i></label>
-
-                            <div class="col-md-8">
-                                <input id="amount" type="number" step="any" class="form-control {{ $errors->has('amount') ? ' is-invalid' : '' }}" name="amount" value="{{ old('amount') }}" autocomplete="off" required>
-
-                                @if ($errors->has('amount'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('amount') }}</strong>
-                                    </span>
-                                @endif
-                            </div>                            
-                        </div>
                         <div class="form-group row">
                             <label for="status" class="col-md-4 col-form-label text-md-right">{{ __('Status') }}<span class="tcr i-req">*</span> </label>
                             <div class="col-md-8">
@@ -219,4 +250,6 @@
         </div>
     </div>
 </div> 
+@livewireScripts
+
 @endsection
