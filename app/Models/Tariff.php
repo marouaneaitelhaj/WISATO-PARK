@@ -43,4 +43,14 @@ class Tariff extends Model
     {
         return $this->belongsTo('App\Models\Category');
     }
+    public function quartier()
+    {
+        return $this->belongsTo('App\Models\Quartier');
+    }
+    public function parkzone()
+    {
+        return $this->belongsTo('App\Models\Parkzone');
+    }
+    
+    
 }

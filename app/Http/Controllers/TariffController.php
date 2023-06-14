@@ -32,7 +32,7 @@ class TariffController extends Controller
             $offset = 0;
             $search = [];
             $where = [];
-            $with = ['category'];
+            $with = ['category','quartier','parkzone'];
             $join = [];
             $orderBy = [];
 
@@ -204,43 +204,91 @@ class TariffController extends Controller
 
 
 
+    // public function store(Request $request)
+    // {
+    //     try {
+    //         $start = Carbon::parse($request->input('start_date'));
+    //         $end = Carbon::parse($request->input('end_date'));
+    //         $interval = CarbonInterval::hour();
+
+    //         $tariffs = collect();
+    //         $amount = $request->input('amount');
+    //         $numberHour = 1;
+
+    //         for ($i = 0; $i < $end->diffInHours($start); $i++) {
+    //             $tariff = Tariff::create([
+    //                 'name'                => $request->input('name'),
+    //                 'category_id'         => $request->input('category_id'),
+    //                 'start_date'          => $start,
+    //                 'end_date'            => $end,
+    //                 'min_amount'          => $request->input('min_amount'),
+    //                 'amount'              => $amount,
+    //                 'status'              => $request->input('status'),
+    //                 'created_by'          => $request->user()->id,
+    //                 'modified_by'         => $request->user()->id,
+    //                 'validate_start_date' => $request->input('validate_start_date'),
+    //                 'validate_end_date'   => $request->input('validate_end_date'),
+    //                 'day'                 => $request->input('day'),
+    //                 'quartier_id'         => $request->input('quartier_id'),
+    //                 'parkzone_id'         => $request->input('parkzone_id'),
+    //                 'shadow_amount'       => $request->input('shadow_amount'),
+    //                 'number_hour'         => $numberHour,
+    //                 'total_amount'        => $amount * $numberHour,
+    //             ]);
+
+    //             $tariffs->push($tariff);
+    //             $numberHour++;
+    //         }
+
+    //         $tariff24 = Tariff::create([
+    //             'name'                => $request->input('name'),
+    //             'category_id'         => $request->input('category_id'),
+    //             'start_date'          => $start,
+    //             'end_date'            => $end,
+    //             'min_amount'          => $request->input('min_amount'),
+    //             'amount'              => $amount,
+    //             'status'              => $request->input('status'),
+    //             'created_by'          => $request->user()->id,
+    //             'modified_by'         => $request->user()->id,
+    //             'validate_start_date' => $request->input('validate_start_date'),
+    //             'validate_end_date'   => $request->input('validate_end_date'),
+    //             'day'                 => $request->input('day'),
+    //             'quartier_id'         => $request->input('quartier_id'),
+    //             'parkzone_id'         => $request->input('parkzone_id'),
+    //             'shadow_amount'       => $request->input('shadow_amount'),
+    //             'number_hour'         => 24,
+    //             'total_amount'        => $amount * 24,
+    //         ]);
+
+    //         $tariffs->push($tariff24);
+    //     } catch (\PDOException $e) {
+    //         return redirect()
+    //             ->back()
+    //             ->withInput()
+    //             ->with(['flashMsg' => ['msg' => $e->getMessage(), 'type' => 'error']]);
+    //     }
+
+    //     return redirect()
+    //         ->route('tariff.index')
+    //         ->with(['flashMsg' => ['msg' => 'Tariff successfully added.', 'type' => 'success']]);
+    // }
+
+
+
+
     public function store(Request $request)
-    {
-        try {
-            $start = Carbon::parse($request->input('start_date'));
-            $end = Carbon::parse($request->input('end_date'));
-            $interval = CarbonInterval::hour();
+{
+    try {
+        $start = Carbon::parse($request->input('start_date'));
+        $end = Carbon::parse($request->input('end_date'));
+        $interval = CarbonInterval::hour();
 
-            $tariffs = collect();
-            $amount = $request->input('amount');
-            $numberHour = 1;
+        $tariffs = collect();
+        $amount = $request->input('amount');
+        $numberHour = 1;
 
-            for ($i = 0; $i < $end->diffInHours($start); $i++) {
-                $tariff = Tariff::create([
-                    'name'                => $request->input('name'),
-                    'category_id'         => $request->input('category_id'),
-                    'start_date'          => $start,
-                    'end_date'            => $end,
-                    'min_amount'          => $request->input('min_amount'),
-                    'amount'              => $amount,
-                    'status'              => $request->input('status'),
-                    'created_by'          => $request->user()->id,
-                    'modified_by'         => $request->user()->id,
-                    'validate_start_date' => $request->input('validate_start_date'),
-                    'validate_end_date'   => $request->input('validate_end_date'),
-                    'day'                 => $request->input('day'),
-                    'quartier_id'         => $request->input('quartier_id'),
-                    'parkzone_id'         => $request->input('parkzone_id'),
-                    'shadow_amount'       => $request->input('shadow_amount'),
-                    'number_hour'         => $numberHour,
-                    'total_amount'        => $amount * $numberHour,
-                ]);
-
-                $tariffs->push($tariff);
-                $numberHour++;
-            }
-
-            $tariff24 = Tariff::create([
+        for ($i = 0; $i < $end->diffInHours($start); $i++) {
+            $tariff = Tariff::create([
                 'name'                => $request->input('name'),
                 'category_id'         => $request->input('category_id'),
                 'start_date'          => $start,
@@ -256,22 +304,47 @@ class TariffController extends Controller
                 'quartier_id'         => $request->input('quartier_id'),
                 'parkzone_id'         => $request->input('parkzone_id'),
                 'shadow_amount'       => $request->input('shadow_amount'),
-                'number_hour'         => 24,
-                'total_amount'        => $amount * 24,
+                'number_hour'         => $numberHour,
+                'total_amount'        => $amount * $numberHour,
             ]);
 
-            $tariffs->push($tariff24);
-        } catch (\PDOException $e) {
-            return redirect()
-                ->back()
-                ->withInput()
-                ->with(['flashMsg' => ['msg' => $e->getMessage(), 'type' => 'error']]);
+            $tariffs->push($tariff);
+            $numberHour++;
         }
 
+        $tariff24 = Tariff::create([
+            'name'                => $request->input('name'),
+            'category_id'         => $request->input('category_id'),
+            'start_date'          => $start,
+            'end_date'            => $end,
+            'min_amount'          => $request->input('min_amount'),
+            'amount'              => $amount,
+            'status'              => $request->input('status'),
+            'created_by'          => $request->user()->id,
+            'modified_by'         => $request->user()->id,
+            'validate_start_date' => $request->input('validate_start_date'),
+            'validate_end_date'   => $request->input('validate_end_date'),
+            'day'                 => $request->input('day'),
+            'quartier_id'         => $request->input('quartier_id'),
+            'parkzone_id'         => $request->input('parkzone_id'),
+            'shadow_amount'       => $request->input('shadow_amount'),
+            'number_hour'         => 24,
+            'total_amount'        => $request->input('24h_amount') ?: ($amount * 24),
+        ]);
+
+        $tariffs->push($tariff24);
+    } catch (\PDOException $e) {
         return redirect()
-            ->route('tariff.index')
-            ->with(['flashMsg' => ['msg' => 'Tariff successfully added.', 'type' => 'success']]);
+            ->back()
+            ->withInput()
+            ->with(['flashMsg' => ['msg' => $e->getMessage(), 'type' => 'error']]);
     }
+
+    return redirect()
+        ->route('tariff.index')
+        ->with(['flashMsg' => ['msg' => 'Tariff successfully added.', 'type' => 'success']]);
+}
+
 
 
 

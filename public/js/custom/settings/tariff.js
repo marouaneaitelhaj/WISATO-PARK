@@ -23,10 +23,17 @@
                 },
                 { title: "Name", name: "name", data: "name" },
                 { title: "Type", name: "category.type", data: "category.type" },
+                { title: "Quartier", name: "Quartier", data: "quartier.quartier_name" },
+                { title: "ParkZone", name: "parkzone", data: "parkzone.name" },
                 { title: "Start Date", name: "start_date", data: "start_date" },
                 { title: "End Date", name: "end_date", data: "end_date" },
-                { title: "Min Amount", name: "min_amount", data: "min_amount" },
                 { title: "Per Hour", name: "amount", data: "amount" },
+                { title: "Total Amount", name: "total_amount", data: "total_amount" },
+                { title: "Shadow Amount", name: "shadow_amount", data: "shadow_amount" },
+
+                
+
+
                 {
                     title: "Status",
                     name: "status",

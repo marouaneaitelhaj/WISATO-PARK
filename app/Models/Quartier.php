@@ -19,4 +19,8 @@ class Quartier extends Model
     {
         return $this->hasMany(Parkzone::class);
     }
+    public function tariffs()
+    {
+        return $this->hasMany(Tariff::class);
+    }
 }
