@@ -16,8 +16,8 @@ class FloorSlot extends Model
         return $this->belongsTo(Floor::class);
     }
 
-    public function categorie()
+    public function Category()
     {
-        return $this->belongsTo(Categorie::class);
+        return $this->belongsTo(Category::class, 'categorie_id');
     }
 }
