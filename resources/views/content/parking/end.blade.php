@@ -44,7 +44,7 @@
                                 <tr>
                                     <td class="w40">Parking Slot</td>
                                     <td class="w10">:</td>
-                                    <td class="w50">{{ $parking->slot->slot_name ?? '' }}</td>
+                                    <td class="w50">{{ $parking->slot->name ?? '' }}</td>
                                 </tr>
                                 <tr>
                                     <td class="w40">In Time</td>

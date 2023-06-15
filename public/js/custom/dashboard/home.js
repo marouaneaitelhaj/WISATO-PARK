@@ -56,8 +56,8 @@
                     {
                         title: "Slot",
                         class: "no-sort",
-                        name: "slot.slot_name",
-                        data: "slot.slot_name",
+                        name: "slot.name",
+                        data: "slot.name",
                         render: function (data, type, row) {
                             return typeof data != "undefined" ? data : "";
                         },

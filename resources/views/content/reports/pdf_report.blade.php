@@ -42,7 +42,7 @@ ini_set('pcre.backtrack_limit', 10000000);
 						<td>{{$parking->vehicle_no}}</td>
 						<td>{{$parking->category->type}}</td>						
 						<td>{{$parking->slot->parkzone->name ?? ''}}</td>						
-						<td>{{$parking->slot->slot_name ?? ''}}</td>						
+						<td>{{$parking->slot->name ?? ''}}</td>						
 						<td>{{$parking->in_time->format(env('DATE_FORMAT','m-d-Y H:i:s'))}}</td>
 						<td>{{$parking->out_time != null?$parking->out_time->format(env('DATE_FORMAT','m-d-Y H:i:s')):$parking->out_time}}</td>
 						@php

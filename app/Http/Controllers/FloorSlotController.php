@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\FloorSlot;
 use App\Models\CountFloorCat;
+use App\Models\Category;
 use App\Models\Floor;
 
 class FloorSlotController extends Controller
@@ -46,8 +47,8 @@ class FloorSlotController extends Controller
             $floorSlot = new FloorSlot();
             $floorSlot->floor_id = $category['floor_id'];
             $floorSlot->categorie_id = $category['category_id'];
-            
-            $name = sprintf('%02d', $startNumber);
+            $ctr = Category::where('id', $category['category_id'])->first();
+            $name = strtok($ctr, ' ') . '-' . count(FloorSlot::where('categorie_id', $category['category_id'])->get()) + 1;
             $floorSlot->name = $name;
             $startNumber++;
     

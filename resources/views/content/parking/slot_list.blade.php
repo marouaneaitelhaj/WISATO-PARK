@@ -11,7 +11,7 @@
             <div  class="seat {{ $slot->active_parking != NULL && $slot->active_parking->id != $id ? 'text-white' : '' }}">
                 <input type="radio" value="{{ $slot->id }}" required name="slot_id" {{ $slot->active_parking != NULL && $slot->active_parking->id != $id ? 'disabled' : ($slot->active_parking != NULL && $slot->active_parking->id == $id ? 'checked' : '' ) }} id="{{ $slot->slotId }}" />
                 <label for="{{ $slot->slotId }}">
-                    {{ strtok($slot->category->type, " ") . $slot->id  }}<br>
+                    {{ $slot->name  }}<br>
                     @if($slot->active_parking != NULL && $slot->active_parking->id != $id)
                     @if($slot->category->type == 'Electric Car')
                     <i class='fa rounded fa-car p-1 bg-white text-success' aria-hidden='true'></i>

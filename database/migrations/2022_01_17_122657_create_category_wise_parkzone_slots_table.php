@@ -16,7 +16,7 @@ class CreateCategoryWiseParkzoneSlotsTable extends Migration
         Schema::create('category_wise_parkzone_slots', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('parkzone_id');
-            $table->string('slot_name')->unique();
+            $table->string('name')->unique();
             $table->foreign('parkzone_id')->references('id')->on('parkzones')->onDelete('cascade');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
