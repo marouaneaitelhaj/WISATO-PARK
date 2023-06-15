@@ -91,35 +91,6 @@
                             </div>
                         </div>
                         
-                        
-                        
-
-                        
-                        
-
-                        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                        
-                        {{-- <div class="form-group">
-                            <label for="24h_amount">Tariff 24 Amount</label>
-                            <input type="text" name="24h_amount" class="form-control" id="24h_amount" value="{{ old('24h_amount') }}">
-                        </div> --}}
-                        
-
 
                         
 
@@ -166,33 +137,7 @@
                                 @endif
                             </div>                            
                         </div>
-                        {{-- <div class="form-group row">
-                            <label for="validate_start_date" class="col-md-4 col-form-label text-md-right"> {{ __('Validate Start Date') }} <span class="tcr i-req">*</span></label>
-                            
-                            <div class="col-md-8">
-                                <input id="validate_start_date" type="text" class="form-control dateTimePicker {{ $errors->has('validate_start_date') ? ' is-invalid' : '' }}" name="validate_start_date" value="{{ old('validate_start_date') }}" autocomplete="off" required>
-
-                                @if ($errors->has('validate_start_date'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('validate_start_date') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>                            
-                        <div class="form-group row">
-                            <label for="validate_end_date" class="col-md-4 col-form-label text-md-right"> {{ __('Validate End Date') }} <span class="tcr i-req">*</span></label>
-
-                            <div class="col-md-8">
-                                <input id="validate_end_date" type="text" class="form-control dateTimePicker {{ $errors->has('validate_end_date') ? ' is-invalid' : '' }}" name="validate_end_date" value="{{ old('validate_end_date') }}" autocomplete="off" required>
-
-                                @if ($errors->has('validate_end_date'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('validate_end_date') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>     --}}
-
+ 
                         <div class="d-flex flex-row">
                             <div class="form-group w-100 d-flex align-items-center">
                                 <label class="col-md-6 col-form-label text-md-right" for="validate_start_date">{{ __('Validate Start Date') }}<span class="tcr i-req">*</span></label>
