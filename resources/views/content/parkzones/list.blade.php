@@ -6,7 +6,6 @@
 
 
 @section('content')
-<input type="checkbox" checked data-toggle="toggle">
 <div class="container-fluid mb100">
     <div class="row justify-content-center">
         <div class="col-md-12">

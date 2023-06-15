@@ -45,15 +45,51 @@ class ParkzoneDashboard extends Component
     public function getfloors($parkzone_id)
     {
         $floor = Floor::where('parkzone_id', $parkzone_id)->get();
+        foreach ($floor as $f) {
+            switch ($f->level) {
+                case 0:
+                    $f->level = 'Ground Floor';
+                    break;
+                case 1:
+                    $f->level = 'First Floor';
+                    break;
+                case 2:
+                    $f->level = 'Second Floor';
+                    break;
+                case 3:
+                    $f->level = 'Third Floor';
+                    break;
+                case 4:
+                    $f->level = 'Fourth Floor';
+                    break;
+                case 5:
+                    $f->level = 'Fifth Floor';
+                    break;
+                case -3:
+                    $f->level = 'Underground 2';
+                    break;
+                case -2:
+                    $f->level = 'Underground 1';
+                    break;
+                case -1:
+                    $f->level = 'Basement';
+                    break;
+                case 0:
+                    $f->level = 'Level 0';
+                    break;
+            }
+        }
         return $floor;
     }
 
     public function updatedSelectedQuartier($quartier_id)
     {
+        $this->selectedParkzone = -9;
         if (auth()->user()->id == 1) {
             $this->parkzones = Parkzone::where('status', 1)
                 ->where('quartier_id', $quartier_id)
                 ->with('quartier')
+                ->with('tariff')
                 ->get();
             return;
         }
@@ -63,13 +99,13 @@ class ParkzoneDashboard extends Component
             })
             ->where('quartier_id', $quartier_id)
             ->with('quartier')
+            ->with('tariff')
             ->get();
         $this->parkzone = $this->parkzones[0];
     }
 
     public function getNumberOfSlots($parkzone_id, $parkzone_type, $category_id, $side = null, $floor_id = null)
     {
-        $this->selectedParkzone = -9;
         if ($parkzone_type == 'standard') {
             $slots = CategoryWiseParkzoneSlot::where('parkzone_id', $parkzone_id)
                 ->where('category_id', $category_id)
@@ -106,11 +142,12 @@ class ParkzoneDashboard extends Component
     // if selectedParkzone is changed
     public function updatedSelectedParkzone($index)
     {
-        $this->selectedParkzone = -9;
         $parkzone_id = $this->parkzones[$index]->id;
         $type = $this->parkzones[$index]->type;
         $this->parkzone = Parkzone::where('id', $parkzone_id)
             ->with('quartier')
+            // with tariff AND tariff->category
+            ->with('tariff.category')
             ->first();
         $this->parkzone->slots = $this->parkzone->slots($type)->get();
         // dd($this->parkzone->slots);

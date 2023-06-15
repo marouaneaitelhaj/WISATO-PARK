@@ -1,7 +1,9 @@
 <div>
     @foreach($this->getfloors($parkzone->id) as $floor)
-    <h1>{{$floor->level}}</h1>
-    <div class="d-flex flex-wrap bg-white py-5 justify-content-around w-100 mt-5 rounded">
+    <div class="w-100 d-flex justify-content-center">
+    <h3>{{$floor->level}}</h3>
+    </div>
+    <div class="d-flex flex-wrap bg-light py-5 justify-content-around w-100 mt-5 border rounded ">
         @foreach ($categories as $categorie)
         <div class="text-center d-flex flex-column" style="cursor: pointer;">
             @if ($categorie->type == 'Electric Car')

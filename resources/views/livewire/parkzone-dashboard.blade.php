@@ -22,11 +22,19 @@
                 @endforeach
             </select>
             <div class="d-flex ml-3 text-center mt-3">
-                <div class="bg-primary m-2 rounded-3">
+                <div class="bg-primary m-2 p-2 rounded-3">
                     <span class="text-white p-3">Electric</span>
                 </div>
-                <div class="bg-warning m-2 rounded-3">
+                <div class="bg-warning m-2 p-2 rounded-3">
                     <span class="text-white p-3">Gasoline</span>
+                </div>
+                <div class="bg-success m-2 p-2 rounded-3" style="cursor: pointer;" onclick="showtariff()">
+                    @if($parkzone != null)
+                    <input type="hidden" id="parkzone_id" value="{{$parkzone->id}}">
+                    @else
+                    <input type="hidden" id="parkzone_id" value="">
+                    @endif
+                    <span class="text-white p-3">Show tariff</span>
                 </div>
             </div>
         </div>
@@ -34,6 +42,9 @@
 
     <div class="w-100">
         @if($parkzone != null)
+        <script>
+            tariff = <?php echo json_encode($parkzone->tariff); ?>;
+        </script>
         @if($parkzone->type == 'standard')
         @component('components.standard', ['parkzone' => $parkzone, 'categories' => $categories])
         @endcomponent
@@ -49,3 +60,44 @@
         @endif
     </div>
 </div>
+<script>
+    var tariff = [];
+    var html = [];
+    function showtariff() {
+        var parkzone_id = document.getElementById('parkzone_id').value;
+        if (parkzone_id == '') {
+            Swal.fire({
+                title: 'Tariff',
+                text: 'Please select a parkzone',
+                icon: 'error',
+            });
+            return;
+        }
+        html += '<table class="table table-bordered">';
+        html += '<thead>';
+        html += '<tr>';
+        html += '<th scope="col">Name</th>';
+        html += '<th scope="col">Category</th>';
+        html += '<th scope="col">Price</th>';
+        html += '</tr>';
+        html += '</thead>';
+        html += '<tbody>';
+        for (var i = 0; i < tariff.length; i++) {
+            if (tariff[i].parkzone_id == parkzone_id) {
+                html += '<tr>';
+                html += '<td>' + tariff[i].name + '</td>';
+                html += '<td>' + tariff[i].category.type + '</td>';
+                html += '<td>' + tariff[i].amount + '</td>';
+                html += '</tr>';
+            }
+        }
+        html += '</tbody>';
+        html += '</table>';
+        Swal.fire({
+            title: 'Tariff',
+            html: html,
+            icon: 'info',
+        });
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
