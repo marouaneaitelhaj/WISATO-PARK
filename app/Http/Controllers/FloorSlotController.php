@@ -48,7 +48,7 @@ class FloorSlotController extends Controller
             $floorSlot->floor_id = $category['floor_id'];
             $floorSlot->categorie_id = $category['category_id'];
             $ctr = Category::where('id', $category['category_id'])->first();
-            $name = strtok($ctr, ' ') . '-' . count(FloorSlot::where('categorie_id', $category['category_id'])->get()) + 1;
+            $name = strtok($ctr->type, ' ') . '-' . count(FloorSlot::where('categorie_id', $category['category_id'])->get()) + 1;
             $floorSlot->name = $name;
             $startNumber++;
     

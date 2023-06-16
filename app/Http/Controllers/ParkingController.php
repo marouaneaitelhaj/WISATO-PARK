@@ -233,13 +233,31 @@ class ParkingController extends Controller
 		$data['categories'] = Category::where('status', 1)->get();
 		$data['currently_parking'] = Parking::where('out_time', NULL)->count();
 		if ($chefId == 1) {
-			$data['total_slots'] = CategoryWiseParkzoneSlot::where('category_wise_parkzone_slots.status', 1)
+			$standard = CategoryWiseParkzoneSlot::where('status', 1)
 				->whereHas('parkzone', function ($query) {
 					$query->where('status', '1');
 				})
 				->whereHas('category', function ($query) {
 					$query->where('status', '1');
-				})->with('active_parking')->count();
+				})
+				->with('category')
+				->with('parkzone')
+				->get();
+			$floor = FloorSlot::with('floor.parkzone')
+				->with('Category')
+				->get();
+			foreach ($floor as $key => $value) {
+				$floor[$key]->parkzone = $value->floor->parkzone;
+			}
+			$side = Side_slot::with('side.parkzone')
+				->with('category')
+				->get();
+			foreach ($side as $key => $value) {
+				$side[$key]->parkzone = $value->side->parkzone;
+			}
+			$slots = $standard->merge($floor)->merge($side);
+			//////////////////////////////////////
+			$data['total_slots'] = count($slots);
 		} else {
 			$data['total_slots'] = CategoryWiseParkzoneSlot::where('category_wise_parkzone_slots.status', 1)
 				->whereHas('parkzone', function ($query) use ($chefId) {
@@ -252,7 +270,6 @@ class ParkingController extends Controller
 					$query->where('status', '1');
 				})->with('active_parking')->count();
 		}
-		// $data['total_slots'] = 99;
 		return view('content.parking.create')->with($data);
 	}
 
