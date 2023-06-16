@@ -24,6 +24,7 @@ class ParkzoneDashboard extends Component
     public $selectedQuartier = null;
     public $selectedParkzone = null;
     public $totalSlots = 0;
+    public $parkzone_tariff = [];
 
     public function mount()
     {
@@ -140,7 +141,6 @@ class ParkzoneDashboard extends Component
         }
     }
 
-    // if selectedParkzone is changed
     public function updatedSelectedParkzone($index)
     {
         if($index == -1){
@@ -157,12 +157,11 @@ class ParkzoneDashboard extends Component
         $type = $this->parkzones[$index]->type;
         $this->parkzone = Parkzone::where('id', $parkzone_id)
             ->with('quartier')
-            // with tariff AND tariff->category
             ->with('tariff.category')
             ->first();
         $this->parkzone->slots = $this->parkzone->slots($type)->get();
         $this->modeshow = 'single';
-        // dd($this->parkzone->slots);
+        $this->parkzone_tariff = $this->parkzone->tariff;
     }
 
 

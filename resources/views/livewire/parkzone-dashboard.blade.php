@@ -39,6 +39,7 @@
                     <input type="hidden" id="parkzone_id" value="">
                     @endif
                     <span class="text-white p-3">Show tariff</span>
+
                 </div>
                 @endif
             </div>
@@ -47,9 +48,7 @@
 
     <div class="w-100">
         @if($parkzone != null)
-        <script>
-            tariff = <?php echo json_encode($parkzone->tariff); ?>;
-        </script>
+        <input type="text" value="{{$parkzone_tariff}}" id="tarrif" hidden>
         @if($parkzone->type == 'standard')
         @component('components.standard', ['parkzone' => $parkzone, 'categories' => $categories])
         @endcomponent
@@ -89,6 +88,8 @@
     function showtariff() {
         html = '';
         var parkzone_id = document.getElementById('parkzone_id').value;
+        tariff = document.getElementById('tarrif').value;
+        tariff = JSON.parse(tariff);
         if (parkzone_id == '') {
             Swal.fire({
                 title: 'Tariff',
