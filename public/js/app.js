@@ -2430,6 +2430,10 @@ var Ziggy = {
       "uri": "floorslots",
       "methods": ["POST"],
     },
+    "teams.store2": {
+      "uri": "teams",
+      "methods": ["POST"],
+    },
     "floorslots.show": {
       "uri": "floorslots}",
       "methods": ["GET", "HEAD"],

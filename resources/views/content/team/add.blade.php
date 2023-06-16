@@ -80,6 +80,7 @@
                                 <select id="role" name="role" class="form-control{{ $errors->has('role') ? ' is-invalid' : '' }}" required>
                                     <option value="2">Gardien</option>
                                     <option value="5">Caméra</option>
+                                    <option value="3">agent</option>
                                 </select>
 
                                 <input type="hidden" name="required_role" value="true">
@@ -98,7 +99,7 @@
                             <label for="id_camera" class="col-md-3 col-form-label text-md-right"> {{ __('id_camera') }}<span class="tcr i-req">*</span></label>
 
                             <div class="col-md-9">
-                                <input id="id_camera" type="text" class="form-control{{ $errors->has('id_camera') ? ' is-invalid' : '' }}" name="id_camera" value="{{ old('id_camera') }}" autocomplete="off" autofocus>
+                                <input id="id_camera" type="text" class="form-control{{ $errors->has('id_camera') ? ' is-invalid' : '' }}" name="id_camera" value="{{ old('id_camera') }}" autocomplete="off">
 
                                 @if ($errors->has('id_camera'))
                                 <span class="invalid-feedback" role="alert">
@@ -112,7 +113,7 @@
                             <label for="serial_number" class="col-md-3 col-form-label text-md-right"> {{ __('serial_number') }}<span class="tcr i-req">*</span></label>
 
                             <div class="col-md-9">
-                                <input id="serial_number" type="text" class="form-control{{ $errors->has('serial_number') ? ' is-invalid' : '' }}" name="serial_number" value="{{ old('serial_number') }}" autocomplete="off" autofocus>
+                                <input id="serial_number" type="text" class="form-control{{ $errors->has('serial_number') ? ' is-invalid' : '' }}" name="serial_number" value="{{ old('serial_number') }}" autocomplete="off">
 
                                 @if ($errors->has('serial_number'))
                                 <span class="invalid-feedback" role="alert">

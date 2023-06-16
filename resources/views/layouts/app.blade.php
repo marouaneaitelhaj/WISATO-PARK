@@ -139,24 +139,7 @@
                         </li>
 
                         
-                        <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="collapse" href="#ui-tariff" aria-expanded="false"
-                                aria-controls="ui-tariff">
-                                <i class="mdi mdi mdi-cash-multiple menu-icon"></i>
-                                <span class="menu-title">Tariff</span>
-                                <i class="menu-arrow"></i>
-                            </a>
-                            <div class="collapse" id="ui-tariff">
-                                <ul class="nav flex-column sub-menu">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('tariff.create') }}">Add Tariff</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('tariff.index') }}">Tariff List</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
+                        
 
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#ui-parking-setup" aria-expanded="false"
@@ -181,6 +164,24 @@
                         </li>
                     @endif
                     @if (Auth::user()->hasRole(['admin', 'chef zone']))
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="collapse" href="#ui-tariff" aria-expanded="false"
+                            aria-controls="ui-tariff">
+                            <i class="mdi mdi mdi-cash-multiple menu-icon"></i>
+                            <span class="menu-title">Tariff</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-tariff">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('tariff.create') }}">Add Tariff</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('tariff.index') }}">Tariff List</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                     <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#ui-taem-management" aria-expanded="false"
                                 aria-controls="ui-team-management">

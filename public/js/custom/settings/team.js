@@ -66,5 +66,4 @@
             processing: true,
         });
     });
-
 })(jQuery);

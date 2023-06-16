@@ -2,6 +2,10 @@
 @section('title', ' - Add Category')
 @section('content')
 
+
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+
     @if (session()->has('flash_message'))
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
@@ -133,40 +137,37 @@
                                                 </th>
                                             </tr>
                                         </thead>
+           
                                         <tbody>
                                             @foreach ($agentOperatorList as $index => $agentOperator)
-                                            @foreach ($agentOperator['operators'] as $operator)
+                                                @foreach ($agentOperator['operators'] as $operator)
+                                                    <tr role="row" class="odd">
+                                                        <td class="no-sort sorting_1">1</td>
+                                                        <td>{{ $agentOperator['agent'] }}</td>
+                                                        <td>{{ $operator['name'] }}</td>
+                                                        <td>{{ $operator['Phone'] }}</td>
+                                                        <td>{{ $operator['email'] }}</td>
+                                                        <td>{{ $operator['cin'] }}</td>
+                                                        {{-- <td> --}}
+                                                            {{-- <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
+                                                                data-bs-target="#addHourseModal">Add Hours</button> --}}
+                                                                {{-- <button class="btn btn-primary btn-sm add-hours-btn" data-bs-toggle="modal" data-bs-target="#addHourseModal" value="{{ $operator['operator'] }}" data-user-id="{{ $operator['id'] }}">Add Hours</button> --}}
 
-                                            <tr role="row" class="odd">
-                                                <td class="no-sort sorting_1">1</td>
-                                                <td>{{ $agentOperator['agent'] }}</td>
-                                                <td>
-                                                    {{ $operator['name'] }}
-                                                <td>
-                                                    {{ $operator['Phone'] }}
-                                                </td>
-                                                <td>
-                                                    {{ $operator['email'] }}
-                                                </td>
-                                                <td>
-                                                    {{ $operator['cin'] }}
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                                        data-bs-target="#addHourseModal">Add Hourse</button>
-                                                </td>
-                                                <td class=" text-end width-5-per"><a
-                                                        href="http://127.0.0.1:8000/category/8/edit"><i
-                                                            class="fa fa-pencil-square-o text-info" aria-hidden="true"
-                                                            title="Edit Category"></i></a>| <button
-                                                        class="btn btn-link p-0"
-                                                        onclick="deleteData('http://127.0.0.1:8000/category/8', '#categoryDatatable')"><i
-                                                            class="fs-6 fa fa-trash-o text-danger" aria-hidden="true"
-                                                            title="Delete Category"></i></button></td>
-                                            </tr>
-                                            @endforeach
+                                                        {{-- </td> --}}
+                                                        <td class="text-end width-5-per">
+                                                            <a href="http://127.0.0.1:8000/category/8/edit">
+                                                                <i class="fa fa-pencil-square-o text-info" aria-hidden="true" title="Edit Category"></i>
+                                                            </a> |
+                                                            <button class="btn btn-link p-0"
+                                                                onclick="deleteData('http://127.0.0.1:8000/category/8', '#categoryDatatable')">
+                                                                <i class="fs-6 fa fa-trash-o text-danger" aria-hidden="true" title="Delete Category"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
                                             @endforeach
                                         </tbody>
+                                        
                                     </table>
                                 </div>
                                 <div class="col-12 col-sm-6" bis_skin_checked="1">
@@ -240,5 +241,89 @@
         });
     });
     </script>
+<!-- Place this script before the closing </body> tag -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get all the "Add Hours" buttons
+        var addHoursBtns = document.querySelectorAll(".add-hours-btn");
+
+        // Add click event listeners to each button
+        addHoursBtns.forEach(function(btn) {
+            btn.addEventListener("click", function(event) {
+                event.preventDefault();
+
+                // Get the operator ID
+                var operatorId = btn.getAttribute("data-user-id");
+
+                // Show the SweetAlert confirmation dialog
+                Swal.fire({
+                    title: "Add Hours",
+                    html: `
+                    <div class="form-group">
+                        <label for="startHour">Start Hour</label>
+                        <input type="datetime-local" name="startHour" id="startHour" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endHour">End Hour</label>
+                        <input type="datetime-local" name="endHour" id="endHour" class="form-control" required>
+                    </div>`,
+                    showCancelButton: true,
+                    cancelButtonText: "Cancel",
+                    confirmButtonText: "Add",
+                    focusConfirm: false,
+                    preConfirm: function() {
+                        // Get the form data
+                        var startHour = document.getElementById("startHour").value;
+                        var endHour = document.getElementById("endHour").value;
+
+                        // Perform any validation or further processing if needed
+
+                        // Return the form data as the result
+                        return {
+                            startHour: startHour,
+                            endHour: endHour
+                        };
+                    }
+                }).then(function(result) {
+                    if (result.isConfirmed) {
+                        // The user clicked "Add"
+                        var startHour = result.value.startHour;
+                        var endHour = result.value.endHour;
+
+                        // Construct the data object
+                        var data = {
+                            operatorId: operatorId,
+                            startHour: startHour,
+                            endHour: endHour
+                        };
+
+                        // Send the request to the server
+                        const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+                        fetch("teams2", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRF-TOKEN": csrfToken,
+                            },
+                            body: JSON.stringify(data),
+                        }).then(function(response) {
+                            if (response.ok) {
+                                // Redirect to the "team.create" route
+                                window.location.href = "/team/create";
+                            } else {
+                                // Handle the error if needed
+                                console.error("An error occurred during form submission.");
+                            }
+                        }).catch(function(error) {
+                            console.error("An error occurred during form submission:", error);
+                        });
+                    }
+                });
+            });
+        });
+    });
+
+</script>
+
 
 @endsection
