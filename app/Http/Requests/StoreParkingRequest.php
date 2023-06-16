@@ -29,7 +29,7 @@ class StoreParkingRequest extends FormRequest
 		return [
 			'vehicle_no'    => 'bail|required|string',
 			'category_id'   => 'bail|required|integer',
-			'slot_id'   	=> 'bail|required|integer',
+			// 'slot_id'   	=> 'bail|required|integer',
 			'driver_mobile' => 'bail|nullable|string',
 			'driver_name'   => 'bail|nullable|string',
 		];

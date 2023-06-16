@@ -281,13 +281,16 @@ class ParkingController extends Controller
 	 */
 	public function store(StoreParkingRequest $request)
 	{
-		dd($request->all());
+		$slotIdParam = $request['slot_id'];
+		$parts = explode('**', $slotIdParam);
+		$tableName = $parts[0];
+		$slotId = $parts[1];
 		$validated = $request->validated();
 
 		try {
 
 			$parking = Parking::create([
-				'slot_id'    	=> $validated['slot_id'],
+				'slot_id'    	=> $slotId,
 				'vehicle_no'    => $validated['vehicle_no'],
 				'category_id'   => $validated['category_id'],
 				'driver_name'   => $validated['driver_name'],
@@ -295,7 +298,8 @@ class ParkingController extends Controller
 				'barcode'       => date('YmdHis') . $request->user()->id,
 				'in_time'       => date('Y-m-d H:i:s'),
 				'created_by'    => $request->user()->id,
-				'modified_by'   => $request->user()->id
+				'modified_by'   => $request->user()->id,
+				'table_name'    => $tableName
 			]);
 		} catch (\PDOException $e) {
 
@@ -538,6 +542,7 @@ class ParkingController extends Controller
 				->with('category')
 				->with('parkzone')
 				->get();
+			// $standard['src'] = "CategoryWiseParkzoneSlot";
 			$floor = FloorSlot::where('categorie_id', $category_id)
 				->with('floor.parkzone')
 				->with('Category')
@@ -545,6 +550,7 @@ class ParkingController extends Controller
 			foreach ($floor as $key => $value) {
 				$floor[$key]->parkzone = $value->floor->parkzone;
 			}
+			// $floor['src'] = "FloorSlot";
 			$side = Side_slot::where('category_id', $category_id)
 				->with('side.parkzone')
 				->with('category')
@@ -552,6 +558,7 @@ class ParkingController extends Controller
 			foreach ($side as $key => $value) {
 				$side[$key]->parkzone = $value->side->parkzone;
 			}
+			// $side['src'] = "Side_slot";
 			// return (['standard' => $standard[0]['parkzone'], 'floor' => $floor[0]['parkzone'], 'side' => $side[0]['parkzone']]);
 			$slots = $standard->merge($floor)->merge($side);
 		} else {

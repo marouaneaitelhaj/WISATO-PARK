@@ -8,8 +8,12 @@
     <div class="row row--10 mb-4">
         <div class="seats">
             @foreach ($florSlots as $index => $slot)
-            <div  class="seat {{ $slot->active_parking != NULL && $slot->active_parking->id != $id ? 'text-white' : '' }}">
-                <input type="radio" value="{{ $slot->id }}" required name="slot_id" {{ $slot->active_parking != NULL && $slot->active_parking->id != $id ? 'disabled' : ($slot->active_parking != NULL && $slot->active_parking->id == $id ? 'checked' : '' ) }} id="{{ $slot->slotId }}" />
+            <div class="seat {{ $slot->active_parking != NULL && $slot->active_parking->id != $id ? 'text-white' : '' }}">
+                @php
+                $tableName = $slot->getTable();
+                $slotValue = $tableName . '**' . $slot->id;
+                @endphp
+                <input type="radio" value="{{ $slotValue }}" required name="slot_id" {{ $slot->active_parking != NULL && $slot->active_parking->id != $id ? 'disabled' : ($slot->active_parking != NULL && $slot->active_parking->id == $id ? 'checked' : '' ) }} id="{{ $slot->slotId }}" />
                 <label for="{{ $slot->slotId }}">
                     {{ $slot->name  }}<br>
                     @if($slot->active_parking != NULL && $slot->active_parking->id != $id)
@@ -58,8 +62,8 @@
 </div>
 <script>
     var seats = document.querySelectorAll(".seat");
-    for(var i = 0; i < seats.length; i++){
-        seats[i].addEventListener("click", function(){
+    for (var i = 0; i < seats.length; i++) {
+        seats[i].addEventListener("click", function() {
             this.children[0].setAttribute("checked", "checked")
         });
     }

@@ -25,7 +25,7 @@ class UpdateParkingRequest extends FormRequest
     public function rules()
     {
         return [
-            'slot_id'       => 'bail|required',
+            // 'slot_id'       => 'bail|required',
             'vehicle_no'    => 'bail|required|string',
             'category_id'   => 'bail|required|integer',
             'driver_name'   => 'bail|nullable|string',
