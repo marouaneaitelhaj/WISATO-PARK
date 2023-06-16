@@ -15,12 +15,15 @@
                 <option value="{{ $quartier->id }}">{{ $quartier->quartier_name }}</option>
                 @endforeach
             </select>
+            @if($parkzones != null)
             <select wire:model="selectedParkzone" class="form-select mt-1">
                 <option hidden value="-9" selected>Select Parzone</option>
+                <option value="-1">All</option>
                 @foreach ($parkzones as $index => $prk)
                 <option value="{{ $index }}">{{ $prk->name }}</option>
                 @endforeach
             </select>
+            @endif
             <div class="d-flex ml-3 text-center mt-3">
                 <div class="bg-primary m-2 p-2 rounded-3">
                     <span class="text-white p-3">Electric</span>
@@ -28,6 +31,7 @@
                 <div class="bg-warning m-2 p-2 rounded-3">
                     <span class="text-white p-3">Gasoline</span>
                 </div>
+                @if($modeshow !== 'all' && $parkzone != null)
                 <div class="bg-success m-2 p-2 rounded-3" style="cursor: pointer;" onclick="showtariff()">
                     @if($parkzone != null)
                     <input type="hidden" id="parkzone_id" value="{{$parkzone->id}}">
@@ -36,6 +40,7 @@
                     @endif
                     <span class="text-white p-3">Show tariff</span>
                 </div>
+                @endif
             </div>
         </div>
     </div>
@@ -57,12 +62,30 @@
         @component('components.side', ['parkzone' => $parkzone, 'categories' => $categories])
         @endcomponent
         @endif
+        @else
+        @if($modeshow == 'all')
+        @foreach ($parkzones as $parkzone)
+        @if($parkzone->type == 'standard')
+        @component('components.standard', ['parkzone' => $parkzone, 'categories' => $categories])
+        @endcomponent
+        @endif
+        @if($parkzone->type == 'floor')
+        @component('components.floor', ['parkzone' => $parkzone, 'categories' => $categories])
+        @endcomponent
+        @endif
+        @if($parkzone->type == 'side')
+        @component('components.side', ['parkzone' => $parkzone, 'categories' => $categories])
+        @endcomponent
+        @endif
+        @endforeach
+        @endif
         @endif
     </div>
 </div>
 <script>
     var tariff = [];
     var html = [];
+
     function showtariff() {
         var parkzone_id = document.getElementById('parkzone_id').value;
         if (parkzone_id == '') {

@@ -17,6 +17,7 @@ use App\View\Components\side;
 class ParkzoneDashboard extends Component
 {
     public $quartiers;
+    public $modeshow = 'single'; 
     public $categories;
     public $parkzones = [];
     public $parkzone = [];
@@ -142,6 +143,16 @@ class ParkzoneDashboard extends Component
     // if selectedParkzone is changed
     public function updatedSelectedParkzone($index)
     {
+        if($index == -1){
+            $this->parkzones = Parkzone::where('status', 1)
+            ->where('quartier_id', $this->selectedQuartier)
+            ->with('quartier')
+            ->with('tariff')
+            ->get();
+            $this->modeshow = 'all';
+            $this->parkzone = null;
+            return;
+        }
         $parkzone_id = $this->parkzones[$index]->id;
         $type = $this->parkzones[$index]->type;
         $this->parkzone = Parkzone::where('id', $parkzone_id)
@@ -150,6 +161,7 @@ class ParkzoneDashboard extends Component
             ->with('tariff.category')
             ->first();
         $this->parkzone->slots = $this->parkzone->slots($type)->get();
+        $this->modeshow = 'single';
         // dd($this->parkzone->slots);
     }
 

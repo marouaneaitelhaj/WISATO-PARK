@@ -22,7 +22,8 @@ class Parking extends Model
 				'paid',
 				'status',
 				'created_by',
-				'modified_by'
+				'modified_by',
+				'table_name'
 			];
 	protected $guarded = [];
 

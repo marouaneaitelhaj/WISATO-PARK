@@ -46,8 +46,8 @@ class CategoryWiseParkzoneSlotController extends Controller
             }
 
             if ($request->input('search') && $request->input('search')['value'] != "") {
-                $search['slot_name'] = $request->input('search')['value'];
-                $search['slot_name'] = $request->input('search')['value'];
+                $search['name'] = $request->input('search')['value'];
+                $search['name'] = $request->input('search')['value'];
             }
 
             if ($request->input('where')) {
@@ -87,7 +87,8 @@ class CategoryWiseParkzoneSlotController extends Controller
                     $CategoryWiseParkzoneSlot = new CategoryWiseParkzoneSlot();
                     $CategoryWiseParkzoneSlot->parkzone_id = $request->parkzone_id;
                     $CategoryWiseParkzoneSlot->category_id = $key;
-                    $CategoryWiseParkzoneSlot->slot_name = $key . '-' . $i . '-' . $request->parkzone_id;
+                    $categories = Category::where('id', $key)->first();
+                    $CategoryWiseParkzoneSlot->name = strtok($categories->type, ' ') . '-' . count(CategoryWiseParkzoneSlot::all()) + 1;
                     $CategoryWiseParkzoneSlot->created_by = auth()->user()->id;
                     $CategoryWiseParkzoneSlot->save();
                 }
@@ -129,15 +130,15 @@ class CategoryWiseParkzoneSlotController extends Controller
     public function update(Request $request, CategoryWiseParkzoneSlot $parking_setting)
     {
         $validator = Validator::make($request->all(), [
-            'slot_name' => 'bail|required|min:1|max:5',
+            'name' => 'bail|required|min:1|max:5',
             'identity' => 'bail|nullable|min:5',
             'remarks' => 'bail|nullable|min:5'
         ]);
 
         $validator->after(function ($validator) use ($request, $parking_setting) {
-            $oldSlot =  CategoryWiseParkzoneSlot::where(['category_id' => $request->category_id, 'parkzone_id' => $request->parkzone_id, 'slot_name' => $request->slot_name])->where('id', '!=', $parking_setting->id)->count();
+            $oldSlot =  CategoryWiseParkzoneSlot::where(['category_id' => $request->category_id, 'parkzone_id' => $request->parkzone_id, 'name' => $request->name])->where('id', '!=', $parking_setting->id)->count();
             if ($oldSlot) {
-                $validator->errors()->add('slot_name', 'This slot name has been used.');
+                $validator->errors()->add('name', 'This slot name has been used.');
             }
         });
 
@@ -150,7 +151,7 @@ class CategoryWiseParkzoneSlotController extends Controller
             'remarks' => $request->remarks,
             'category_id' => $request->category_id,
             'parkzone_id' => $request->parkzone_id,
-            'slot_name' => $request->slot_name
+            'name' => $request->name
         ];
 
         $parking_setting->update($data);

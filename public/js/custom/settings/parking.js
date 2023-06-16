@@ -67,7 +67,7 @@
                     'title': 'Amount', name: 'amount', data: "amount"
                 },
                 {
-                    'title': 'Slot', name: 'slot.slot_name', data: "slot.slot_name", render: function (data, type, row) {
+                    'title': 'Slot', name: 'slot.name', data: "slot.name", render: function (data, type, row) {
                         return typeof data != 'undefined' ? data : '';
                     }
                 },
@@ -147,7 +147,7 @@
                     'title': 'In Time', name: 'in_time', data: "in_time"
                 },
                 {
-                    'title': 'Slot', name: 'slot.slot_name', data: "slot.slot_name", render: function (data, type, row) {
+                    'title': 'Slot', name: 'slot.name', data: "slot.name", render: function (data, type, row) {
                         return typeof data != 'undefined' ? data : '';
                     }
                 },
@@ -228,7 +228,7 @@
                     'title': 'Amount', name: 'amount', data: "amount"
                 },
                 {
-                    'title': 'Slot', name: 'slot.slot_name', data: "slot.slot_name", render: function (data, type, row) {
+                    'title': 'Slot', name: 'slot.name', data: "slot.name", render: function (data, type, row) {
                         return typeof data != 'undefined' ? data : '';
                     }
                 },

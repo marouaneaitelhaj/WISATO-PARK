@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Parkzone;
 use Illuminate\Http\Request;
 use App\Models\Sides;
+use App\Models\Category;
 use App\Models\Side_slot;
 use App\Models\Side_slot_number;
 
@@ -109,7 +110,8 @@ class SideController extends Controller
                     $side_slot = new Side_slot;
                     $side_slot->side_id = $sides->id;
                     $side_slot->category_id = $index;
-                    $side_slot->name = $index . '-' . $i;
+                    $category = Category::find($index)->first();
+                    $side_slot->name = strtok($category->type, ' ') . '-' . count(Side_slot::where('category_id', $index)->get()) + 1;
                     $side_slot->save();
                 }
             }

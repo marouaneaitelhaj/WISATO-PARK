@@ -17,7 +17,7 @@ class Side_slot extends Model
     {
         return $this->belongsTo(Sides::class);
     }
-    public function category()
+    public function Category()
     {
         return $this->belongsTo(Category::class);
     }

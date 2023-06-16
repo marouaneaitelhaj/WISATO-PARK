@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Parking;
 use App\Models\Category;
+use App\Models\FloorSlot;
+use App\Models\Side_slot;
 use App\Models\Tariff;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreParkingRequest;
@@ -11,6 +13,7 @@ use App\Http\Requests\UpdateParkingRequest;
 use App\Http\Requests\PayParkingRequest;
 use App\Models\CategoryWiseParkzoneSlot;
 use App\Models\Parkzone;
+use App\View\Components\floor;
 use Exception;
 use Illuminate\Support\Facades\Session;
 use phpDocumentor\Reflection\Types\This;
@@ -214,7 +217,7 @@ class ParkingController extends Controller
 			->whereHas('category', function ($query) {
 				$query->where('status', '1');
 			})->with('active_parking')->count();
-			// $data['total_slots'] = 99;
+		// $data['total_slots'] = 99;
 		return view('content.parking.ended_list')->with($data);
 	}
 
@@ -230,13 +233,31 @@ class ParkingController extends Controller
 		$data['categories'] = Category::where('status', 1)->get();
 		$data['currently_parking'] = Parking::where('out_time', NULL)->count();
 		if ($chefId == 1) {
-			$data['total_slots'] = CategoryWiseParkzoneSlot::where('category_wise_parkzone_slots.status', 1)
+			$standard = CategoryWiseParkzoneSlot::where('status', 1)
 				->whereHas('parkzone', function ($query) {
 					$query->where('status', '1');
 				})
 				->whereHas('category', function ($query) {
 					$query->where('status', '1');
-				})->with('active_parking')->count();
+				})
+				->with('category')
+				->with('parkzone')
+				->get();
+			$floor = FloorSlot::with('floor.parkzone')
+				->with('Category')
+				->get();
+			foreach ($floor as $key => $value) {
+				$floor[$key]->parkzone = $value->floor->parkzone;
+			}
+			$side = Side_slot::with('side.parkzone')
+				->with('category')
+				->get();
+			foreach ($side as $key => $value) {
+				$side[$key]->parkzone = $value->side->parkzone;
+			}
+			$slots = $standard->merge($floor)->merge($side);
+			//////////////////////////////////////
+			$data['total_slots'] = count($slots);
 		} else {
 			$data['total_slots'] = CategoryWiseParkzoneSlot::where('category_wise_parkzone_slots.status', 1)
 				->whereHas('parkzone', function ($query) use ($chefId) {
@@ -248,8 +269,7 @@ class ParkingController extends Controller
 				->whereHas('category', function ($query) {
 					$query->where('status', '1');
 				})->with('active_parking')->count();
-			}
-			// $data['total_slots'] = 99;
+		}
 		return view('content.parking.create')->with($data);
 	}
 
@@ -261,13 +281,16 @@ class ParkingController extends Controller
 	 */
 	public function store(StoreParkingRequest $request)
 	{
-		dd($request->all());
+		$slotIdParam = $request['slot_id'];
+		$parts = explode('**', $slotIdParam);
+		$tableName = $parts[0];
+		$slotId = $parts[1];
 		$validated = $request->validated();
 
 		try {
 
 			$parking = Parking::create([
-				'slot_id'    	=> $validated['slot_id'],
+				'slot_id'    	=> $slotId,
 				'vehicle_no'    => $validated['vehicle_no'],
 				'category_id'   => $validated['category_id'],
 				'driver_name'   => $validated['driver_name'],
@@ -275,7 +298,8 @@ class ParkingController extends Controller
 				'barcode'       => date('YmdHis') . $request->user()->id,
 				'in_time'       => date('Y-m-d H:i:s'),
 				'created_by'    => $request->user()->id,
-				'modified_by'   => $request->user()->id
+				'modified_by'   => $request->user()->id,
+				'table_name'    => $tableName
 			]);
 		} catch (\PDOException $e) {
 
@@ -505,8 +529,9 @@ class ParkingController extends Controller
 	public function parkingSlot(Request $request, $category_id)
 	{
 		$chefId = auth()->user()->id;
+		$slots = [];
 		if ($chefId == 1) {
-			$slots = CategoryWiseParkzoneSlot::where('category_id', $category_id)
+			$standard = CategoryWiseParkzoneSlot::where('category_id', $category_id)
 				->where('status', 1)
 				->whereHas('parkzone', function ($query) {
 					$query->where('status', '1');
@@ -514,8 +539,28 @@ class ParkingController extends Controller
 				->whereHas('category', function ($query) {
 					$query->where('status', '1');
 				})
+				->with('category')
 				->with('parkzone')
 				->get();
+			// $standard['src'] = "CategoryWiseParkzoneSlot";
+			$floor = FloorSlot::where('categorie_id', $category_id)
+				->with('floor.parkzone')
+				->with('Category')
+				->get();
+			foreach ($floor as $key => $value) {
+				$floor[$key]->parkzone = $value->floor->parkzone;
+			}
+			// $floor['src'] = "FloorSlot";
+			$side = Side_slot::where('category_id', $category_id)
+				->with('side.parkzone')
+				->with('category')
+				->get();
+			foreach ($side as $key => $value) {
+				$side[$key]->parkzone = $value->side->parkzone;
+			}
+			// $side['src'] = "Side_slot";
+			// return (['standard' => $standard[0]['parkzone'], 'floor' => $floor[0]['parkzone'], 'side' => $side[0]['parkzone']]);
+			$slots = $standard->merge($floor)->merge($side);
 		} else {
 			$slots = CategoryWiseParkzoneSlot::where('category_id', $category_id)
 				->where('status', 1)

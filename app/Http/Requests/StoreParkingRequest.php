@@ -29,7 +29,7 @@ class StoreParkingRequest extends FormRequest
 		return [
 			'vehicle_no'    => 'bail|required|string',
 			'category_id'   => 'bail|required|integer',
-			'slot_id'   	=> 'bail|required|integer',
+			// 'slot_id'   	=> 'bail|required|integer',
 			'driver_mobile' => 'bail|nullable|string',
 			'driver_name'   => 'bail|nullable|string',
 		];
@@ -44,7 +44,7 @@ class StoreParkingRequest extends FormRequest
 			$activeParking = Parking::where('vehicle_no', $this->request->get('vehicle_no'))->where('out_time', null)->first();
 
 			if($activeParking){
-				$validator->errors()->add('vehicle_no', 'This vehicle has currently parked in ' . $activeParking->slot->slot_name . ' slot.');
+				$validator->errors()->add('vehicle_no', 'This vehicle has currently parked in ' . $activeParking->slot->name . ' slot.');
 			}
 
 		});

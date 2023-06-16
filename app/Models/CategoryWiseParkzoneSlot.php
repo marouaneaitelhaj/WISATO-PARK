@@ -10,7 +10,7 @@ class CategoryWiseParkzoneSlot extends Model
     protected $fillable = [
         'id',
         'parkzone_id',
-        'slot_name',
+        'name',
         'slotId',
         'identity',
         'remarks',

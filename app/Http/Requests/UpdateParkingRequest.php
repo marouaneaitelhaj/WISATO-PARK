@@ -25,7 +25,7 @@ class UpdateParkingRequest extends FormRequest
     public function rules()
     {
         return [
-            'slot_id'       => 'bail|required',
+            // 'slot_id'       => 'bail|required',
             'vehicle_no'    => 'bail|required|string',
             'category_id'   => 'bail|required|integer',
             'driver_name'   => 'bail|nullable|string',
@@ -42,7 +42,7 @@ class UpdateParkingRequest extends FormRequest
             $activeParking = Parking::where('vehicle_no', $this->request->get('vehicle_no'))->where('id', '!=', $this->route('parking_crud')->id)->where('out_time', null)->first();
 
             if ($activeParking) {
-                $validator->errors()->add('vehicle_no', 'This vehicle has currently parked in ' . $activeParking->slot->slot_name . ' slot.');
+                $validator->errors()->add('vehicle_no', 'This vehicle has currently parked in ' . $activeParking->slot->name . ' slot.');
             }
         });
     }

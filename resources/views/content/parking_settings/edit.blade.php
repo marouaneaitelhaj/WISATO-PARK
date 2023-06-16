@@ -62,14 +62,14 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="slot_name" class="text-md-right">{{ __('Slot Name') }} <span
+                                    <label for="name" class="text-md-right">{{ __('Slot Name') }} <span
                                             class="tcr text-danger">*</span></label>
                                     <input type="text" required
-                                        class="form-control{{ $errors->has('slot_name') ? ' is-invalid' : '' }}"
-                                        value="{{ old('slot_name', $parking_setting->slot_name ) }}" name="slot_name">
-                                    @if ($errors->has('slot_name'))
+                                        class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                        value="{{ old('name', $parking_setting->name ) }}" name="name">
+                                    @if ($errors->has('name'))
                                     <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('slot_name') }}</strong>
+                                        <strong>{{ $errors->first('name') }}</strong>
                                     </span>
                                     @endif
                                 </div>

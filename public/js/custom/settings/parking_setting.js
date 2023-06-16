@@ -64,7 +64,7 @@
           name: "parkzone_id",
           data: "parkzone.name",
         },
-        { title: "Slot Name", name: "slot_name", data: "slot_name" },
+        { title: "Slot Name", name: "name", data: "name" },
 
         {
           title: "Status",
