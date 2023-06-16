@@ -10,7 +10,7 @@ use App\Models\Floor;
 
 
 
-use App\Models\Cities;
+use App\Models\cities;
 use App\Models\FloorSlot;
 use App\Models\Side_slot;
 use Exception;
