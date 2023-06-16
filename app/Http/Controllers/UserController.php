@@ -135,8 +135,11 @@ class UserController extends Controller
                 'email' => $validated['email'],
                 'password' => Hash::make($validated['password']),
                 'status' => 1,
-                'cin' => $validated['cin'] 
+                'cin' => $validated['cin'],
+                'id_camera' => $validated['id_camera'],
+                'serial_number' => $validated['serial_number'],
             ]);
+            // dd($user);
     
             $user->roles()->attach($validated['role']);
             $user->sendEmailVerificationNotification();

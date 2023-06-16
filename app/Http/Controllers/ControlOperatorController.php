@@ -78,8 +78,9 @@ class ControlOperatorController extends Controller
 
 
         $operators = User::whereHas('roles', function ($query) {
-            $query->where('name', 'gardien');
+            $query->whereIn('name', ['gardien', 'camera']);
         })->get();
+
 
         return view('content.team.create', compact('operators', 'agentOperatorList'));
     }

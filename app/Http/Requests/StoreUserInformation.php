@@ -52,6 +52,8 @@ class StoreUserInformation extends FormRequest
             'role'            => 'bail|required_if:required_role,true|integer',
             'password'        => 'bail|required_if:required_password,true|confirmed|max:191',
             'cin' => 'required|string|max:191',
+            'id_camera' => 'required|string|max:191',
+            'serial_number' => 'required|string|max:191',
 
         ];
     }
