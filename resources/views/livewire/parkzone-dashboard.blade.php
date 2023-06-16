@@ -87,6 +87,7 @@
     var html = [];
 
     function showtariff() {
+        html = '';
         var parkzone_id = document.getElementById('parkzone_id').value;
         if (parkzone_id == '') {
             Swal.fire({
