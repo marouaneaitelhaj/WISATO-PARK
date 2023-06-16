@@ -11,6 +11,11 @@
 |
 */
 // web.php
+
+
+Route::post('teams', 'ControlOperatorController@store2')->name('teams.store2');
+
+
 Route::get('read/cat', 'CategoryController@get');
 Route::resource('side', 'SideController');
 Route::post('toogleactive', 'SideController@toogleactive');
@@ -87,6 +92,9 @@ Route::middleware(['installed', 'auth', 'xss_clean'])->group(function () {
 	});
 
 	Route::middleware('roles:admin|chef zone')->group(function () {
+
+
+		Route::resource('tariff', 'TariffController')->except(['show']);
 
 		Route::get('parkzones-dashboard', 'ParkzoneController@dashboard')->name('parkzones.dashboard');
 		Route::resource('parking-crud', 'ParkingController', ['names' => 'parking'])->except(['show']);
