@@ -17,7 +17,7 @@ use App\View\Components\side;
 class ParkzoneDashboard extends Component
 {
     public $quartiers;
-    public $modeshow = 'single'; 
+    public $modeshow = 'single';
     public $categories;
     public $parkzones = [];
     public $parkzone = [];
@@ -115,11 +115,12 @@ class ParkzoneDashboard extends Component
             $available = 0;
             $unavailable = 0;
             foreach ($slots as $slot) {
-                if ($slot->active_parking == null) {
-                    $available++;
-                } else {
-                    $unavailable++;
-                }
+                // dd($slot->active_parking);  
+                // if ($slot->active_parking == null) {
+                //     $available++;
+                // } else {
+                //     $unavailable++;
+                // }
             }
             $totalSlots = $available + $unavailable;
             return ['totalSlots' => $totalSlots, 'available' => $available, 'unavailable' => $unavailable];
@@ -127,28 +128,47 @@ class ParkzoneDashboard extends Component
             $slots = Sides::where('parkzone_id', $parkzone_id)
                 ->where('side', $side)
                 ->first();
-
             if ($slots == null) {
                 return ['totalSlots' => 0, 'available' => 0, 'unavailable' => 0];
             }
-            // dd();
-            return ['totalSlots' => count($slots->side_slots($category_id)->get()), 'available' => 0, 'unavailable' => 0];
+            $totalSlots = $slots->side_slots($category_id)->get();
+            $available = 0;
+            $unavailable = 0;
+            foreach ($totalSlots as $slot) {
+                // dd($slot, $slot->active_parking);
+                if ($slot->active_parking == null) {
+                    $available++;
+                } else {
+                    $unavailable++;
+                }
+            }
+            return ['totalSlots' => count($totalSlots), 'available' => $available, 'unavailable' => $unavailable];
         } else {
             $slots = FloorSlot::where('categorie_id', $category_id)
                 ->where('floor_id', $floor_id)
                 ->get();
-            return ['totalSlots' => count($slots), 'available' => 0, 'unavailable' => 0];
+            $available = 0;
+            $unavailable = 0;
+            foreach ($slots as $slot) {
+                // dd($slot->active_parking);
+                if ($slot->active_parking == null) {
+                    $available++;
+                } else {
+                    $unavailable++;
+                }
+            }
+            return ['totalSlots' => count($slots), 'available' => $available, 'unavailable' => $unavailable];
         }
     }
 
     public function updatedSelectedParkzone($index)
     {
-        if($index == -1){
+        if ($index == -1) {
             $this->parkzones = Parkzone::where('status', 1)
-            ->where('quartier_id', $this->selectedQuartier)
-            ->with('quartier')
-            ->with('tariff')
-            ->get();
+                ->where('quartier_id', $this->selectedQuartier)
+                ->with('quartier')
+                ->with('tariff')
+                ->get();
             $this->modeshow = 'all';
             $this->parkzone = null;
             return;

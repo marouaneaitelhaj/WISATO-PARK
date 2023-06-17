@@ -302,7 +302,7 @@ class ParkingController extends Controller
 				'table_name'    => $tableName
 			]);
 		} catch (\PDOException $e) {
-
+			// dd($e->getMessage());
 			return redirect()
 				->back()
 				->withInput()
