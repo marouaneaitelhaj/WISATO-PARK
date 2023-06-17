@@ -100,10 +100,10 @@
                     const e = m.parseFromString('<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">\n            <polyline points="18 15 12 21 6 15"></polyline></svg>', "image/svg+xml").documentElement;
                     u.append(e), i.append(s), a.append(i), (p = document.createElement("div")).classList.add("drawer", "hidden"), t.shadow && p.classList.add("shadow"), t.rounded && p.classList.add("rounded"), p.append(c), v = document.createElement("ul"), p.appendChild(v), l.appendChild(a), l.appendChild(p), n.nextSibling ? n.parentNode.insertBefore(l, n.nextSibling) : n.parentNode.appendChild(l)
                 }(), h(), L(), E(), u.addEventListener("click", (() => {
-                    p.classList.contains("hidden") && (h(), L(), p.classList.remove("hidden"), r.focus())
+                    p.classList.toggle("hidden"), r.focus()
                 })),
                 document.querySelector("body > div > div > div > div > div > div > div > div > div.card-body > form > div > div.col-md-12.w-100 > div > div > div > div.wrapper > div > div.input-container").addEventListener("click", (() => {
-                    p.classList.contains("hidden") && (h(), L(), p.classList.remove("hidden"), r.focus())   
+                    p.classList.toggle("hidden"), r.focus()   
                 })),
                  r.addEventListener("keyup", (e => {
                     h(e.target.value), L()

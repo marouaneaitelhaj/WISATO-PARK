@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\CategoryWiseParkzoneSlot;
-
+use App\Models\CategoryWiseParkzoneSlotNumber;
 use App\Models\Parkzone;
 use Exception;
 use Illuminate\Http\Request;
@@ -81,6 +81,8 @@ class CategoryWiseParkzoneSlotController extends Controller
      */
     public function store(Request $request)
     {
+        CategoryWiseParkzoneSlot::where('parkzone_id', $request->parkzone_id)->delete();
+        CategoryWiseParkzoneSlotNumber::where('parkzone_id', $request->parkzone_id)->delete();
         foreach ($request->all() as $key => $value) {
             if ($key !== 'parkzone_id' && $key !== 'side') {
                 for ($i = 0; $i < $value; $i++) {
@@ -92,6 +94,12 @@ class CategoryWiseParkzoneSlotController extends Controller
                     $CategoryWiseParkzoneSlot->created_by = auth()->user()->id;
                     $CategoryWiseParkzoneSlot->save();
                 }
+                // call the function to store slot number
+                $CategoryWiseParkzoneSlotNumber = new CategoryWiseParkzoneSlotNumber();
+                $CategoryWiseParkzoneSlotNumber->parkzone_id = $request->parkzone_id;
+                $CategoryWiseParkzoneSlotNumber->category_id = $key;
+                $CategoryWiseParkzoneSlotNumber->slot_number = $value;
+                $CategoryWiseParkzoneSlotNumber->save();
             }
         }
     }

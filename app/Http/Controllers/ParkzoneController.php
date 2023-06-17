@@ -6,6 +6,7 @@ use App\Models\Parkzone;
 use App\Models\Category;
 use App\Models\Quartier;
 use App\Models\CategoryWiseParkzoneSlot;
+use App\Models\CategoryWiseParkzoneSlotNumber;
 use App\Models\Floor;
 
 
@@ -261,7 +262,8 @@ class ParkzoneController extends Controller
             $parkzone = Parkzone::find($id);
             $categoryWiseParkzoneSlots = CategoryWiseParkzoneSlot::where('parkzone_id', $parkzone->id)->get();
             if (count($categoryWiseParkzoneSlots) > 0) {
-                return response()->json(null, 404);
+                $categoryWiseParkzoneSlots = CategoryWiseParkzoneSlotNumber::where('parkzone_id', $parkzone->id)->get();
+                return response()->json($categoryWiseParkzoneSlots, 404);
             } else {
                 return response()->json(null, 200);
             }

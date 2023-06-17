@@ -1,5 +1,6 @@
 var arr = [];
 var html = "";
+var dataside = [];
 
 (function ($) {
   "use strict";
@@ -254,60 +255,61 @@ function createFloor(parkzoneId) {
 //////////////////////////////////// marwaneaitelhaj /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 function createSide(parkzoneId) {
+  // Swal.fire({
+  //   title: "Loading...",
+  //   text: "Please wait",
+  //   icon: "info",
+  // });
+  // axios
+  //   .get("api/checkiffloorsidestandarexist/" + parkzoneId + "/side")
+  //   .then(function (response) {
+  var left = false;
+  var right = false;
+  dataside = [];
+  check_if_side_is_activ(parkzoneId, "left");
+  check_if_side_is_activ(parkzoneId, "right");
   Swal.fire({
-    title: "Loading...",
-    text: "Please wait",
-    icon: "info",
+    title: "Create Side",
+    html:
+      '<meta name="csrf-token" content="{{ csrf_token() }}">' +
+      '<div class="w-100 d-flex flex-column align-items-center justify-content-around">' +
+      '<div class="w-100  align-items-center justify-content-center form-group d-flex">' +
+      "<div class='w-100'>" +
+      '<button type="button" class="w-100 btn btn-primary" onclick="openLeftSide(' +
+      parkzoneId +
+      ')">Left Side</button>' +
+      "</div>" +
+      '<div class=" form-switch">' +
+      '<input type="checkbox" id="leftactive" disabled onchange="leftactive(' +
+      parkzoneId +
+      ')" class="form-check-input" checked data-toggle="toggle">' +
+      "</div>" +
+      "</div>" +
+      '<div class="form-group   align-items-center d-flex justify-content-center w-100 ">' +
+      "<div class='w-100'>" +
+      '<button type="button" class="btn btn-primary w-100" onclick="openRightSide(' +
+      parkzoneId +
+      ')">Right Side</button>' +
+      "</div>" +
+      '<div class=" form-switch">' +
+      '<input class="form-check-input"  onchange="rightactive(' +
+      parkzoneId +
+      ')"  id="rightactive"  disabled type="checkbox" checked data-toggle="toggle">' +
+      "</div>" +
+      "</div>" +
+      "</div>",
+    showConfirmButton: false,
   });
-  axios
-    .get("api/checkiffloorsidestandarexist/" + parkzoneId + "/side")
-    .then(function (response) {
-      var left = false;
-      var right = false;
-      check_if_side_is_activ(parkzoneId, "left");
-      check_if_side_is_activ(parkzoneId, "right");
-      Swal.fire({
-        title: "Create Side",
-        html:
-          '<meta name="csrf-token" content="{{ csrf_token() }}">' +
-          '<div class="form-group d-flex flex-column align-items-center justify-content-around">' +
-          '<div class="  align-items-center form-group d-flex">' +
-          "<div>" +
-          '<button type="button" class="btn btn-primary" onclick="openLeftSide(' +
-          parkzoneId +
-          ')">Left Side</button>' +
-          "</div>" +
-          '<div class=" form-switch">' +
-          '<input type="checkbox" id="leftactive" disabled onchange="leftactive(' +
-          parkzoneId +
-          ')" class="form-check-input" checked data-toggle="toggle">' +
-          "</div>" +
-          "</div>" +
-          '<div class="form-group   align-items-center d-flex ">' +
-          "<div>" +
-          '<button type="button" class="btn btn-primary" onclick="openRightSide(' +
-          parkzoneId +
-          ')">Right Side</button>' +
-          "</div>" +
-          '<div class=" form-switch">' +
-          '<input class="form-check-input"  onchange="rightactive(' +
-          parkzoneId +
-          ')"  id="rightactive"  disabled type="checkbox" checked data-toggle="toggle">' +
-          "</div>" +
-          "</div>" +
-          "</div>",
-        showConfirmButton: false,
-      });
-    })
+  // })
 
-    .catch(function (error) {
-      Swal.fire({
-        title: "Error",
-        text: "An error occurred while creating the side. Or the Slots already exist.",
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
-    });
+  // .catch(function (error) {
+  //   Swal.fire({
+  //     title: "Error",
+  //     text: "An error occurred while creating the side. Or the Slots already exist.",
+  //     icon: "error",
+  //     confirmButtonText: "Ok",
+  //   });
+  // });
 }
 function createstandard(parkzoneId) {
   Swal.fire({
@@ -394,9 +396,91 @@ function createstandard(parkzoneId) {
     .catch(function (error) {
       Swal.fire({
         title: "Error",
-        text: "An error occurred while creating the slots. Or the Slots already exist.",
+        text: "The Slots already exist. do you want to edit them?",
         icon: "error",
         confirmButtonText: "Ok",
+        confirmButtonColor: "#3085d6",
+        showCancelButton: true,
+        preConfirm: () => {
+          for (var i = 0; i < cat.length; i++) {
+            for (var j = 0; j < error.response.data.length; j++) {}
+            html +=
+              '<div class="m-1"> <input type="number"  class="form-control" placeholder="' +
+              cat[i].type +
+              '" name="' +
+              cat[i].id +
+              '"';
+            for (var j = 0; j < error.response.data.length; j++) {
+              if (cat[i].id == error.response.data[j].category_id) {
+                html += 'value="' + error.response.data[j].slot_number + '"';
+              }
+            }
+            html += "> </div>";
+          }
+          Swal.fire({
+            title: "Manage standard parkzone",
+            html:
+              '<div class="form-group">' +
+              '<form id="createSideForm">' +
+              '<label for="category_id" class="text-md-right">Category<span class="tcr text-danger">*</span></label>' +
+              '<div class="d-flex flex-wrap justify-content-center">' +
+              html +
+              "</div>" +
+              "<form />" +
+              "</div>",
+            showCancelButton: true,
+            cancelButtonText: "Cancel",
+            confirmButtonText: "Create",
+            focusConfirm: false,
+            preConfirm: () => {
+              const form = document.getElementById("createSideForm");
+              const formData = new FormData(form);
+              const formValues = Object.fromEntries(formData.entries());
+              // must be json to send to the server
+              formValues.parkzone_id = parkzoneId;
+              const jsonFormValues = JSON.stringify(formValues);
+
+              // Access the form values
+              const csrfToken = document.head.querySelector(
+                'meta[name="csrf-token"]'
+              ).content;
+
+              // fetch("side", {
+              //   method: "POST",
+              //   headers: {
+              //     "Content-Type": "application/json",
+              //     "X-CSRF-TOKEN": csrfToken,
+              //   },
+              //   body: jsonFormValues,
+              // });
+              axios
+                .post("parking-settings", jsonFormValues, {
+                  headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": csrfToken,
+                  },
+                })
+                .then(function (response) {
+                  console.log(response);
+                  Swal.fire({
+                    title: "Side Created",
+                    text: "The side has been created successfully.",
+                    icon: "success",
+                    confirmButtonText: "Ok",
+                  });
+                })
+                .catch(function (error) {
+                  console.log(error);
+                  Swal.fire({
+                    title: "Error",
+                    text: "An error occurred while creating the side.",
+                    icon: "error",
+                    confirmButtonText: "Ok",
+                  });
+                });
+            },
+          });
+        },
       });
     });
 }
@@ -409,7 +493,13 @@ function openLeftSide(parkzoneId) {
       cat[i].type +
       '" name="' +
       cat[i].id +
-      '"> </div>';
+      '"';
+    for (var j = 0; j < dataside["left"]["side_slot"].length; j++) {
+      if (cat[i].id == dataside["left"]["side_slot"][j].category_id) {
+        html += 'value="' + dataside["left"]["side_slot"][j].slot_number + '"';
+      }
+    }
+    html += "> </div>";
   }
   Swal.fire({
     title: "Create Left Side",
@@ -502,7 +592,13 @@ function openRightSide(parkzoneId) {
       cat[i].type +
       '" name="' +
       cat[i].id +
-      '"> </div>';
+      '"';
+    for (var j = 0; j < dataside["right"]["side_slot"].length; j++) {
+      if (cat[i].id == dataside["right"]["side_slot"][j].category_id) {
+        html += 'value="' + dataside["right"]["side_slot"][j].slot_number + '"';
+      }
+    }
+    html += "> </div>";
   }
   Swal.fire({
     title: "Create Right Side",
@@ -663,11 +759,16 @@ function check_if_side_is_activ(parkzone_id, side) {
       return response.json();
     })
     .then((data) => {
-      if (data == "active") {
+      if (data["data"].side.side == "left") {
+        dataside["left"] = data["data"];
+      } else if (data["data"].side.side == "right") {
+        dataside["right"] = data["data"];
+      }
+      if (data["message"] == "active") {
         document.getElementById(side + "active").checked = true;
         // delete disabled attribute
         document.getElementById(side + "active").removeAttribute("disabled");
-      } else if (data == "notactive") {
+      } else if (data["message"] == "notactive") {
         document.getElementById(side + "active").checked = false;
         // delete disabled attribute
         document.getElementById(side + "active").removeAttribute("disabled");
