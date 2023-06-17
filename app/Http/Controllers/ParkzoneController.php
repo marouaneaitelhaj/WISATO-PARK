@@ -13,6 +13,7 @@ use App\Models\Floor;
 use App\Models\cities;
 use App\Models\FloorSlot;
 use App\Models\Side_slot;
+use App\Models\Sides;
 use Exception;
 use Illuminate\Http\Request;
 use App\User;
@@ -238,6 +239,34 @@ class ParkzoneController extends Controller
     public function destroy(Parkzone $parkzone)
     {
         $parkzone->delete();
+    }
+    public function checkiffloorsideexist($id, $type)
+    {
+        if ($type == 'floor') {
+            $parkzone = Parkzone::find($id);
+            $floors = Floor::where('parkzone_id', $parkzone->id)->get();
+            if (count($floors) > 0) {
+                return response()->json(null, 404);
+            } else {
+                return response()->json(null, 200);
+            }
+        } elseif ($type == 'side') {
+            $parkzone = Parkzone::find($id);
+            $sides = Sides::where('parkzone_id', $parkzone->id)->get();
+            if (count($sides) > 0) {
+                return response()->json(null, 404);
+            } else {
+                return response()->json(null, 200);
+            }
+        } elseif ($type == 'standard') {
+            $parkzone = Parkzone::find($id);
+            $categoryWiseParkzoneSlots = CategoryWiseParkzoneSlot::where('parkzone_id', $parkzone->id)->get();
+            if (count($categoryWiseParkzoneSlots) > 0) {
+                return response()->json(null, 404);
+            } else {
+                return response()->json(null, 200);
+            }
+        }
     }
     public function dashboard()
     {

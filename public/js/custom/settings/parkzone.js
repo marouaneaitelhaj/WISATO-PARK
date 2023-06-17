@@ -131,222 +131,274 @@ function agentslist(id) {
 
 function createFloor(parkzoneId) {
   Swal.fire({
-    title: "Create Floor",
-    html:
-      '<form id="floorForm">' +
-      '<div class="form-group">' +
-      '<label for="level" class="">Level:</label>' +
-      "<hr>" +
-      '<select class="form-select" id="level" name="level[]" data-placeholder="Choose anything" multiple>' +
-      '<option value="5">Fifth Floor</option>' +
-      '<option value="4">Fourth Floor</option>' +
-      '<option value="3">Third Floor</option>' +
-      '<option value="2">Second Floor</option>' +
-      '<option value="1">First Floor</option>' +
-      '<option value="0">Level 0</option>' +
-      '<option value="-1">Basement</option>' +
-      '<option value="-2">Underground</option>' +
-      '<option value="-3">Underground 2</option>' +
-      "</select>" +
-      "</div>" +
-      '<div class="form-group">' +
-      '<label for="shadow" class="">Shadow:</label>' +
-      "<hr>" +
-      '<select class="form-select" id="shadow" name="shadow">' +
-      '<option value="yes">No Shadow</option>' +
-      '<option value="no">Shadow</option>' +
-      "</select>" +
-      "</div>" +
-      '<div class="form-group">' +
-      '<label for="status" class="">Status:</label>' +
-      "<hr>" +
-      '<select class="form-select" id="status" name="status">' +
-      '<option value="yes">Inactive</option>' +
-      '<option value="no">Active</option>' +
-      "</select>" +
-      "</div>" +
-      "</form>",
-
-    showCancelButton: true,
-    cancelButtonText: "Cancel",
-    confirmButtonText: "Create",
-    focusConfirm: false,
-    preConfirm: () => {
-      const levels = Array.from(
-        Swal.getPopup().querySelectorAll("#level option:checked"),
-        (option) => option.value
-      );
-      if (levels.length === 0) {
-        Swal.showValidationMessage("Please select at least one level");
-      }
-      return {
-        levels: levels,
-        shadow: Swal.getPopup().querySelector("#shadow").value,
-        status: Swal.getPopup().querySelector("#status").value,
-      };
-    },
-  }).then((result) => {
-    if (!result.dismiss && result.value) {
-      const levels = result.value.levels;
-      const shadow = result.value.shadow;
-      const status = result.value.status;
-
-      const formData = new FormData();
-      formData.append("parkzone_id", parkzoneId);
-      levels.forEach((level) => {
-        formData.append("level[]", level);
-        formData.append("shadow[]", shadow);
-        formData.append("status[]", status);
-      });
-
-      var csrfToken = $('meta[name="csrf-token"]').attr("content");
-
-      $.ajax({
-        url: route("parkzones.store"),
-        method: "POST",
-        headers: {
-          "X-CSRF-TOKEN": csrfToken,
-        },
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (response) {
-          Swal.fire({
-            title: "Floor Created",
-            text: "The floor has been created successfully.",
-            icon: "success",
-            confirmButtonText: "Ok",
-          }).then(() => {
-            // location.reload();
-          });
-        },
-        error: function (xhr, status, error) {
-          Swal.fire({
-            title: "Error",
-            text: "An error occurred while creating the floor.",
-            icon: "error",
-            confirmButtonText: "Ok",
-          });
-        },
-      });
-    }
+    title: "Loading...",
+    text: "Please wait",
+    icon: "info",
   });
+  axios
+    .get("api/checkiffloorsidestandarexist/" + parkzoneId + "/floor")
+    .then(function (response) {
+      Swal.fire({
+        title: "Create Floor",
+        html:
+          '<form id="floorForm">' +
+          '<div class="form-group">' +
+          '<label for="level" class="">Level:</label>' +
+          "<hr>" +
+          '<select class="form-select" id="level" name="level[]" data-placeholder="Choose anything" multiple>' +
+          '<option value="5">Fifth Floor</option>' +
+          '<option value="4">Fourth Floor</option>' +
+          '<option value="3">Third Floor</option>' +
+          '<option value="2">Second Floor</option>' +
+          '<option value="1">First Floor</option>' +
+          '<option value="0">Level 0</option>' +
+          '<option value="-1">Basement</option>' +
+          '<option value="-2">Underground</option>' +
+          '<option value="-3">Underground 2</option>' +
+          "</select>" +
+          "</div>" +
+          '<div class="form-group">' +
+          '<label for="shadow" class="">Shadow:</label>' +
+          "<hr>" +
+          '<select class="form-select" id="shadow" name="shadow">' +
+          '<option value="yes">No Shadow</option>' +
+          '<option value="no">Shadow</option>' +
+          "</select>" +
+          "</div>" +
+          '<div class="form-group">' +
+          '<label for="status" class="">Status:</label>' +
+          "<hr>" +
+          '<select class="form-select" id="status" name="status">' +
+          '<option value="yes">Inactive</option>' +
+          '<option value="no">Active</option>' +
+          "</select>" +
+          "</div>" +
+          "</form>",
+
+        showCancelButton: true,
+        cancelButtonText: "Cancel",
+        confirmButtonText: "Create",
+        focusConfirm: false,
+        preConfirm: () => {
+          const levels = Array.from(
+            Swal.getPopup().querySelectorAll("#level option:checked"),
+            (option) => option.value
+          );
+          if (levels.length === 0) {
+            Swal.showValidationMessage("Please select at least one level");
+          }
+          return {
+            levels: levels,
+            shadow: Swal.getPopup().querySelector("#shadow").value,
+            status: Swal.getPopup().querySelector("#status").value,
+          };
+        },
+      }).then((result) => {
+        if (!result.dismiss && result.value) {
+          const levels = result.value.levels;
+          const shadow = result.value.shadow;
+          const status = result.value.status;
+
+          const formData = new FormData();
+          formData.append("parkzone_id", parkzoneId);
+          levels.forEach((level) => {
+            formData.append("level[]", level);
+            formData.append("shadow[]", shadow);
+            formData.append("status[]", status);
+          });
+
+          var csrfToken = $('meta[name="csrf-token"]').attr("content");
+
+          $.ajax({
+            url: route("parkzones.store"),
+            method: "POST",
+            headers: {
+              "X-CSRF-TOKEN": csrfToken,
+            },
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+              Swal.fire({
+                title: "Floor Created",
+                text: "The floor has been created successfully.",
+                icon: "success",
+                confirmButtonText: "Ok",
+              }).then(() => {
+                // location.reload();
+              });
+            },
+            error: function (xhr, status, error) {
+              Swal.fire({
+                title: "Error",
+                text: "An error occurred while creating the floor.",
+                icon: "error",
+                confirmButtonText: "Ok",
+              });
+            },
+          });
+        }
+      });
+    })
+    .catch(function (error) {
+      Swal.fire({
+        title: "Error",
+        text: "An error occurred while creating the floor. Or the floor already exist.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    });
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////// marwaneaitelhaj /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 function createSide(parkzoneId) {
-  var left = false;
-  var right = false;
-  check_if_side_is_activ(parkzoneId, "left");
-  check_if_side_is_activ(parkzoneId, "right");
   Swal.fire({
-    title: "Create Side",
-    html:
-      '<meta name="csrf-token" content="{{ csrf_token() }}">' +
-      '<div class="form-group d-flex flex-column align-items-center justify-content-around">' +
-      '<div class="  align-items-center form-group d-flex">' +
-      "<div>" +
-      '<button type="button" class="btn btn-primary" onclick="openLeftSide(' +
-      parkzoneId +
-      ')">Left Side</button>' +
-      "</div>" +
-      '<div class=" form-switch">' +
-      '<input type="checkbox" id="leftactive" disabled onchange="leftactive(' +
-      parkzoneId +
-      ')" class="form-check-input" checked data-toggle="toggle">' +
-      "</div>" +
-      "</div>" +
-      '<div class="form-group   align-items-center d-flex ">' +
-      "<div>" +
-      '<button type="button" class="btn btn-primary" onclick="openRightSide(' +
-      parkzoneId +
-      ')">Right Side</button>' +
-      "</div>" +
-      '<div class=" form-switch">' +
-      '<input class="form-check-input"  onchange="rightactive(' +
-      parkzoneId +
-      ')"  id="rightactive"  disabled type="checkbox" checked data-toggle="toggle">' +
-      "</div>" +
-      "</div>" +
-      "</div>",
-    showConfirmButton: false,
+    title: "Loading...",
+    text: "Please wait",
+    icon: "info",
   });
+  axios
+    .get("api/checkiffloorsidestandarexist/" + parkzoneId + "/side")
+    .then(function (response) {
+      var left = false;
+      var right = false;
+      check_if_side_is_activ(parkzoneId, "left");
+      check_if_side_is_activ(parkzoneId, "right");
+      Swal.fire({
+        title: "Create Side",
+        html:
+          '<meta name="csrf-token" content="{{ csrf_token() }}">' +
+          '<div class="form-group d-flex flex-column align-items-center justify-content-around">' +
+          '<div class="  align-items-center form-group d-flex">' +
+          "<div>" +
+          '<button type="button" class="btn btn-primary" onclick="openLeftSide(' +
+          parkzoneId +
+          ')">Left Side</button>' +
+          "</div>" +
+          '<div class=" form-switch">' +
+          '<input type="checkbox" id="leftactive" disabled onchange="leftactive(' +
+          parkzoneId +
+          ')" class="form-check-input" checked data-toggle="toggle">' +
+          "</div>" +
+          "</div>" +
+          '<div class="form-group   align-items-center d-flex ">' +
+          "<div>" +
+          '<button type="button" class="btn btn-primary" onclick="openRightSide(' +
+          parkzoneId +
+          ')">Right Side</button>' +
+          "</div>" +
+          '<div class=" form-switch">' +
+          '<input class="form-check-input"  onchange="rightactive(' +
+          parkzoneId +
+          ')"  id="rightactive"  disabled type="checkbox" checked data-toggle="toggle">' +
+          "</div>" +
+          "</div>" +
+          "</div>",
+        showConfirmButton: false,
+      });
+    })
+
+    .catch(function (error) {
+      Swal.fire({
+        title: "Error",
+        text: "An error occurred while creating the side. Or the Slots already exist.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    });
 }
 function createstandard(parkzoneId) {
-  var html = "";
-  for (var i = 0; i < cat.length; i++) {
-    html +=
-      '<div class="m-1"> <input type="number"  class="form-control" placeholder="' +
-      cat[i].type +
-      '" name="' +
-      cat[i].id +
-      '"> </div>';
-  }
   Swal.fire({
-    title: "Manage standard parkzone",
-    html:
-      '<div class="form-group">' +
-      '<form id="createSideForm">' +
-      '<label for="category_id" class="text-md-right">Category<span class="tcr text-danger">*</span></label>' +
-      '<div class="d-flex flex-wrap justify-content-center">' +
-      html +
-      "</div>" +
-      "<form />" +
-      "</div>",
-    showCancelButton: true,
-    cancelButtonText: "Cancel",
-    confirmButtonText: "Create",
-    focusConfirm: false,
-    preConfirm: () => {
-      const form = document.getElementById("createSideForm");
-      const formData = new FormData(form);
-      const formValues = Object.fromEntries(formData.entries());
-      // must be json to send to the server
-      formValues.parkzone_id = parkzoneId;
-      const jsonFormValues = JSON.stringify(formValues);
-
-      // Access the form values
-      const csrfToken = document.head.querySelector(
-        'meta[name="csrf-token"]'
-      ).content;
-
-      // fetch("side", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     "X-CSRF-TOKEN": csrfToken,
-      //   },
-      //   body: jsonFormValues,
-      // });
-      axios
-        .post("parking-settings", jsonFormValues, {
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-TOKEN": csrfToken,
-          },
-        })
-        .then(function (response) {
-          console.log(response);
-          Swal.fire({
-            title: "Side Created",
-            text: "The side has been created successfully.",
-            icon: "success",
-            confirmButtonText: "Ok",
-          });
-        })
-        .catch(function (error) {
-          console.log(error);
-          Swal.fire({
-            title: "Error",
-            text: "An error occurred while creating the side.",
-            icon: "error",
-            confirmButtonText: "Ok",
-          });
-        });
-    },
+    title: "Loading...",
+    text: "Please wait",
+    icon: "info",
   });
+  axios
+    .get("api/checkiffloorsidestandarexist/" + parkzoneId + "/standard")
+    .then(function (response) {
+      var html = "";
+      for (var i = 0; i < cat.length; i++) {
+        html +=
+          '<div class="m-1"> <input type="number"  class="form-control" placeholder="' +
+          cat[i].type +
+          '" name="' +
+          cat[i].id +
+          '"> </div>';
+      }
+      Swal.fire({
+        title: "Manage standard parkzone",
+        html:
+          '<div class="form-group">' +
+          '<form id="createSideForm">' +
+          '<label for="category_id" class="text-md-right">Category<span class="tcr text-danger">*</span></label>' +
+          '<div class="d-flex flex-wrap justify-content-center">' +
+          html +
+          "</div>" +
+          "<form />" +
+          "</div>",
+        showCancelButton: true,
+        cancelButtonText: "Cancel",
+        confirmButtonText: "Create",
+        focusConfirm: false,
+        preConfirm: () => {
+          const form = document.getElementById("createSideForm");
+          const formData = new FormData(form);
+          const formValues = Object.fromEntries(formData.entries());
+          // must be json to send to the server
+          formValues.parkzone_id = parkzoneId;
+          const jsonFormValues = JSON.stringify(formValues);
+
+          // Access the form values
+          const csrfToken = document.head.querySelector(
+            'meta[name="csrf-token"]'
+          ).content;
+
+          // fetch("side", {
+          //   method: "POST",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //     "X-CSRF-TOKEN": csrfToken,
+          //   },
+          //   body: jsonFormValues,
+          // });
+          axios
+            .post("parking-settings", jsonFormValues, {
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": csrfToken,
+              },
+            })
+            .then(function (response) {
+              console.log(response);
+              Swal.fire({
+                title: "Side Created",
+                text: "The side has been created successfully.",
+                icon: "success",
+                confirmButtonText: "Ok",
+              });
+            })
+            .catch(function (error) {
+              console.log(error);
+              Swal.fire({
+                title: "Error",
+                text: "An error occurred while creating the side.",
+                icon: "error",
+                confirmButtonText: "Ok",
+              });
+            });
+        },
+      });
+    })
+    .catch(function (error) {
+      Swal.fire({
+        title: "Error",
+        text: "An error occurred while creating the slots. Or the Slots already exist.",
+        icon: "error",
+        confirmButtonText: "Ok",
+      });
+    });
 }
 var cat = [];
 function openLeftSide(parkzoneId) {
