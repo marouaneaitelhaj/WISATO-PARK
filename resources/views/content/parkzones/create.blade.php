@@ -102,9 +102,17 @@
                             </div>
                             <div class="col-md-12">
                                 @livewire('quartier-city')
-                               
-                                
                             </div>
+                            @if ($errors->has('lng'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('lng') }}</strong>
+                            </span>
+                            @endif
+                            @if ($errors->has('lat'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('lat') }}</strong>
+                            </span>
+                            @endif
                             <div class="col-md-12">
                                 <div class="form-group d-flex justify-content-around ">
                                     <div id="map"></div>
@@ -163,13 +171,10 @@
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                document.getElementById("lat").value = data[0].lat;
-                document.getElementById("lng").value = data[0].lon;
+                // document.getElementById("lat").value = data[0].lat;
+                // document.getElementById("lng").value = data[0].lon;
                 map.setView([data[0].lat, data[0].lon], 15);
             });
-    })
-    document.getElementById("quartier").addEventListener('change', function(e) {
-
     })
     document.getElementById("quartier").addEventListener("change", function(e) {
         // i want to get the selected option text and add it to the url with the city text
@@ -182,8 +187,8 @@
             .then(response => response.json())
             .then(data => {
                 console.log(data);
-                document.getElementById("lat").value = data[0].lat;
-                document.getElementById("lng").value = data[0].lon;
+                // document.getElementById("lat").value = data[0].lat;
+                // document.getElementById("lng").value = data[0].lon;
                 map.setView([data[0].lat, data[0].lon], 15);
             });
 

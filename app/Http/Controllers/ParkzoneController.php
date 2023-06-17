@@ -97,7 +97,6 @@ class ParkzoneController extends Controller
             'mode' => 'bail|required',
             'remarks' => 'bail|nullable|min:3',
             'lat' => 'bail|required',
-            // 'category' => 'bail|required|array', // Ensure category is an array
             'lng' => 'bail|required',
             'agent_id' => 'bail|required|array', // Ensure agent_id is an array
             'agent_id.*' => 'exists:users,id',

@@ -19,7 +19,8 @@ class Parkzone extends Model
         'mode',
         'remarks',
         'quartier_id',
-        'status'
+        'status',
+        'in_use'
     ];
     public function sides()
     {
