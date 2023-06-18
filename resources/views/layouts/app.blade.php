@@ -132,8 +132,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('parkzones.index') }}">ParkZone List</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('floor.index') }}">Floor List</a>
+                                    
                                 </ul>
                             </div>
                         </li>
@@ -158,6 +157,9 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('side.index') }}">Side Slot List</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('floor.index') }}">Floor List</a>
                                     </li>
                                 </ul>
                             </div>

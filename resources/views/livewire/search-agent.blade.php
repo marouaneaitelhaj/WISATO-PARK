@@ -35,6 +35,9 @@
     <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
     <script>
         new MultiSelectTag('operator'); // id
+        // document.querySelectorAll('.input-container')[0].addEventListener('click', function() {
+        //     document.querySelectorAll('.drawer')[0].classList.toggle('hidden');
+        // });
     </script>
 
 </div>
