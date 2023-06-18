@@ -116,10 +116,15 @@ var deleteData;
                         title: title,
                         icon: 'error'
                     });
-                });
+                }).finally(function () {
+                    window.setTimeout(() => {
+                        location.reload();
+                    }, 1000);
+                })
     
     
             }
+
         })
     }
 })(jQuery);

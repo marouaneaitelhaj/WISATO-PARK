@@ -22,6 +22,9 @@
         </script>
         <label for="operator">Agent</label>
         <select wire:model="selectedAgent" name="agent_id[]" id="operator" multiple>
+            @foreach ($selectedAgents as $agent)
+            <option value="{{ $agent->id }}" selected hidden>{{ $agent->name }}</option>
+            @endforeach
             @foreach ($agents as $agent)
             <option value="{{ $agent->id }}">{{ $agent->name }}</option>
             @endforeach

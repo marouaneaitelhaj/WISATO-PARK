@@ -76,7 +76,7 @@ var dataside = [];
               row.id +
               '/edit"> <i class="fa fa-pencil-square-o" aria-hidden="true"></i></a> | <button class="btn btn-link p-0" onclick="deleteData(\'' +
               deleteUrl +
-              '\', \'#parkzoneDatatableEl\')" > <i class="fa fa-trash-o" aria-hidden="true"></i></button></div>'
+              '\', \'#parkzoneDatatableEl\')" > <i class="fa fa fa-trash text-danger" aria-hidden="true"></i></button></div>'
             );
           },
         },

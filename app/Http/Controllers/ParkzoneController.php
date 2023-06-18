@@ -191,8 +191,6 @@ class ParkzoneController extends Controller
             'quartier_id' => 'required',
             'agent_id' => 'bail|required|array', // Ensure agent_id is an array
             'agent_id.*' => 'exists:users,id',
-
-
         ]);
 
         $parkzone->agents()->sync($request->agent_id);
@@ -200,6 +198,11 @@ class ParkzoneController extends Controller
         $parkzone->update([
             'name'     => $validated['name'],
             'remarks'  => $validated['remarks'],
+            'mode'     => $validated['mode'],
+            'lat'      => $validated['lat'],
+            'lng'      => $validated['lng'],
+            'type'     => $validated['type'],
+            'quartier_id' => $validated['quartier_id'],
         ]);
 
         return redirect()

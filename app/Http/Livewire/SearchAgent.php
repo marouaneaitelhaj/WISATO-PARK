@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\User;
 use Livewire\Component;
 use App\Models\AgentInParkzone;
+use Dflydev\DotAccessData\Data;
 
 class SearchAgent extends Component
 {
@@ -19,7 +20,10 @@ class SearchAgent extends Component
     {
 
         if ($this->parkzone != null) {
-            $this->selectedAgents = AgentInParkzone::where('parkzone_id', $this->parkzone->id)->with('agent')->get();
+            $data = AgentInParkzone::where('parkzone_id', $this->parkzone->id)->with('agent')->get();
+            foreach ($data as $key => $value) {
+                $this->selectedAgents[] = $value->agent;
+            }
         }
         $this->fetchAgents();
     }
