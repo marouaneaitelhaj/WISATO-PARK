@@ -18,6 +18,18 @@
                     class: "no-sort",
                     width: "50px",
                 },
+                {
+                    title: "Image",
+                    name: "image",
+                    data: null,
+                    render: function (data, type, row) {
+                      if (data.image) {
+                        return '<img src="/storage/' + data.image + '" alt="Image" width="50">';
+                      } else {
+                        return "No Image";
+                      }
+                    }
+                  },
                 { title: "parkzone", name: "parkzone", data: "parkzone.name" },
                 { title: "Level", name: "level", data: "level" },
                 { 

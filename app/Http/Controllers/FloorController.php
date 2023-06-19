@@ -167,13 +167,54 @@ class FloorController extends Controller
 
 
 
-    public function store(Request $request)
+//     public function store(Request $request)
+// {
+//     $validated = $request->validate([
+//         'parkzone_id' => 'required',
+//         'level' => 'required|array',
+//         'shadow' => 'nullable|array',
+//         'status' => 'nullable|array',
+//         'image' => 'bail|required|image|mimes:jpeg,png,jpg,gif|max:2048', // Updated validation rule for the image field
+
+//     ]);
+
+//     $parkzoneId = $validated['parkzone_id'];
+//     $levels = $validated['level'];
+//     $shadows = $validated['shadow'] ?? [];
+//     $statuses = $validated['status'] ?? [];
+
+    
+
+//     foreach ($levels as $index => $level) {
+//         // Check if the floor already exists
+//         $existingFloor = Floor::where('parkzone_id', $parkzoneId)
+//             ->where('level', $level)
+//             ->first();
+
+//         if ($existingFloor) {
+//             return response()->json(['message' => 'The floor already inserted'], 422);
+//         }
+
+//         $floor = new Floor();
+//         $floor->parkzone_id = $parkzoneId;
+//         $floor->level = $level;
+//         $floor->shadow = isset($shadows[$index]) ? $shadows[$index] : null;
+//         $floor->status = isset($statuses[$index]) ? $statuses[$index] : null;
+//         $floor->save();
+//     }
+
+//     return response()->json(['message' => 'The floor has been created successfully.']);
+// }
+
+
+public function store(Request $request)
 {
     $validated = $request->validate([
         'parkzone_id' => 'required',
         'level' => 'required|array',
         'shadow' => 'nullable|array',
         'status' => 'nullable|array',
+        'image' => 'bail|required|image|mimes:jpeg,png,jpg,gif|max:2048', // Updated validation rule for the image field
     ]);
 
     $parkzoneId = $validated['parkzone_id'];
@@ -188,7 +229,7 @@ class FloorController extends Controller
             ->first();
 
         if ($existingFloor) {
-            return response()->json(['message' => 'The floor already inserted'], 422);
+            return response()->json(['message' => 'The floor already exists.'], 422);
         }
 
         $floor = new Floor();
@@ -196,11 +237,18 @@ class FloorController extends Controller
         $floor->level = $level;
         $floor->shadow = isset($shadows[$index]) ? $shadows[$index] : null;
         $floor->status = isset($statuses[$index]) ? $statuses[$index] : null;
+
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('floor', 'public');
+            $floor->image = $imagePath;
+        }
+
         $floor->save();
     }
 
     return response()->json(['message' => 'The floor has been created successfully.']);
 }
+
 
     
 

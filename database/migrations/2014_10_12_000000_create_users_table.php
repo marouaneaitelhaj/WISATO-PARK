@@ -22,6 +22,8 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('id_camera')->nullable();
             $table->string('serial_number')->nullable();
+            $table->string('image')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });

@@ -54,6 +54,8 @@ class StoreUserInformation extends FormRequest
             'cin' => 'required|string|max:191',
             'id_camera' => 'nullable|string|max:191',
             'serial_number' => 'nullable|string|max:191',            
+            'image' => 'bail|nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+
 
         ];
     }
