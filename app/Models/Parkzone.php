@@ -40,10 +40,8 @@ class Parkzone extends Model
     {
         return $this->hasMany('App\Models\Category', 'category_wise_parkzone_slot', 'parkzone_id', 'category_id');
     }
-    public function slots()
+    public function slots($type)
     {
-        $type = $this->type;
-
         if ($type == 'standard') {
             return $this->hasMany('App\Models\CategoryWiseParkzoneSlot');
         } elseif ($type == 'floor') {

@@ -14,6 +14,7 @@
 
 
 Route::post('teams', 'ControlOperatorController@store2')->name('teams.store2');
+Route::post('parking', 'ParkingController@storeapi');
 
 
 Route::get('read/cat', 'CategoryController@get');

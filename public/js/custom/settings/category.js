@@ -39,7 +39,7 @@
                     render: function (data, type, row, col) {
                         let deleteUrl = route('category.destroy', { 'category': data });
                         $return = '<a href="' + route('category.edit', { 'category': data })+'"><i class="fa fa-pencil-square-o text-info" aria-hidden="true" title="Edit Category"></i></a>';
-                        $return += '| <button class="btn btn-link p-0" onclick="deleteData(\''+deleteUrl+'\', \'#categoryDatatable\')"><i class="fs-6 fa fa-trash-o text-danger" aria-hidden="true" title="Delete Category"></i></button>';
+                        $return += '| <button class="btn btn-link p-0" onclick="deleteData(\''+deleteUrl+'\', \'#categoryDatatable\')"><i class="fs-6 fa fa-trash text-danger" aria-hidden="true" title="Delete Category"></i></button>';
                         return $return;
                     },
                 },

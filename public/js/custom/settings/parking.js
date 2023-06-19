@@ -81,7 +81,7 @@
                                 '<a href="' + route('parking.edit', data) + '"><i class="fa fa-pencil-square-o text-info" aria-hidden="true" title="Edit Parking"></i></a> | ';
                             }
                         
-                            $returnData += '<button class="btn btn-link p-0" onclick="deleteData(\'' + deleteUrl + '\')"><i class="fs-6 fa fa-trash-o text-danger" aria-hidden="true" title="Delete Parking"></i></button>';
+                            $returnData += '<button class="btn btn-link p-0" onclick="deleteData(\'' + deleteUrl + '\')"><i class="fs-6 fa fa-trash text-danger" aria-hidden="true" title="Delete Parking"></i></button>';
                         return $returnData;
                     }
                 },
@@ -157,7 +157,7 @@
                         return '<a href="' + route('parking.barcode', data) + '"><i class="fa fa-barcode text-info" aria-hidden="true" title="Print Barcode"></i></a> | ' +
                             '<a href="' + route('parking.end', data) + '"><i class="fa fa-car text-success" aria-hidden="true" title="End Parking"></i></a> | ' +
                             '<a href="' + route('parking.edit', data) + '"><i class="fa fa-pencil-square-o text-info" aria-hidden="true" title="Edit Parking"></i></a> | ' +
-                            '<button class="btn btn-link p-0" onclick="deleteData(\'' + deleteUrl + '\')"><i class="fs-6 fa fa-trash-o text-danger" aria-hidden="true" title="Delete Parking"></i></button>';
+                            '<button class="btn btn-link p-0" onclick="deleteData(\'' + deleteUrl + '\')"><i class="fs-6 fa fa-trash text-danger" aria-hidden="true" title="Delete Parking"></i></button>';
                     }
                 },
             ],
@@ -235,7 +235,7 @@
                 {
                     'title': 'Option', data: 'id', class: 'text-end width-5-per', render: function (data, type, row, col) {
                         let deleteUrl = route('parking.destroy', data);
-                        return '<button class="btn btn-link p-0" onclick="deleteData(\'' + deleteUrl + '\', \'#parkingDatatableEnded\')"><i class="fs-6 fa fa-trash-o text-danger" aria-hidden="true" title="Delete Parking"></i></button>';
+                        return '<button class="btn btn-link p-0" onclick="deleteData(\'' + deleteUrl + '\', \'#parkingDatatableEnded\')"><i class="fs-6 fa fa-trash text-danger" aria-hidden="true" title="Delete Parking"></i></button>';
                     }
                 },
             ],

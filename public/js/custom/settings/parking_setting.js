@@ -107,7 +107,7 @@
             $return +=
               '| <button class="btn btn-link p-0" onclick="deleteData(\'' +
               delURL +
-              '\', \'#parkingSlotDatatable\')"><i class="fs-6 fa fa-trash-o text-danger" aria-hidden="true" title="Delete Parking Slot"></i></button>';
+              '\', \'#parkingSlotDatatable\')"><i class="fs-6 fa fa-trash text-danger" aria-hidden="true" title="Delete Parking Slot"></i></button>';
 
             return $return;
           },

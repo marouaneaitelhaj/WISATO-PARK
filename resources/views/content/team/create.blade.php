@@ -160,7 +160,7 @@
                                                             </a> |
                                                             <button class="btn btn-link p-0"
                                                                 onclick="deleteData('http://127.0.0.1:8000/category/8', '#categoryDatatable')">
-                                                                <i class="fs-6 fa fa-trash-o text-danger" aria-hidden="true" title="Delete Category"></i>
+                                                                <i class="fs-6 fa fa-trash text-danger" aria-hidden="true" title="Delete Category"></i>
                                                             </button>
                                                         </td>
                                                     </tr>
