@@ -132,124 +132,110 @@ function agentslist(id) {
 
 function createFloor(parkzoneId) {
   Swal.fire({
-    title: "Loading...",
-    text: "Please wait",
-    icon: "info",
-  });
-  axios
-    .get("api/checkiffloorsidestandarexist/" + parkzoneId + "/floor")
-    .then(function (response) {
-      Swal.fire({
-        title: "Create Floor",
-        html:
-          '<form id="floorForm">' +
-          '<div class="form-group">' +
-          '<label for="level" class="">Level:</label>' +
-          "<hr>" +
-          '<select class="form-select" id="level" name="level[]" data-placeholder="Choose anything" multiple>' +
-          '<option value="5">Fifth Floor</option>' +
-          '<option value="4">Fourth Floor</option>' +
-          '<option value="3">Third Floor</option>' +
-          '<option value="2">Second Floor</option>' +
-          '<option value="1">First Floor</option>' +
-          '<option value="0">Level 0</option>' +
-          '<option value="-1">Basement</option>' +
-          '<option value="-2">Underground</option>' +
-          '<option value="-3">Underground 2</option>' +
-          "</select>" +
-          "</div>" +
-          '<div class="form-group">' +
-          '<label for="shadow" class="">Shadow:</label>' +
-          "<hr>" +
-          '<select class="form-select" id="shadow" name="shadow">' +
-          '<option value="yes">No Shadow</option>' +
-          '<option value="no">Shadow</option>' +
-          "</select>" +
-          "</div>" +
-          '<div class="form-group">' +
-          '<label for="status" class="">Status:</label>' +
-          "<hr>" +
-          '<select class="form-select" id="status" name="status">' +
-          '<option value="yes">Inactive</option>' +
-          '<option value="no">Active</option>' +
-          "</select>" +
-          "</div>" +
-          "</form>",
+    title: "Create Floor",
+    html:
+      '<form id="floorForm">' +
+      '<div class="form-group">' +
+      '<label for="level" class="">Level:</label>' +
+      "<hr>" +
+      '<select class="form-select" id="level" name="level[]" data-placeholder="Choose anything" multiple>' +
+      '<option value="5">Fifth Floor</option>' +
+      '<option value="4">Fourth Floor</option>' +
+      '<option value="3">Third Floor</option>' +
+      '<option value="2">Second Floor</option>' +
+      '<option value="1">First Floor</option>' +
+      '<option value="0">Level 0</option>' +
+      '<option value="-1">Basement</option>' +
+      '<option value="-2">Underground</option>' +
+      '<option value="-3">Underground 2</option>' +
+      "</select>" +
+      "</div>" +
+      '<div class="form-group">' +
+      '<label for="shadow" class="">Shadow:</label>' +
+      "<hr>" +
+      '<select class="form-select" id="shadow" name="shadow">' +
+      '<option value="yes">No Shadow</option>' +
+      '<option value="no">Shadow</option>' +
+      "</select>" +
+      "</div>" +
+      '<div class="form-group">' +
+      '<label for="status" class="">Status:</label>' +
+      "<hr>" +
+      '<select class="form-select" id="status" name="status">' +
+      '<option value="yes">Inactive</option>' +
+      '<option value="no">Active</option>' +
+      "</select>" +
+      "</div>" +
+      "</form>",
 
-        showCancelButton: true,
-        cancelButtonText: "Cancel",
-        confirmButtonText: "Create",
-        focusConfirm: false,
-        preConfirm: () => {
-          const levels = Array.from(
-            Swal.getPopup().querySelectorAll("#level option:checked"),
-            (option) => option.value
-          );
-          if (levels.length === 0) {
-            Swal.showValidationMessage("Please select at least one level");
-          }
-          return {
-            levels: levels,
-            shadow: Swal.getPopup().querySelector("#shadow").value,
-            status: Swal.getPopup().querySelector("#status").value,
-          };
+    showCancelButton: true,
+    cancelButtonText: "Cancel",
+    confirmButtonText: "Create",
+    focusConfirm: false,
+    preConfirm: () => {
+      const levels = Array.from(
+        Swal.getPopup().querySelectorAll("#level option:checked"),
+        (option) => option.value
+      );
+      if (levels.length === 0) {
+        Swal.showValidationMessage("Please select at least one level");
+      }
+      return {
+        levels: levels,
+        shadow: Swal.getPopup().querySelector("#shadow").value,
+        status: Swal.getPopup().querySelector("#status").value,
+      };
+    },
+  }).then((result) => {
+    if (!result.dismiss && result.value) {
+      const levels = result.value.levels;
+      const shadow = result.value.shadow;
+      const status = result.value.status;
+
+      const formData = new FormData();
+      formData.append("parkzone_id", parkzoneId);
+      levels.forEach((level) => {
+        formData.append("level[]", level);
+        formData.append("shadow[]", shadow);
+        formData.append("status[]", status);
+      });
+
+      var csrfToken = $('meta[name="csrf-token"]').attr("content");
+
+      $.ajax({
+        url: route("parkzones.store"),
+        method: "POST",
+        headers: {
+          "X-CSRF-TOKEN": csrfToken,
         },
-      }).then((result) => {
-        if (!result.dismiss && result.value) {
-          const levels = result.value.levels;
-          const shadow = result.value.shadow;
-          const status = result.value.status;
-
-          const formData = new FormData();
-          formData.append("parkzone_id", parkzoneId);
-          levels.forEach((level) => {
-            formData.append("level[]", level);
-            formData.append("shadow[]", shadow);
-            formData.append("status[]", status);
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (xhr, status, error) {
+          Swal.fire({
+            title: "Floor Created",
+            text: xhr.message,
+            icon: "success",
+            confirmButtonText: "Ok",
+          }).then(() => {
+            // location.reload();
           });
-
-          var csrfToken = $('meta[name="csrf-token"]').attr("content");
-
-          $.ajax({
-            url: route("parkzones.store"),
-            method: "POST",
-            headers: {
-              "X-CSRF-TOKEN": csrfToken,
-            },
-            data: formData,
-            processData: false,
-            contentType: false,
-            success: function (response) {
-              Swal.fire({
-                title: "Floor Created",
-                text: "The floor has been created successfully.",
-                icon: "success",
-                confirmButtonText: "Ok",
-              }).then(() => {
-                // location.reload();
-              });
-            },
-            error: function (xhr, status, error) {
-              Swal.fire({
-                title: "Error",
-                text: "An error occurred while creating the floor.",
-                icon: "error",
-                confirmButtonText: "Ok",
-              });
-            },
+        },
+        error: function (xhr, status, error) {
+          Swal.fire({
+            title: "Error",
+            text: xhr.responseJSON.message,
+            icon: "error",
+            confirmButtonText: "Ok",
           });
-        }
+        },
+        
       });
-    })
-    .catch(function (error) {
-      Swal.fire({
-        title: "Error",
-        text: "An error occurred while creating the floor. Or the floor already exist.",
-        icon: "error",
-        confirmButtonText: "Ok",
-      });
-    });
+    }
+  });
 }
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////// marwaneaitelhaj /////////////////////////////////////

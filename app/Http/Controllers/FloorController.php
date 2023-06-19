@@ -188,7 +188,7 @@ class FloorController extends Controller
             ->first();
 
         if ($existingFloor) {
-            return response()->json(['message' => 'Floor already inserted'], 422);
+            return response()->json(['message' => 'The floor already inserted'], 422);
         }
 
         $floor = new Floor();
@@ -199,7 +199,7 @@ class FloorController extends Controller
         $floor->save();
     }
 
-    return response()->json(['message' => 'Floors created successfully']);
+    return response()->json(['message' => 'The floor has been created successfully.']);
 }
 
     
