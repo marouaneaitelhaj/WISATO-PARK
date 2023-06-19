@@ -51,7 +51,7 @@
                         var editURL = route("tariff.edit", { tariff: data });
                         var delURL = route("tariff.destroy", { tariff: data });
                         $return = `<a href="`+editURL+`"><i class="fa fa-pencil-square-o text-info" aria-hidden="true" title="Edit Tariff"></i></a> | 
-                            <button class="btn btn-link p-0" onclick="deleteData('`+delURL+`', \'#tariffDatatable\')"><i class="fs-6 fa fa-trash-o text-danger" aria-hidden="true" title="Delete Category"></i></button>`
+                            <button class="btn btn-link p-0" onclick="deleteData('`+delURL+`', \'#tariffDatatable\')"><i class="fs-6 fa fa-trash text-danger" aria-hidden="true" title="Delete Category"></i></button>`
                         return $return;
                     },
                 },

@@ -116,11 +116,11 @@ class ParkzoneDashboard extends Component
             $unavailable = 0;
             foreach ($slots as $slot) {
                 // dd($slot->active_parking);  
-                // if ($slot->active_parking == null) {
-                //     $available++;
-                // } else {
-                //     $unavailable++;
-                // }
+                if ($slot->active_parking == null) {
+                    $available++;
+                } else {
+                    $unavailable++;
+                }
             }
             $totalSlots = $available + $unavailable;
             return ['totalSlots' => $totalSlots, 'available' => $available, 'unavailable' => $unavailable];

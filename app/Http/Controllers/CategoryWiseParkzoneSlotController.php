@@ -30,7 +30,6 @@ class CategoryWiseParkzoneSlotController extends Controller
             $with = ['createBy', 'parkzone', 'category'];
             $join = [];
             $orderBy = [];
-
             if ($request->input('length')) {
                 $limit = $request->input('length');
             }
@@ -98,6 +97,9 @@ class CategoryWiseParkzoneSlotController extends Controller
                 $CategoryWiseParkzoneSlotNumber = new CategoryWiseParkzoneSlotNumber();
                 $CategoryWiseParkzoneSlotNumber->parkzone_id = $request->parkzone_id;
                 $CategoryWiseParkzoneSlotNumber->category_id = $key;
+                if($value == ""){
+                    $value = 0;
+                }
                 $CategoryWiseParkzoneSlotNumber->slot_number = $value;
                 $CategoryWiseParkzoneSlotNumber->save();
             }

@@ -13,6 +13,7 @@ use App\Http\Requests\UpdateParkingRequest;
 use App\Http\Requests\PayParkingRequest;
 use App\Models\CategoryWiseParkzoneSlot;
 use App\Models\Parkzone;
+use App\Models\Sides;
 use App\View\Components\floor;
 use Exception;
 use Illuminate\Support\Facades\Session;
@@ -327,6 +328,59 @@ class ParkingController extends Controller
 			->with(['flashMsg' => ['msg' => 'Parking successfully added.', 'type' => 'success']]);
 	}
 
+
+
+	public function storeapi(StoreParkingRequest $request)
+	{
+		$validated = $request->validated();
+		$user = auth()->user()->id;
+		if($request['tableName'] == "standard"){
+			$request['tableName'] = "category_wise_parkzone_slots";
+		}elseif($request['tableName'] == "floor"){
+			$request['tableName'] = "floor_slots";
+		}elseif($request['tableName'] == "side"){
+			$request['tableName'] = "side_slots";
+		}
+		try {
+
+			$parking = Parking::create([
+				'slot_id'    	=> $request['slot_id'],
+				'vehicle_no'    => $validated['vehicle_no'],
+				'category_id'   => $validated['category_id'],
+				'driver_name'   => $validated['driver_name'],
+				'driver_mobile' => $validated['driver_mobile'],
+				'barcode'       => date('YmdHis') . $user,
+				'in_time'       => date('Y-m-d H:i:s'),
+				'created_by'    => $user,
+				'modified_by'   => $user,
+				'table_name'    => $request['tableName']
+			]);
+		} catch (\PDOException $e) {
+			// dd($e->getMessage());
+			return redirect()
+				->back()
+				->withInput()
+				->with(['flashMsg' => ['msg' => $this->getMessage($e), 'type' => 'error']]);
+		}
+		if ($request['tableName'] == 'category_wise_parkzone_slots') {
+			$slot = CategoryWiseParkzoneSlot::where('id', $request['slot_id'])->first();
+			$slot->parkzone->in_use = 1;
+			$slot->parkzone->update();
+		} elseif ($request['tableName'] == 'floor_slots') {
+			$slot = FloorSlot::where('id', $request['slot_id'])->first();
+			$slot->floor->parkzone->in_use = 1;
+			$slot->floor->parkzone->update();
+		} elseif ($request['tableName'] == 'side_slots') {
+			$slot = Side_slot::where('id', $request['slot_id'])->first();
+			$slot->side->parkzone->in_use = 1;
+			$slot->side->parkzone->update();
+		}
+
+		return redirect()
+			->route('parking.barcode', ['parking' => $parking->id])
+			->with(['flashMsg' => ['msg' => 'Parking successfully added.', 'type' => 'success']]);
+	}
+
 	/**
 	 * Display the specified resource.
 	 *
@@ -590,6 +644,37 @@ class ParkingController extends Controller
 				->get();
 		}
 		return view('content.parking.slot_list')->with(['slots' => $slots, 'id' => $request->id])->render();
+	}
+
+
+	public function parkingSlotapi($parkzpne_id, $category_id, $type, $side = null, $floor = null)
+	{
+		$data = [];
+		if ($type == "side") {
+			$Side_slot = Sides::where('parkzone_id', $parkzpne_id)->where('side', $side)->first();
+			$data['slots'] = $Side_slot->side_slots($category_id)->get();
+			foreach ($data['slots'] as $key => $value) {
+				$value->active_parking = $value->active_parking()->first();
+			}
+		} elseif ($type == "floor") {
+			$floor_slots = 'App\Models\Floor'::where('id', $floor)->where('parkzone_id', $parkzpne_id)->get();
+			$mini = [];
+			foreach ($floor_slots as $key => $value) {
+				$mini[] = $value->floorSlots($category_id)->get();
+			}
+			$mini = collect($mini)->collapse();
+			$data['slots'] = $mini;
+			foreach($data['slots'] as $key => $value){
+				$value->active_parking = $value->active_parking()->first();
+			}
+		} elseif ($type == "standard") {
+			$standard_slots = CategoryWiseParkzoneSlot::where('parkzone_id', $parkzpne_id)->where('category_id', $category_id)->get();
+			$data['slots'] = $standard_slots;
+			foreach($data['slots'] as $key => $value){
+				$value->active_parking = $value->active_parking()->first();
+			}
+		}
+		return response()->json($data);
 	}
 
 

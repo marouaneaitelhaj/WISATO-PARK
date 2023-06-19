@@ -494,9 +494,11 @@ function openLeftSide(parkzoneId) {
       '" name="' +
       cat[i].id +
       '"';
-    for (var j = 0; j < dataside["left"]["side_slot"].length; j++) {
-      if (cat[i].id == dataside["left"]["side_slot"][j].category_id) {
-        html += 'value="' + dataside["left"]["side_slot"][j].slot_number + '"';
+    if(dataside["left"] != undefined){
+      for (var j = 0; j < dataside["left"]["side_slot"].length; j++) {
+        if (cat[i].id == dataside["left"]["side_slot"][j].category_id) {
+          html += 'value="' + dataside["left"]["side_slot"][j].slot_number + '"';
+        }
       }
     }
     html += "> </div>";
@@ -593,11 +595,13 @@ function openRightSide(parkzoneId) {
       '" name="' +
       cat[i].id +
       '"';
-    for (var j = 0; j < dataside["right"]["side_slot"].length; j++) {
-      if (cat[i].id == dataside["right"]["side_slot"][j].category_id) {
-        html += 'value="' + dataside["right"]["side_slot"][j].slot_number + '"';
+      if(dataside["right"] != undefined){
+        for (var j = 0; j < dataside["right"]["side_slot"].length; j++) {
+          if (cat[i].id == dataside["right"]["side_slot"][j].category_id) {
+            html += 'value="' + dataside["right"]["side_slot"][j].slot_number + '"';
+          }
+        }
       }
-    }
     html += "> </div>";
   }
   Swal.fire({
