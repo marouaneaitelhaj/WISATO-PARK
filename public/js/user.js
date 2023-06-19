@@ -8,12 +8,12 @@
             initComplete: function () {
                 $("#userDataTableSearch").append(
                     '<div class="dataTableBtnWrap flL">' +
-                        '<select class="form-control" id="userDataTableFilterStatus">' +
-                        '<option value="">All User</option>' +
-                        '<option value="1">Active</option>' +
-                        '<option value="0">Deactive</option>' +
-                        "</select>" +
-                        "</div>"
+                    '<select class="form-control" id="userDataTableFilterStatus">' +
+                    '<option value="">All User</option>' +
+                    '<option value="1">Active</option>' +
+                    '<option value="0">Deactive</option>' +
+                    "</select>" +
+                    "</div>"
                 );
             },
             processing: true,
@@ -28,6 +28,18 @@
                     //     var pageInfo = userDataTable.page.info();
                     //     return ind.row + 1 + pageInfo.start;
                     // },
+                },
+                {
+                    title: "Image",
+                    name: "image",
+                    data: null,
+                    render: function (data, type, row) {
+                        if (data.image) {
+                            return '<img src="/storage/' + data.image + '" alt="Image" width="50">';
+                        } else {
+                            return "No Image";
+                        }
+                    }
                 },
                 {
                     data: "name",

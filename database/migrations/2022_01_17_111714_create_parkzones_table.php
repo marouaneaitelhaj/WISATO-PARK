@@ -22,6 +22,7 @@ class CreateParkzonesTable extends Migration
             $table->string('lat');
             $table->string('mode');
             $table->string('type');
+            $table->string('image')->nullable();
             $table->string('remarks')->nullable();
             $table->boolean('in_use')->default(false);
             $table->tinyInteger('status')->default(1);

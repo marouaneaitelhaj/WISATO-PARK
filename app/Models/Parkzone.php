@@ -13,6 +13,7 @@ class Parkzone extends Model
      *
      * @var array
      */
+
     protected $fillable = [
         'name',
         'type',
@@ -20,7 +21,8 @@ class Parkzone extends Model
         'remarks',
         'quartier_id',
         'status',
-        'in_use'
+        'in_use',
+        'image_path',
     ];
     public function sides()
     {

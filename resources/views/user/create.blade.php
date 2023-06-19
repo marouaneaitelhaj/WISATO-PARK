@@ -12,8 +12,23 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('user.store') }}">
+                    <form method="POST" action="{{ route('user.store') }}" enctype="multipart/form-data">
                         @csrf
+
+
+
+                        <div class="form-group row">
+                                <label for="image" class="col-md-3 col-form-label text-md-right">{{ __('Image') }} <span class="tcr text-danger">*</span></label>
+                                <div class="col-md-9">
+
+                                <input id="image" type="file" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" name="image">
+                                @if ($errors->has('image'))
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $errors->first('image') }}</strong>
+                                </span>
+                                @endif
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="name" class="col-md-3 col-form-label text-md-right"> {{ __('Name') }}<span class="tcr i-req">*</span></label>

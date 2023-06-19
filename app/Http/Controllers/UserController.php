@@ -82,41 +82,84 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // public function store(StoreUserInformation $request)
+    // {
+
+    //     $validated = $request->validated();
+
+    //     try {
+    //         // dd($validated);
+    //         $user = User::create([
+    //             "Phone" => $validated['Phone'],
+    //             'name'     => $validated['name'],
+    //             'email'    => $validated['email'],
+    //             'password' => Hash::make($validated['password']),
+    //             'image' => 'bail|required|image|mimes:jpeg,png,jpg,gif|max:2048', // Updated validation rule for the image field
+    //             'status'   => 1,
+    //             'cin' => $validated['cin'],
+    //         ]);
+
+    //         $user->roles()->attach($validated['role']);
+
+    //         $user->sendEmailVerificationNotification();
+    //     } catch (\PDOException $e) {
+
+    //         return redirect()
+    //             ->back()
+    //             ->withInput($request->except('password'))
+    //             ->with(['flashMsg' => ['msg' => $this->getMessage($e), 'type' => 'error']]);
+    //     } catch (Exception $ex) {
+    //         return redirect()
+    //             ->route('user.list')
+    //             ->with(['flashMsg' => ['msg' => "The user successfully created but failed to send the email, because the email is not configured.", 'type' => 'error']]);
+    //     }
+
+    //     return redirect()
+    //         ->route('user.list')
+    //         ->with(['flashMsg' => ['msg' => 'User successfully created.', 'type' => 'success']]);
+    // }
+
+
     public function store(StoreUserInformation $request)
-    {
+{
+    $validated = $request->validated();
 
-        $validated = $request->validated();
+    try {
+        $imagePath = null;
 
-        try {
-            // dd($validated);
-            $user = User::create([
-                "Phone" => $validated['Phone'],
-                'name'     => $validated['name'],
-                'email'    => $validated['email'],
-                'password' => Hash::make($validated['password']),
-                'status'   => 1,
-                'cin' => $validated['cin'],
-            ]);
-
-            $user->roles()->attach($validated['role']);
-
-            $user->sendEmailVerificationNotification();
-        } catch (\PDOException $e) {
-
-            return redirect()
-                ->back()
-                ->withInput($request->except('password'))
-                ->with(['flashMsg' => ['msg' => $this->getMessage($e), 'type' => 'error']]);
-        } catch (Exception $ex) {
-            return redirect()
-                ->route('user.list')
-                ->with(['flashMsg' => ['msg' => "The user successfully created but failed to send the email, because the email is not configured.", 'type' => 'error']]);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('users', 'public');
         }
 
+        $user = User::create([
+            'Phone' => $validated['Phone'],
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'image' => $imagePath,
+            'status' => 1,
+            'cin' => $validated['cin'],
+        ]);
+
+        $user->roles()->attach($validated['role']);
+
+        $user->sendEmailVerificationNotification();
+    } catch (\PDOException $e) {
+        return redirect()
+            ->back()
+            ->withInput($request->except('password'))
+            ->with(['flashMsg' => ['msg' => $this->getMessage($e), 'type' => 'error']]);
+    } catch (Exception $ex) {
         return redirect()
             ->route('user.list')
-            ->with(['flashMsg' => ['msg' => 'User successfully created.', 'type' => 'success']]);
+            ->with(['flashMsg' => ['msg' => "The user was successfully created but failed to send the email because the email is not configured.", 'type' => 'error']]);
     }
+
+    return redirect()
+        ->route('user.list')
+        ->with(['flashMsg' => ['msg' => 'User successfully created.', 'type' => 'success']]);
+}
 
     public function create2()
     {

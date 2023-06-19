@@ -29,6 +29,7 @@ class CreateParkingsTable extends Migration
             $table->tinyInteger('status')->default(1);
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('modified_by')->nullable();
+            $table->string('action')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('modified_by')->references('id')->on('users')->onDelete('cascade');
             $table->unique(['slot_id','table_name']);

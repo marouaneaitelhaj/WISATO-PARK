@@ -19,6 +19,7 @@ class CreateFloorTable extends Migration
             $table->integer('level');
             $table->string('shadow')->nullable();
             $table->string('status')->nullable();
+            $table->string('image')->nullable();
             $table->timestamps();
 
             $table->foreign('parkzone_id')->references('id')->on('parkzones')->onDelete('cascade');

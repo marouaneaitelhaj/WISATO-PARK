@@ -8,6 +8,8 @@ use App\Models\Quartier;
 use App\Models\CategoryWiseParkzoneSlot;
 use App\Models\CategoryWiseParkzoneSlotNumber;
 use App\Models\Floor;
+use Illuminate\Support\Facades\Storage;
+
 
 
 
@@ -89,9 +91,47 @@ class ParkzoneController extends Controller
      */
 
 
+    // public function store(Request $request)
+    // {
+    //     // dd($request->all());
+    //     $validated = $request->validate([
+    //         'name' => 'bail|required|unique:parkzones',
+    //         'type' => 'bail|required',
+    //         'mode' => 'bail|required',
+    //         'remarks' => 'bail|nullable|min:3',
+    //         'lat' => 'bail|required',
+    //         'lng' => 'bail|required',
+    //         'agent_id' => 'bail|required|array', // Ensure agent_id is an array
+    //         'agent_id.*' => 'exists:users,id',
+    //         'quartier_id' => 'required',
+    //     ]);
+
+
+    //     $parkzone = new Parkzone();
+    //     $parkzone->name = $request->name;
+    //     $parkzone->type = $request->type;
+    //     $parkzone->mode = $request->mode;
+    //     $parkzone->remarks = $request->remarks;
+    //     $parkzone->lat = $request->lat;
+    //     $parkzone->lng = $request->lng;
+    //     $parkzone->quartier_id = $request->quartier_id;
+    //     $parkzone->save();
+
+
+
+    //     // Attach agent_id values to the parkzone using the pivot table
+    //     $parkzone->agents()->attach($request->agent_id);
+    //     // dd($request->all());
+
+    //     return redirect()
+    //         ->route('parkzones.index')
+    //         ->with(['flashMsg' => ['msg' => 'Parkzone successfully added.', 'type' => 'success']]);
+    // }
+
+
+    
     public function store(Request $request)
     {
-        // dd($request->all());
         $validated = $request->validate([
             'name' => 'bail|required|unique:parkzones',
             'type' => 'bail|required',
@@ -99,12 +139,12 @@ class ParkzoneController extends Controller
             'remarks' => 'bail|nullable|min:3',
             'lat' => 'bail|required',
             'lng' => 'bail|required',
-            'agent_id' => 'bail|required|array', // Ensure agent_id is an array
+            'image' => 'bail|required|image|mimes:jpeg,png,jpg,gif|max:2048', // Updated validation rule for the image field
+            'agent_id' => 'bail|required|array',
             'agent_id.*' => 'exists:users,id',
             'quartier_id' => 'required',
         ]);
-
-
+    
         $parkzone = new Parkzone();
         $parkzone->name = $request->name;
         $parkzone->type = $request->type;
@@ -113,36 +153,22 @@ class ParkzoneController extends Controller
         $parkzone->lat = $request->lat;
         $parkzone->lng = $request->lng;
         $parkzone->quartier_id = $request->quartier_id;
+    
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('parkzone', 'public');
+            $parkzone->image = $imagePath;
+        }
+    
         $parkzone->save();
-
-
-
+    
         // Attach agent_id values to the parkzone using the pivot table
         $parkzone->agents()->attach($request->agent_id);
-        // dd($request->all());
-
+    
         return redirect()
             ->route('parkzones.index')
             ->with(['flashMsg' => ['msg' => 'Parkzone successfully added.', 'type' => 'success']]);
     }
-
-    // public function store2(Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'parkzone_id' => 'required',
-    //         'levelUp' => 'required',
-    //         'levelDown' => 'required',
-    //     ]);
-    //     $floor = new Floor();
-    //     $floor->parkzone_id = $validated['parkzone_id'];
-    //     $floor->levelUp = $validated['levelUp'];
-    //     $floor->levelDown = $validated['levelDown'];
-    //     $floor->save();
-
-    //     return response()->json(['message' => 'Floor created successfully']);
-    // }
-
-
+    
 
 
     /**
