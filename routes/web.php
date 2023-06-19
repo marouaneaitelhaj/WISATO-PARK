@@ -92,8 +92,14 @@ Route::middleware(['installed', 'auth', 'xss_clean'])->group(function () {
 	});
 
 	Route::middleware('roles:admin|chef zone')->group(function () {
+		Route::get('user-create', 'UserController@create')->name('user.create');
 
 
+		Route::get('operator-create', 'UserController@create2')->name('team.create2');
+
+		Route::post('operator-create', 'UserController@store2')->name('team.store2');
+
+		
 		Route::resource('tariff', 'TariffController')->except(['show']);
 
 		Route::get('parkzones-dashboard', 'ParkzoneController@dashboard')->name('parkzones.dashboard');
@@ -105,6 +111,8 @@ Route::middleware(['installed', 'auth', 'xss_clean'])->group(function () {
 		Route::post('parking/{parking}/pay', 'ParkingController@pay')->name('parking.pay');
 		Route::post('parking/quick-end', 'ParkingController@quick_end')->name('parking.quick_end');
 		Route::get('parking/slot/{category_id}', 'ParkingController@parkingSlot')->name('parking.slot');
+
+		
 	});
 	// Route::middleware('roles:chef zone')->group(function () {
 	// });

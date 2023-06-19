@@ -139,31 +139,69 @@ class FloorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    // public function store(Request $request)
+    // {
+    //     $validated = $request->validate([
+    //         'parkzone_id' => 'required',
+    //         'level' => 'required|array',
+    //         'shadow' => 'nullable|array',
+    //         'status' => 'nullable|array',
+    //     ]);
+    
+    //     $parkzoneId = $validated['parkzone_id'];
+    //     $levels = $validated['level'];
+    //     $shadows = $validated['shadow'] ?? [];
+    //     $statuses = $validated['status'] ?? [];
+    
+    //     foreach ($levels as $index => $level) {
+    //         $floor = new Floor();
+    //         $floor->parkzone_id = $parkzoneId;
+    //         $floor->level = $level;
+    //         $floor->shadow = isset($shadows[$index]) ? $shadows[$index] : null;
+    //         $floor->status = isset($statuses[$index]) ? $statuses[$index] : null;
+    //         $floor->save();
+    //     }
+    
+    //     return response()->json(['message' => 'Floors created successfully']);
+    // }
+
+
+
     public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'parkzone_id' => 'required',
-            'level' => 'required|array',
-            'shadow' => 'nullable|array',
-            'status' => 'nullable|array',
-        ]);
-    
-        $parkzoneId = $validated['parkzone_id'];
-        $levels = $validated['level'];
-        $shadows = $validated['shadow'] ?? [];
-        $statuses = $validated['status'] ?? [];
-    
-        foreach ($levels as $index => $level) {
-            $floor = new Floor();
-            $floor->parkzone_id = $parkzoneId;
-            $floor->level = $level;
-            $floor->shadow = isset($shadows[$index]) ? $shadows[$index] : null;
-            $floor->status = isset($statuses[$index]) ? $statuses[$index] : null;
-            $floor->save();
+{
+    $validated = $request->validate([
+        'parkzone_id' => 'required',
+        'level' => 'required|array',
+        'shadow' => 'nullable|array',
+        'status' => 'nullable|array',
+    ]);
+
+    $parkzoneId = $validated['parkzone_id'];
+    $levels = $validated['level'];
+    $shadows = $validated['shadow'] ?? [];
+    $statuses = $validated['status'] ?? [];
+
+    foreach ($levels as $index => $level) {
+        // Check if the floor already exists
+        $existingFloor = Floor::where('parkzone_id', $parkzoneId)
+            ->where('level', $level)
+            ->first();
+
+        if ($existingFloor) {
+            return response()->json(['message' => 'Floor already inserted'], 422);
         }
-    
-        return response()->json(['message' => 'Floors created successfully']);
+
+        $floor = new Floor();
+        $floor->parkzone_id = $parkzoneId;
+        $floor->level = $level;
+        $floor->shadow = isset($shadows[$index]) ? $shadows[$index] : null;
+        $floor->status = isset($statuses[$index]) ? $statuses[$index] : null;
+        $floor->save();
     }
+
+    return response()->json(['message' => 'Floors created successfully']);
+}
+
     
 
 

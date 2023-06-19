@@ -58,6 +58,38 @@ class StoreUserInformation extends FormRequest
         ];
     }
 
+    // public function withValidator($validator)
+    // {           
+    //     $validator->after(function ($validator) {
+    //         $userParam = $this->route('user');            
+    //         if(gettype($userParam) == 'object')
+    //             $userParam = $userParam->id;
+    //         if($this::user()->id == $userParam
+    //             && !Hash::check($validator->getData()['currentPassword'], $this::user()->makeVisible('password')->password)                
+    //         ){
+    //             $validator->errors()->add('currentPassword', 'Current Password is not matched.');
+    //         }
+    //         elseif (
+    //             $this::user()
+    //             && Route::currentRouteName() !== 'user.store'
+    //             && !$this::user()->hasRole('admin')
+    //             && !Hash::check($validator->getData()['currentPassword'], $this::user()->makeVisible('password')->password)
+    //         ) {
+    //             $validator->errors()->add('currentPassword', 'Current Password is not matched.');
+    //         }
+
+    //         if ((!$this::user() || !$this->route('user')) && !$validator->getData()['password']) {
+    //             $validator->errors()->add('password', 'Password is required.');
+    //         }
+    //     });
+    // }
+
+
+
+
+
+
+
     public function withValidator($validator)
     {           
         $validator->after(function ($validator) {
@@ -72,15 +104,19 @@ class StoreUserInformation extends FormRequest
             elseif (
                 $this::user()
                 && Route::currentRouteName() !== 'user.store'
-                && !$this::user()->hasRole('admin')
+                && !($this::user()->hasRole('admin') || $this::user()->hasRole('chef zone'))
                 && !Hash::check($validator->getData()['currentPassword'], $this::user()->makeVisible('password')->password)
             ) {
                 $validator->errors()->add('currentPassword', 'Current Password is not matched.');
             }
-
+    
             if ((!$this::user() || !$this->route('user')) && !$validator->getData()['password']) {
                 $validator->errors()->add('password', 'Password is required.');
             }
         });
     }
+    
+
+
+
 }
