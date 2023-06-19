@@ -23,6 +23,20 @@ var dataside = [];
           class: "no-sort",
           width: "50px",
         },
+        {
+          title: "Image",
+          name: "image",
+          data: null,
+          render: function (data, type, row) {
+            if (data.image) {
+              return '<img src="/storage/' + data.image + '" alt="Image" width="50">';
+            } else {
+              return "No Image";
+            }
+          }
+        },
+        
+        
         { title: "Name", name: "name", data: "name" },
         { title: "Remarks", name: "remarks", data: "remarks" },
         { title: "Quartier", name: "Quartier", data: "quartier.quartier_name" },
