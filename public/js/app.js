@@ -2410,6 +2410,8 @@ var Ziggy = {
         "user": "id"
       }
     },
+
+    
     "category.index": {
       "uri": "category",
       "methods": ["GET", "HEAD"]
@@ -2471,6 +2473,10 @@ var Ziggy = {
         "category": "id"
       }
     },
+    // "parkzone.gallery.store": {
+    //   "uri": "parkzones/{parkzoneId}/gallery",
+    //   "methods": ["POST"]
+    // },
     "tariff.index": {
       "uri": "tariff",
       "methods": ["GET", "HEAD"]

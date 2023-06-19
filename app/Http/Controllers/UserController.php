@@ -172,12 +172,19 @@ class UserController extends Controller
         $validated = $request->validated();
     
         try {
+            $imagePath = null;
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $imagePath = $image->store('users', 'public');
+            }
             $user = User::create([
                 'Phone' => $validated['Phone'],
                 'name' => $validated['name'],
                 'email' => $validated['email'],
                 'password' => Hash::make($validated['password']),
                 'status' => 1,
+                'image' => $imagePath,
                 'cin' => $validated['cin'],
                 'id_camera' => $validated['id_camera'],
                 'serial_number' => $validated['serial_number'],

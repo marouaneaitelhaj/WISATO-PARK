@@ -75,6 +75,8 @@ Route::middleware(['installed', 'auth', 'xss_clean'])->group(function () {
 
 		Route::get('user-edit/{user}', 'UserController@edit')->name('user.edit');
 		Route::put('user-edit/{user}', 'UserController@update')->name('user.update');
+		Route::post('/parkzones/{parkzoneId}/gallery', 'ParkzoneController@createGallery')->name('parkzone.gallery.store');
+
 
 		Route::resource('category', 'CategoryController')->except(['show']);
 

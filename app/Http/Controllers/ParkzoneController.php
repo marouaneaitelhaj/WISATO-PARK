@@ -9,6 +9,7 @@ use App\Models\CategoryWiseParkzoneSlot;
 use App\Models\CategoryWiseParkzoneSlotNumber;
 use App\Models\Floor;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Gallery;
 
 
 
@@ -129,7 +130,7 @@ class ParkzoneController extends Controller
     // }
 
 
-    
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -144,7 +145,7 @@ class ParkzoneController extends Controller
             'agent_id.*' => 'exists:users,id',
             'quartier_id' => 'required',
         ]);
-    
+
         $parkzone = new Parkzone();
         $parkzone->name = $request->name;
         $parkzone->type = $request->type;
@@ -153,22 +154,75 @@ class ParkzoneController extends Controller
         $parkzone->lat = $request->lat;
         $parkzone->lng = $request->lng;
         $parkzone->quartier_id = $request->quartier_id;
-    
+
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('parkzone', 'public');
             $parkzone->image = $imagePath;
         }
-    
+
         $parkzone->save();
-    
+
         // Attach agent_id values to the parkzone using the pivot table
         $parkzone->agents()->attach($request->agent_id);
-    
+
         return redirect()
             ->route('parkzones.index')
             ->with(['flashMsg' => ['msg' => 'Parkzone successfully added.', 'type' => 'success']]);
     }
+
+    // public function createGallery(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'galleryImages' => 'required|array',
+    //         'galleryImages.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+    //     ]);
+
+    //     $parkzone = Parkzone::findOrFail($id);
+
+    //     foreach ($request->file('galleryImages') as $image) {
+    //         $imageName = $image->store('gallery', 'public');
+
+    //         $gallery = new Gallery([
+    //             'parkzone_id' => $parkzone->id,
+    //             'image' => $imageName,
+    //         ]);
+
+    //         $gallery->save();
+    //     }
+
+    //     return redirect()->back()->with('success', 'Gallery added successfully');
+    // }
+
+
+    public function createGallery(Request $request, $id)
+    {
+        $galleryImages = $request->file('galleryImages');
     
+        if (empty($galleryImages)) {
+            return response()->json(['error' => 'Gallery images are required and must be an array']);
+        }
+    
+        $parkzone = Parkzone::findOrFail($id);
+    
+        foreach ($galleryImages as $image) {
+            if (!$image->isValid() || !in_array($image->getClientOriginalExtension(), ['jpeg', 'png', 'jpg', 'gif'])) {
+                return response()->json(['error' => 'Invalid image format']);
+            }
+    
+            $imageName = $image->store('gallery', 'public');
+    
+            $gallery = new Gallery([
+                'parkzone_id' => $parkzone->id,
+                'image' => $imageName,
+            ]);
+    
+            $gallery->save();
+        }
+    
+        return response()->json(['success' => 'Gallery added successfully']);
+    }
+    
+
 
 
     /**
