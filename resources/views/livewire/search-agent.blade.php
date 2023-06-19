@@ -22,6 +22,9 @@
         </script>
         <label for="operator">Agent</label>
         <select wire:model="selectedAgent" name="agent_id[]" id="operator" multiple>
+            @foreach ($selectedAgents as $agent)
+            <option value="{{ $agent->id }}" selected hidden>{{ $agent->name }}</option>
+            @endforeach
             @foreach ($agents as $agent)
             <option value="{{ $agent->id }}">{{ $agent->name }}</option>
             @endforeach
@@ -35,6 +38,9 @@
     <script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag/dist/js/multi-select-tag.js"></script>
     <script>
         new MultiSelectTag('operator'); // id
+        // document.querySelectorAll('.input-container')[0].addEventListener('click', function() {
+        //     document.querySelectorAll('.drawer')[0].classList.toggle('hidden');
+        // });
     </script>
 
 </div>

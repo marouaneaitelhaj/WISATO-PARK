@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::get('readparkzones', 'ParkzoneController@readApi');
 Route::get('readparkzones/{id}', 'ParkzoneController@readApiById');
+Route::get('checkiffloorsidestandarexist/{id}/{type}', 'ParkzoneController@checkiffloorsideexist');

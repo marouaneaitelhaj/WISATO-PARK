@@ -16,7 +16,9 @@ class CreateParkingsTable extends Migration
         Schema::create('parkings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
+            $table->string('slot_id');
             $table->string('barcode')->unique();
+            $table->string('table_name');
             $table->string('vehicle_no');
             $table->string('driver_name')->nullable();
             $table->string('driver_mobile')->nullable();
@@ -30,6 +32,7 @@ class CreateParkingsTable extends Migration
             $table->string('action')->nullable();
             $table->foreign('created_by')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('modified_by')->references('id')->on('users')->onDelete('cascade');
+            $table->unique(['slot_id','table_name']);
             $table->timestamps();
         });
     }

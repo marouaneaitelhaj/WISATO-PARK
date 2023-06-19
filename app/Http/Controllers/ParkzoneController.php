@@ -6,11 +6,15 @@ use App\Models\Parkzone;
 use App\Models\Category;
 use App\Models\Quartier;
 use App\Models\CategoryWiseParkzoneSlot;
+use App\Models\CategoryWiseParkzoneSlotNumber;
 use App\Models\Floor;
 
 
 
-use App\Models\Cities;
+use App\Models\cities;
+use App\Models\FloorSlot;
+use App\Models\Side_slot;
+use App\Models\Sides;
 use Exception;
 use Illuminate\Http\Request;
 use App\User;
@@ -94,7 +98,6 @@ class ParkzoneController extends Controller
             'mode' => 'bail|required',
             'remarks' => 'bail|nullable|min:3',
             'lat' => 'bail|required',
-            // 'category' => 'bail|required|array', // Ensure category is an array
             'lng' => 'bail|required',
             'agent_id' => 'bail|required|array', // Ensure agent_id is an array
             'agent_id.*' => 'exists:users,id',
@@ -188,8 +191,6 @@ class ParkzoneController extends Controller
             'quartier_id' => 'required',
             'agent_id' => 'bail|required|array', // Ensure agent_id is an array
             'agent_id.*' => 'exists:users,id',
-
-
         ]);
 
         $parkzone->agents()->sync($request->agent_id);
@@ -197,6 +198,11 @@ class ParkzoneController extends Controller
         $parkzone->update([
             'name'     => $validated['name'],
             'remarks'  => $validated['remarks'],
+            'mode'     => $validated['mode'],
+            'lat'      => $validated['lat'],
+            'lng'      => $validated['lng'],
+            'type'     => $validated['type'],
+            'quartier_id' => $validated['quartier_id'],
         ]);
 
         return redirect()
@@ -237,6 +243,35 @@ class ParkzoneController extends Controller
     {
         $parkzone->delete();
     }
+    public function checkiffloorsideexist($id, $type)
+    {
+        if ($type == 'floor') {
+            $parkzone = Parkzone::find($id);
+            $floors = Floor::where('parkzone_id', $parkzone->id)->get();
+            if (count($floors) > 0) {
+                return response()->json(null, 404);
+            } else {
+                return response()->json(null, 200);
+            }
+        } elseif ($type == 'side') {
+            $parkzone = Parkzone::find($id);
+            $sides = Sides::where('parkzone_id', $parkzone->id)->get();
+            if (count($sides) > 0) {
+                return response()->json(null, 404);
+            } else {
+                return response()->json(null, 200);
+            }
+        } elseif ($type == 'standard') {
+            $parkzone = Parkzone::find($id);
+            $categoryWiseParkzoneSlots = CategoryWiseParkzoneSlot::where('parkzone_id', $parkzone->id)->get();
+            if (count($categoryWiseParkzoneSlots) > 0) {
+                $categoryWiseParkzoneSlots = CategoryWiseParkzoneSlotNumber::where('parkzone_id', $parkzone->id)->get();
+                return response()->json($categoryWiseParkzoneSlots, 404);
+            } else {
+                return response()->json(null, 200);
+            }
+        }
+    }
     public function dashboard()
     {
         $chefId = auth()->user()->id;
@@ -254,17 +289,30 @@ class ParkzoneController extends Controller
     {
         $data = [];
         $parkzones = Parkzone::all();
+        $categories = Category::all();
         foreach ($parkzones as $index => $parkzone) {
             if ($parkzone->type == 'standard') {
-                $categories = Category::all();
-                foreach ($categories as $category) {
-                    $parkzones[$category->name] = CategoryWiseParkzoneSlot::where('category_id', $category->id)->count();
+                foreach ($categories as $categorie) {
+                    $parkzones[$index]["category"]["total"][$categorie->type] = count(CategoryWiseParkzoneSlot::where('parkzone_id', $parkzone->id)->where('category_id', $categorie->id)->get());
+                    $parkzones[$index]["category"]["available"][$categorie->type] = count(CategoryWiseParkzoneSlot::where('parkzone_id', $parkzone->id)->where('category_id', $categorie->id)->where('active_parking', null)->get());
                 }
             } elseif ($parkzone->type == 'floor') {
-                $parkzones[$index]->slots = $parkzone->floor;
+                foreach ($categories as $categorie) {
+                    $parkzones[$index]["category"]["total"][$categorie->type] = count(FloorSlot::whereHas('floor', function ($query) use ($parkzone) {
+                        $query->where('parkzone_id', $parkzone->id);
+                    })->where('categorie_id', $categorie->id)->get());
+                    $parkzones[$index]["category"]["available"][$categorie->type] = count(FloorSlot::whereHas('floor', function ($query) use ($parkzone) {
+                        $query->where('parkzone_id', $parkzone->id);
+                    })->where('categorie_id', $categorie->id)->where('active_parking', null)->get());
+                }
             } elseif ($parkzone->type == 'side') {
-                foreach ($parkzone->sides as $side) {
-                    $parkzones[$index]->slots = $side->side_slots;
+                foreach ($categories as $categorie) {
+                    $parkzones[$index]["category"]["total"][$categorie->type] = count(Side_slot::whereHas('side', function ($query) use ($parkzone) {
+                        $query->where('parkzone_id', $parkzone->id);
+                    })->where('category_id', $categorie->id)->get());
+                    $parkzones[$index]["category"]["available"][$categorie->type] = count(Side_slot::whereHas('side', function ($query) use ($parkzone) {
+                        $query->where('parkzone_id', $parkzone->id);
+                    })->where('category_id', $categorie->id)->where('active_parking', null)->get());
                 }
             }
         }

@@ -59,54 +59,54 @@ class ControlOperatorController extends Controller
 
 
     public function index(Request $request)
-{
-    $user = $request->user();
-    
-    if ($request->wantsJson()) {
-        $categories = new ControlOperator();
-        $limit = 10;
-        $offset = 0;
-        $search = [];
-        $where = [];
-        $with = ['operatorUser', 'agentUser'];
-        $join = [];
-        $orderBy = [];
+    {
+        $user = $request->user();
 
-        if ($request->input('length')) {
-            $limit = $request->input('length');
-        }
-        
-        if ($request->input('order')[0]['column'] != 0) {
-            $column_name = $request->input('columns')[$request->input('order')[0]['column']]['name'];
-            $sort = $request->input('order')[0]['dir'];
-            $orderBy[$column_name] = $sort;
+        if ($request->wantsJson()) {
+            $categories = new ControlOperator();
+            $limit = 10;
+            $offset = 0;
+            $search = [];
+            $where = [];
+            $with = ['operatorUser', 'agentUser'];
+            $join = [];
+            $orderBy = [];
+
+            if ($request->input('length')) {
+                $limit = $request->input('length');
+            }
+
+            if ($request->input('order')[0]['column'] != 0) {
+                $column_name = $request->input('columns')[$request->input('order')[0]['column']]['name'];
+                $sort = $request->input('order')[0]['dir'];
+                $orderBy[$column_name] = $sort;
+            }
+
+            if ($request->input('start')) {
+                $offset = $request->input('start');
+            }
+
+            if ($request->input('search') && $request->input('search')['value'] != "") {
+                $search['type'] = $request->input('search')['value'];
+                $search['description'] = $request->input('search')['value'];
+            }
+
+            if ($request->input('where')) {
+                $where = $request->input('where');
+            }
+
+            if ($user->hasRole('admin')) {
+                $categories = $categories->getDataForDataTable($limit, $offset, $search, $where, $with, $join, $orderBy,  $request->all());
+            } elseif ($user->hasRole('chef zone')) {
+                $where['agent'] = $user->id;
+                $categories = $categories->getDataForDataTable($limit, $offset, $search, $where, $with, $join, $orderBy,  $request->all());
+            }
+
+            return response()->json($categories);
         }
 
-        if ($request->input('start')) {
-            $offset = $request->input('start');
-        }
-
-        if ($request->input('search') && $request->input('search')['value'] != "") {
-            $search['type'] = $request->input('search')['value'];
-            $search['description'] = $request->input('search')['value'];
-        }
-
-        if ($request->input('where')) {
-            $where = $request->input('where');
-        }
-        
-        if ($user->hasRole('admin')) {
-            $categories = $categories->getDataForDataTable($limit, $offset, $search, $where, $with, $join, $orderBy,  $request->all());
-        } elseif ($user->hasRole('chef zone')) {
-            $where['agent'] = $user->id;
-            $categories = $categories->getDataForDataTable($limit, $offset, $search, $where, $with, $join, $orderBy,  $request->all());
-        }
-        
-        return response()->json($categories);
+        return view('content.team.index');
     }
-    
-    return view('content.team.index');
-}
 
 
 
@@ -139,40 +139,40 @@ class ControlOperatorController extends Controller
     public function create(Request $request)
     {
         $currentUser = $request->user();
-    
+
         if ($currentUser->hasRole('admin')) {
             $agents = User::whereIn('id', ControlOperator::pluck('agent'))->get();
         } elseif ($currentUser->hasRole('chef zone')) {
             $agentId = $currentUser->id;
             $agents = User::whereIn('id', ControlOperator::where('agent', $agentId)->pluck('agent'))->get();
         }
-    
+
         $agentOperatorList = new Collection();
-    
+
         foreach ($agents as $agent) {
             $operators = ControlOperator::where('agent', $agent->id)->pluck('operator');
             $operatorDetails = User::whereIn('id', $operators)->get(['id', 'name', 'Phone', 'email', 'cin']);
-    
+
             // Add the ControlOperator ID to the operator details
             $operatorDetails = $operatorDetails->map(function ($operator) use ($agent) {
                 $controlOperator = ControlOperator::where('agent', $agent->id)->where('operator', $operator->id)->first();
                 $operator['id'] = $controlOperator->id;
                 return $operator;
             });
-    
+
             $agentOperatorList->push([
                 'agent' => $agent->name,
                 'operators' => $operatorDetails,
             ]);
         }
-    
+
         $operators = User::whereHas('roles', function ($query) {
             $query->whereIn('name', ['gardien', 'camera']);
         })->get();
-    
+
         return view('content.team.create', compact('operators', 'agentOperatorList'));
     }
-    
+
 
 
     public function store(Request $request)
@@ -227,16 +227,16 @@ class ControlOperatorController extends Controller
     //         'start_date' => 'required|date',
     //         'end_date' => 'required|date',
     //     ]);
-    
+
     //     $startDate = $request->input('start_date');
     //     $endDate = $request->input('end_date');
-    
+
     //     // Perform the insertion into the "control_operators" table
     //     // using the $startDate and $endDate values
-    
+
     //     return redirect()->route('team.create');
     // }
-    
+
 
 
 
@@ -303,11 +303,17 @@ class ControlOperatorController extends Controller
             'operator' => 'required|array',
             'operator.*' => 'exists:users,id',
         ]);
+        // delete all operator in parkzone 
+        operator_inparkzone::where('parkzone_id', $request->parkzone)->delete();
         foreach ($request->operator as $operator) {
             $new = new operator_inparkzone();
             $new->parkzone_id = $request->parkzone;
             $new->operator_id = $operator;
             $new->save();
         }
+        return redirect()->back()->with('flashMsg', [
+            'type' => 'success',
+            'msg' => 'Operator added successfully',
+        ]);
     }
 }

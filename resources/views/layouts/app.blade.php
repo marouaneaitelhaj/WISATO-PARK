@@ -97,7 +97,7 @@
                                 </ul>
                             </div>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#ui-category" aria-expanded="false"
                                 aria-controls="ui-category">
@@ -132,14 +132,13 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('parkzones.index') }}">ParkZone List</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('floor.index') }}">Floor List</a>
+                                    
                                 </ul>
                             </div>
                         </li>
 
-                        
-                        
+
+
 
                         <li class="nav-item">
                             <a class="nav-link" data-bs-toggle="collapse" href="#ui-parking-setup" aria-expanded="false"
@@ -158,6 +157,9 @@
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ route('side.index') }}">Side Slot List</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ route('floor.index') }}">Floor List</a>
                                     </li>
                                 </ul>
                             </div>

@@ -23,9 +23,13 @@ class Sides extends Model
     {
         if ($Category == null) {
             return $this->hasMany(Side_slot::class, 'side_id');
-        }else{
+        } else {
             return $this->hasMany(Side_slot::class, 'side_id')->where('category_id', $Category);
         }
+    }
+    public function side_slots_active($Category = null)
+    {
+        return $this->hasMany(Side_slot::class, 'side_id')->where('category_id', $Category);
     }
     public function side_slot_numbers()
     {

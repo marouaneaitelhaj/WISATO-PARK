@@ -39,6 +39,11 @@
                     title: "serial_number",
                     name: "serial_number",
                     data: "operator_user.serial_number",
+                },
+                {
+                    title: "Created At",
+                    name: "created_at",
+                    data: "created_at",
                 }
             ],
 

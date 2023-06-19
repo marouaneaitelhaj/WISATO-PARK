@@ -6,7 +6,7 @@ namespace Database\Seeders;
 
 
 use Illuminate\Database\Seeder;
-use App\Models\Cities;
+use App\Models\cities;
 use App\Models\Quartier;
 
 class QuartierSeeder extends Seeder
@@ -19,7 +19,7 @@ class QuartierSeeder extends Seeder
         $data = json_decode($file, true);
 
         foreach ($data as $cityName => $quartiers) {
-            $city = Cities::where('CITY', $cityName)->first();
+            $city = cities::where('CITY', $cityName)->first();
 
             if ($city) {
                 foreach ($quartiers as $quartierData) {

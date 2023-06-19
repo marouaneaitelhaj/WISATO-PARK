@@ -302,11 +302,24 @@ class ParkingController extends Controller
 				'table_name'    => $tableName
 			]);
 		} catch (\PDOException $e) {
-
+			// dd($e->getMessage());
 			return redirect()
 				->back()
 				->withInput()
 				->with(['flashMsg' => ['msg' => $this->getMessage($e), 'type' => 'error']]);
+		}
+		if ($tableName == 'category_wise_parkzone_slots') {
+			$slot = CategoryWiseParkzoneSlot::where('id', $slotId)->first();
+			$slot->parkzone->in_use = 1;
+			$slot->parkzone->update();
+		} elseif ($tableName == 'floor_slots') {
+			$slot = FloorSlot::where('id', $slotId)->first();
+			$slot->floor->parkzone->in_use = 1;
+			$slot->floor->parkzone->update();
+		} elseif ($tableName == 'side_slots') {
+			$slot = Side_slot::where('id', $slotId)->first();
+			$slot->side->parkzone->in_use = 1;
+			$slot->side->parkzone->update();
 		}
 
 		return redirect()

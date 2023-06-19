@@ -194,12 +194,15 @@ class SideController extends Controller
     {
         $side = Sides::where('side', $request->side)->where('parkzone_id', $request->parkzoneId)->first();
         if ($side != null) {
+            $data = [];
+            $data['side'] = $side;
+            $data['side_slot'] = Side_slot_number::where('side_id', $side->id)->get();
             if ($side->is_active == 1) {
                 $message = 'active';
-                return response()->json($message, 200);
+                return response()->json(['message' => $message, 'data' => $data], 200);
             } else {
                 $message = 'notactive';
-                return response()->json($message, 200);
+                return response()->json(['message' => $message, 'data' => $data], 200);
             }
         } else {
             $message = 'notfound';

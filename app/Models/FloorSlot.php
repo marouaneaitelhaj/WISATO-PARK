@@ -20,4 +20,8 @@ class FloorSlot extends Model
     {
         return $this->belongsTo(Category::class, 'categorie_id');
     }
+    public function active_parking()
+    {
+        return $this->hasOne('App\Models\Parking', 'slot_id')->where('table_name', 'floor_slots')->whereNull('out_time');
+    }
 }
