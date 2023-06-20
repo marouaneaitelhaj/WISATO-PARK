@@ -129,7 +129,7 @@ class ParkzoneController extends Controller
     // }
 
 
-    
+
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -144,7 +144,7 @@ class ParkzoneController extends Controller
             'agent_id.*' => 'exists:users,id',
             'quartier_id' => 'required',
         ]);
-    
+
         $parkzone = new Parkzone();
         $parkzone->name = $request->name;
         $parkzone->type = $request->type;
@@ -153,22 +153,22 @@ class ParkzoneController extends Controller
         $parkzone->lat = $request->lat;
         $parkzone->lng = $request->lng;
         $parkzone->quartier_id = $request->quartier_id;
-    
+
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('parkzone', 'public');
             $parkzone->image = $imagePath;
         }
-    
+
         $parkzone->save();
-    
+
         // Attach agent_id values to the parkzone using the pivot table
         $parkzone->agents()->attach($request->agent_id);
-    
+
         return redirect()
             ->route('parkzones.index')
             ->with(['flashMsg' => ['msg' => 'Parkzone successfully added.', 'type' => 'success']]);
     }
-    
+
 
 
     /**
@@ -317,36 +317,50 @@ class ParkzoneController extends Controller
         $parkzones = Parkzone::all();
         $categories = Category::all();
         foreach ($parkzones as $index => $parkzone) {
+            $data[$index] = $parkzone->getAttributes();
+
             if ($parkzone->type == 'standard') {
                 foreach ($categories as $categorie) {
-                    $parkzones[$index]["category"]["total"][$categorie->type] = count(CategoryWiseParkzoneSlot::where('parkzone_id', $parkzone->id)->where('category_id', $categorie->id)->get());
-                    $parkzones[$index]["category"]["available"][$categorie->type] = count(CategoryWiseParkzoneSlot::where('parkzone_id', $parkzone->id)->where('category_id', $categorie->id)->where('active_parking', null)->get());
+                    $data[$index]["category"][$categorie->type]["total"] = count(CategoryWiseParkzoneSlot::where('parkzone_id', $parkzone->id)->where('category_id', $categorie->id)->get());
+                    $data[$index]["category"][$categorie->type]["available"] = count(CategoryWiseParkzoneSlot::where('parkzone_id', $parkzone->id)->where('category_id', $categorie->id)->whereDoesntHave('active_parking')->get());
                 }
             } elseif ($parkzone->type == 'floor') {
                 foreach ($categories as $categorie) {
-                    $parkzones[$index]["category"]["total"][$categorie->type] = count(FloorSlot::whereHas('floor', function ($query) use ($parkzone) {
+                    $data[$index]["category"][$categorie->type]["total"] = count(FloorSlot::whereHas('floor', function ($query) use ($parkzone) {
                         $query->where('parkzone_id', $parkzone->id);
                     })->where('categorie_id', $categorie->id)->get());
-                    $parkzones[$index]["category"]["available"][$categorie->type] = count(FloorSlot::whereHas('floor', function ($query) use ($parkzone) {
+                    $data[$index]["category"][$categorie->type]["available"] = count(FloorSlot::whereHas('floor', function ($query) use ($parkzone) {
                         $query->where('parkzone_id', $parkzone->id);
-                    })->where('categorie_id', $categorie->id)->where('active_parking', null)->get());
+                    })->where('categorie_id', $categorie->id)->whereDoesntHave('active_parking')->get());
                 }
             } elseif ($parkzone->type == 'side') {
                 foreach ($categories as $categorie) {
-                    $parkzones[$index]["category"]["total"][$categorie->type] = count(Side_slot::whereHas('side', function ($query) use ($parkzone) {
+                    $data[$index]["category"][$categorie->type]["total"] = count(Side_slot::whereHas('side', function ($query) use ($parkzone) {
                         $query->where('parkzone_id', $parkzone->id);
                     })->where('category_id', $categorie->id)->get());
-                    $parkzones[$index]["category"]["available"][$categorie->type] = count(Side_slot::whereHas('side', function ($query) use ($parkzone) {
+                    $data[$index]["category"][$categorie->type]["available"] = count(Side_slot::whereHas('side', function ($query) use ($parkzone) {
                         $query->where('parkzone_id', $parkzone->id);
-                    })->where('category_id', $categorie->id)->where('active_parking', null)->get());
+                    })->where('category_id', $categorie->id)->whereDoesntHave('active_parking')->get());
                 }
             }
         }
-        return response()->json($parkzones);
+        return response()->json($data);
     }
+
     public function readApiById($id)
     {
-        $parkzones = CategoryWiseParkzoneSlot::where('parkzone_id', $id)->with('category')->get();
-        return response()->json($parkzones);
+        $parkzones = Parkzone::find($id);
+        if ($parkzones->type == 'standard') {
+            $data = CategoryWiseParkzoneSlot::where('parkzone_id', $id)->with('category')->get();
+        } elseif ($parkzones->type == 'floor') {
+            $data = FloorSlot::whereHas('floor', function ($query) use ($parkzones) {
+                $query->where('parkzone_id', $parkzones->id);
+            })->with('category')->get();
+        } elseif ($parkzones->type == 'side') {
+            $data = Side_slot::whereHas('side', function ($query) use ($parkzones) {
+                $query->where('parkzone_id', $parkzones->id);
+            })->with('category')->get();
+        }
+        return response()->json($data);
     }
 }
