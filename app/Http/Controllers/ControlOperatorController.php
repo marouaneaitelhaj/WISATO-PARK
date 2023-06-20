@@ -16,47 +16,6 @@ class ControlOperatorController extends Controller
 
 
 
-    // public function index(Request $request)
-    // {
-    //     if ($request->wantsJson()) {
-    //         $categories = new ControlOperator();
-    //         $limit = 10;
-    //         $offset = 0;
-    //         $search = [];
-    //         $where = [];
-    //         $with = ['operatorUser', 'agentUser'];
-    //         $join = [];
-    //         $orderBy = [];
-
-    //         if ($request->input('length')) {
-    //             $limit = $request->input('length');
-    //         }
-    //         // dd($request->all());
-    //         if ($request->input('order')[0]['column'] != 0) {
-    //             $column_name = $request->input('columns')[$request->input('order')[0]['column']]['name'];
-    //             $sort = $request->input('order')[0]['dir'];
-    //             $orderBy[$column_name] = $sort;
-    //         }
-
-    //         if ($request->input('start')) {
-    //             $offset = $request->input('start');
-    //         }
-
-    //         if ($request->input('search') && $request->input('search')['value'] != "") {
-    //             $search['type'] = $request->input('search')['value'];
-    //             $search['description'] = $request->input('search')['value'];
-    //         }
-
-    //         if ($request->input('where')) {
-    //             $where = $request->input('where');
-    //         }
-
-    //         $categories = $categories->getDataForDataTable($limit, $offset, $search, $where, $with, $join, $orderBy,  $request->all());
-    //         return response()->json($categories);
-    //     }
-    //     return view('content.team.index');
-    // }
-
 
     public function index(Request $request)
     {
@@ -110,31 +69,7 @@ class ControlOperatorController extends Controller
 
 
 
-    // public function create()
-    // {
 
-    //     $controlOperators = ControlOperator::all();
-    //     $agents = User::whereIn('id', $controlOperators->pluck('agent'))->get();
-
-    //     $agentOperatorList = new Collection();
-    //     foreach ($agents as $agent) {
-    //         $operators0 = $controlOperators->where('agent', $agent->id)->pluck('operator');
-    //         $operatorDetails = User::whereIn('id', $operators0)->get(['name', 'Phone', 'email', 'cin']);
-
-    //         $agentOperatorList->push([
-    //             'agent' => $agent->name,
-    //             'operators' => $operatorDetails,
-    //         ]);
-    //     }
-
-
-    //     $operators = User::whereHas('roles', function ($query) {
-    //         $query->whereIn('name', ['gardien', 'camera']);
-    //     })->get();
-
-
-    //     return view('content.team.create', compact('operators', 'agentOperatorList'));
-    // }
 
     public function create(Request $request)
     {
@@ -153,7 +88,6 @@ class ControlOperatorController extends Controller
             $operators = ControlOperator::where('agent', $agent->id)->pluck('operator');
             $operatorDetails = User::whereIn('id', $operators)->get(['id', 'name', 'Phone', 'email', 'cin']);
 
-            // Add the ControlOperator ID to the operator details
             $operatorDetails = $operatorDetails->map(function ($operator) use ($agent) {
                 $controlOperator = ControlOperator::where('agent', $agent->id)->where('operator', $operator->id)->first();
                 $operator['id'] = $controlOperator->id;
@@ -221,21 +155,6 @@ class ControlOperatorController extends Controller
         ]);
     }
 
-    // public function store2(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'start_date' => 'required|date',
-    //         'end_date' => 'required|date',
-    //     ]);
-
-    //     $startDate = $request->input('start_date');
-    //     $endDate = $request->input('end_date');
-
-    //     // Perform the insertion into the "control_operators" table
-    //     // using the $startDate and $endDate values
-
-    //     return redirect()->route('team.create');
-    // }
 
 
 
@@ -264,10 +183,27 @@ class ControlOperatorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'operatorId' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+        ]);
+    
+        $operatorId = $request->input('operatorId');
+        $startHour = $request->input('start_date');
+        $endHour = $request->input('end_date');
+    
+        // Update the controll_operator table with the new start_date and end_date values
+        $operator = ControlOperator::findOrFail($operatorId);
+        $operator->start_date = $startHour;
+        $operator->end_date = $endHour;
+        $operator->save();
+    
+        return response()->json(['message' => 'Hours updated successfully.'], 200);
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -289,7 +225,6 @@ class ControlOperatorController extends Controller
             ->with('Quartier')
             ->with('operators')
             ->get();
-        // dd($park);
         $agentOperatorList  = ControlOperator::with('operatorUser')
             ->where('agent', $chefId)
             ->with('agentUser')

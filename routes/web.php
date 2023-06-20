@@ -13,7 +13,13 @@
 // web.php
 
 
-Route::post('teams', 'ControlOperatorController@store2')->name('teams.store2');
+
+// Route::post('teamshours', [ControlOperatorController::class, 'store2'])->name('teamshours.store2');
+
+// Route::post('team/teamshours', 'ControlOperatorController@store2')->name('teamshours');
+Route::put('team/teamshours', 'ControlOperatorController@update')->name('teamshours');
+
+
 Route::post('parking', 'ParkingController@storeapi');
 
 
@@ -76,6 +82,8 @@ Route::middleware(['installed', 'auth', 'xss_clean'])->group(function () {
 
 		Route::get('user-edit/{user}', 'UserController@edit')->name('user.edit');
 		Route::put('user-edit/{user}', 'UserController@update')->name('user.update');
+		Route::post('/parkzones/{parkzoneId}/gallery', 'ParkzoneController@createGallery')->name('parkzone.gallery.store');
+
 
 		Route::resource('category', 'CategoryController')->except(['show']);
 

@@ -15,7 +15,14 @@ var dataside = [];
         [10, 50, 100, 200, -1],
         [10, 50, 100, 200, "All"],
       ],
-      buttons: [],
+      buttons: [
+        {
+          text: 'Add Image',
+          action: function () {
+            addImageToGallery();
+          }
+        }
+      ],
       columns: [
         {
           title: "id",
@@ -35,8 +42,6 @@ var dataside = [];
             }
           }
         },
-        
-        
         { title: "Name", name: "name", data: "name" },
         { title: "Remarks", name: "remarks", data: "remarks" },
         { title: "Quartier", name: "Quartier", data: "quartier.quartier_name" },
@@ -67,6 +72,18 @@ var dataside = [];
               );
             }
           },
+        },
+        {
+          title: "galery",
+          name: "galery",
+          data: "galery",
+          render: function (data, type, row) {
+            return (
+              '<button class="btn btn-primary" onclick="addImageToGallery(' +
+              row.id +
+              ')">Add Image</button>'
+            );
+          }
         },
         {
           title: "Chef Zone",
@@ -140,114 +157,97 @@ function agentslist(id) {
   });
 }
 
+
+
+
+
+function addImageToGallery(parkzoneId) {
+  Swal.fire({
+    title: 'Add Gallery',
+    html:
+      '<form id="galleryForm">' +
+      '<div class="form-group">' +
+      '<label for="galleryImages" class="">Gallery Images:</label>' +
+      '<hr>' +
+      '<div id="imageInputs">' +
+      '<input type="file" class="form-control mb-2" name="galleryImages[]">' +
+      '</div>' +
+      '<button type="button" id="addImageInput" class="btn btn-primary"><i class="bi bi-plus"></i>+</button>' +
+      '</div>' +
+      '</form>',
+    showCancelButton: true,
+    cancelButtonText: 'Cancel',
+    confirmButtonText: 'Add',
+    focusConfirm: false,
+    preConfirm: () => {
+      const galleryImages = Swal.getPopup().querySelectorAll('[name="galleryImages[]"]');
+
+      if (!galleryImages || galleryImages.length === 0) {
+        Swal.showValidationMessage('Please select one or more images for the gallery');
+      }
+
+      return {
+        galleryImages: galleryImages,
+      };
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const galleryImages = result.value.galleryImages;
+      const formData = new FormData();
+
+      for (let i = 0; i < galleryImages.length; i++) {
+        formData.append('galleryImages[]', galleryImages[i].files[0]);
+      }
+
+      const csrfToken = document.head.querySelector(
+        'meta[name="csrf-token"]'
+      ).content;
+
+      fetch(`/parkzones/${parkzoneId}/gallery`, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          "X-CSRF-TOKEN": csrfToken,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(response.statusText);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          Swal.fire('Success', data.success, 'success');
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  });
+
+  const addImageInputButton = document.getElementById('addImageInput');
+  addImageInputButton.addEventListener('click', () => {
+    const imageInputsContainer = document.getElementById('imageInputs');
+    const imageInput = document.createElement('input');
+    imageInput.type = 'file';
+    imageInput.className = 'form-control mb-2';
+    imageInput.name = 'galleryImages[]';
+    imageInputsContainer.appendChild(imageInput);
+  });
+}
+
+
+
+
+
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////// majidisimo /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////
 
-// function createFloor(parkzoneId) {
-//   Swal.fire({
-//     title: "Create Floor",
-//     html:
-//       '<form id="floorForm">' +
-//       '<div class="form-group">' +
-//       '<label for="level" class="">Level:</label>' +
-//       "<hr>" +
-//       '<select class="form-select" id="level" name="level[]" data-placeholder="Choose anything" multiple>' +
-//       '<option value="5">Fifth Floor</option>' +
-//       '<option value="4">Fourth Floor</option>' +
-//       '<option value="3">Third Floor</option>' +
-//       '<option value="2">Second Floor</option>' +
-//       '<option value="1">First Floor</option>' +
-//       '<option value="0">Level 0</option>' +
-//       '<option value="-1">Basement</option>' +
-//       '<option value="-2">Underground</option>' +
-//       '<option value="-3">Underground 2</option>' +
-//       "</select>" +
-//       "</div>" +
-//       '<div class="form-group">' +
-//       '<label for="shadow" class="">Shadow:</label>' +
-//       "<hr>" +
-//       '<select class="form-select" id="shadow" name="shadow">' +
-//       '<option value="yes">No Shadow</option>' +
-//       '<option value="no">Shadow</option>' +
-//       "</select>" +
-//       "</div>" +
-//       '<div class="form-group">' +
-//       '<label for="status" class="">Status:</label>' +
-//       "<hr>" +
-//       '<select class="form-select" id="status" name="status">' +
-//       '<option value="yes">Inactive</option>' +
-//       '<option value="no">Active</option>' +
-//       "</select>" +
-//       "</div>" +
-//       "</form>",
 
-//     showCancelButton: true,
-//     cancelButtonText: "Cancel",
-//     confirmButtonText: "Create",
-//     focusConfirm: false,
-//     preConfirm: () => {
-//       const levels = Array.from(
-//         Swal.getPopup().querySelectorAll("#level option:checked"),
-//         (option) => option.value
-//       );
-//       if (levels.length === 0) {
-//         Swal.showValidationMessage("Please select at least one level");
-//       }
-//       return {
-//         levels: levels,
-//         shadow: Swal.getPopup().querySelector("#shadow").value,
-//         status: Swal.getPopup().querySelector("#status").value,
-//       };
-//     },
-//   }).then((result) => {
-//     if (!result.dismiss && result.value) {
-//       const levels = result.value.levels;
-//       const shadow = result.value.shadow;
-//       const status = result.value.status;
-
-//       const formData = new FormData();
-//       formData.append("parkzone_id", parkzoneId);
-//       levels.forEach((level) => {
-//         formData.append("level[]", level);
-//         formData.append("shadow[]", shadow);
-//         formData.append("status[]", status);
-//       });
-
-//       var csrfToken = $('meta[name="csrf-token"]').attr("content");
-
-//       $.ajax({
-//         url: route("parkzones.store"),
-//         method: "POST",
-//         headers: {
-//           "X-CSRF-TOKEN": csrfToken,
-//         },
-//         data: formData,
-//         processData: false,
-//         contentType: false,
-//         success: function (xhr, status, error) {
-//           Swal.fire({
-//             title: "Floor Created",
-//             text: xhr.message,
-//             icon: "success",
-//             confirmButtonText: "Ok",
-//           }).then(() => {
-//             // location.reload();
-//           });
-//         },
-//         error: function (xhr, status, error) {
-//           Swal.fire({
-//             title: "Error",
-//             text: xhr.responseJSON.message,
-//             icon: "error",
-//             confirmButtonText: "Ok",
-//           });
-//         },
-        
-//       });
-//     }
-//   });
-// }
 function createFloor(parkzoneId) {
   Swal.fire({
     title: "Create Floor",
@@ -358,11 +358,14 @@ function createFloor(parkzoneId) {
             confirmButtonText: "Ok",
           });
         },
-        
+
       });
     }
   });
 }
+
+
+
 
 
 
@@ -519,7 +522,7 @@ function createstandard(parkzoneId) {
         showCancelButton: true,
         preConfirm: () => {
           for (var i = 0; i < cat.length; i++) {
-            for (var j = 0; j < error.response.data.length; j++) {}
+            for (var j = 0; j < error.response.data.length; j++) { }
             html +=
               '<div class="m-1"> <input type="number"  class="form-control" placeholder="' +
               cat[i].type +
@@ -561,14 +564,7 @@ function createstandard(parkzoneId) {
                 'meta[name="csrf-token"]'
               ).content;
 
-              // fetch("side", {
-              //   method: "POST",
-              //   headers: {
-              //     "Content-Type": "application/json",
-              //     "X-CSRF-TOKEN": csrfToken,
-              //   },
-              //   body: jsonFormValues,
-              // });
+
               axios
                 .post("parking-settings", jsonFormValues, {
                   headers: {

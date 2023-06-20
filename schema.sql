@@ -297,7 +297,7 @@ CREATE TABLE `settings` (
 
 LOCK TABLES `settings` WRITE;
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` VALUES (1,'img/logo.png','Demo Site','img/favicon.ico','img/login-bg.jpg','2022-02-16 10:14:27','2022-02-16 10:14:27');
+INSERT INTO `settings` VALUES (1,'img/logo.png','Smart Parking','img/favicon.ico','img/login-bg.jpg','2022-02-16 10:14:27','2022-02-16 10:14:27');
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 UNLOCK TABLES;
 

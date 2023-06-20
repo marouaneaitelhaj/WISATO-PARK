@@ -25,7 +25,7 @@ class CreateSettingsTable extends Migration
         });
 
         Setting::create([
-            'site_title' => 'Demo Site',
+            'site_title' => 'Smart Parking',
             'logo' => 'img/logo.png',
             'login_image' => 'img/login-bg.jpg',
             'favicon' => 'img/favicon.ico',

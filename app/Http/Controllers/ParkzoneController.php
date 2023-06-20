@@ -9,6 +9,7 @@ use App\Models\CategoryWiseParkzoneSlot;
 use App\Models\CategoryWiseParkzoneSlotNumber;
 use App\Models\Floor;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Gallery;
 
 
 
@@ -168,6 +169,59 @@ class ParkzoneController extends Controller
             ->route('parkzones.index')
             ->with(['flashMsg' => ['msg' => 'Parkzone successfully added.', 'type' => 'success']]);
     }
+
+    // public function createGallery(Request $request, $id)
+    // {
+    //     $request->validate([
+    //         'galleryImages' => 'required|array',
+    //         'galleryImages.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+    //     ]);
+
+    //     $parkzone = Parkzone::findOrFail($id);
+
+    //     foreach ($request->file('galleryImages') as $image) {
+    //         $imageName = $image->store('gallery', 'public');
+
+    //         $gallery = new Gallery([
+    //             'parkzone_id' => $parkzone->id,
+    //             'image' => $imageName,
+    //         ]);
+
+    //         $gallery->save();
+    //     }
+
+    //     return redirect()->back()->with('success', 'Gallery added successfully');
+    // }
+
+
+    public function createGallery(Request $request, $id)
+    {
+        $galleryImages = $request->file('galleryImages');
+    
+        if (empty($galleryImages)) {
+            return response()->json(['error' => 'Gallery images are required and must be an array']);
+        }
+    
+        $parkzone = Parkzone::findOrFail($id);
+    
+        foreach ($galleryImages as $image) {
+            if (!$image->isValid() || !in_array($image->getClientOriginalExtension(), ['jpeg', 'png', 'jpg', 'gif'])) {
+                return response()->json(['error' => 'Invalid image format']);
+            }
+    
+            $imageName = $image->store('gallery', 'public');
+    
+            $gallery = new Gallery([
+                'parkzone_id' => $parkzone->id,
+                'image' => $imageName,
+            ]);
+    
+            $gallery->save();
+        }
+    
+        return response()->json(['success' => 'Gallery added successfully']);
+    }
+    
 
 
 

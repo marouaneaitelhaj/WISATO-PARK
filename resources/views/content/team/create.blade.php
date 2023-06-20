@@ -133,8 +133,9 @@
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="categoryDatatable"
                                                     rowspan="1" colspan="1"
-                                                    aria-label="Type: activate to sort column ascending"></th>
+                                                    aria-label="Type: activate to sort column ascending">Action</th>
                                                 </th>
+                                                
                                             </tr>
                                         </thead>
            
@@ -148,12 +149,9 @@
                                                         <td>{{ $operator['Phone'] }}</td>
                                                         <td>{{ $operator['email'] }}</td>
                                                         <td>{{ $operator['cin'] }}</td>
-                                                        {{-- <td> --}}
-                                                            {{-- <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                                                data-bs-target="#addHourseModal">Add Hours</button> --}}
-                                                                {{-- <button class="btn btn-primary btn-sm add-hours-btn" data-bs-toggle="modal" data-bs-target="#addHourseModal" value="{{ $operator['operator'] }}" data-user-id="{{ $operator['id'] }}">Add Hours</button> --}}
-
-                                                        {{-- </td> --}}
+                                                        <td>
+                                                                <button class="btn btn-primary btn-sm add-hours-btn" data-bs-toggle="modal" data-bs-target="#addHourseModal" value="{{ $operator['operator'] }}" data-user-id="{{ $operator['id'] }}">Add Hours</button>
+                                                        </td>
                                                         <td class="text-end width-5-per">
                                                             <a href="http://127.0.0.1:8000/category/8/edit">
                                                                 <i class="fa fa-pencil-square-o text-info" aria-hidden="true" title="Edit Category"></i>
@@ -241,89 +239,144 @@
         });
     });
     </script>
-<!-- Place this script before the closing </body> tag -->
+{{-- <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Get all the "Add Hours" buttons
-        var addHoursBtns = document.querySelectorAll(".add-hours-btn");
+  document.addEventListener("DOMContentLoaded", function() {
+    var addHoursBtns = document.querySelectorAll(".add-hours-btn");
 
-        // Add click event listeners to each button
-        addHoursBtns.forEach(function(btn) {
-            btn.addEventListener("click", function(event) {
-                event.preventDefault();
+    addHoursBtns.forEach(function(btn) {
+      btn.addEventListener("click", function(event) {
+        event.preventDefault();
 
-                // Get the operator ID
-                var operatorId = btn.getAttribute("data-user-id");
+        var operatorId = btn.getAttribute("data-user-id");
 
-                // Show the SweetAlert confirmation dialog
-                Swal.fire({
-                    title: "Add Hours",
-                    html: `
-                    <div class="form-group">
-                        <label for="startHour">Start Hour</label>
-                        <input type="datetime-local" name="startHour" id="startHour" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="endHour">End Hour</label>
-                        <input type="datetime-local" name="endHour" id="endHour" class="form-control" required>
-                    </div>`,
-                    showCancelButton: true,
-                    cancelButtonText: "Cancel",
-                    confirmButtonText: "Add",
-                    focusConfirm: false,
-                    preConfirm: function() {
-                        // Get the form data
-                        var startHour = document.getElementById("startHour").value;
-                        var endHour = document.getElementById("endHour").value;
+        Swal.fire({
+          title: "Add Hours",
+          html: `
+          <div class="form-group">
+            <label for="start_date">Start Hour</label>
+            <input type="datetime-local" name="start_date" id="start_date" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="end_date">End Hour</label>
+            <input type="datetime-local" name="end_date" id="end_date" class="form-control" required>
+          </div>`,
+          showCancelButton: true,
+          cancelButtonText: "Cancel",
+          confirmButtonText: "Add",
+          focusConfirm: false,
+          preConfirm: function() {
+            var start_date = document.getElementById("start_date").value;
+            var end_date = document.getElementById("end_date").value;
 
-                        // Perform any validation or further processing if needed
 
-                        // Return the form data as the result
-                        return {
-                            startHour: startHour,
-                            endHour: endHour
-                        };
-                    }
-                }).then(function(result) {
-                    if (result.isConfirmed) {
-                        // The user clicked "Add"
-                        var startHour = result.value.startHour;
-                        var endHour = result.value.endHour;
+            return {
+              start_date: start_date,
+              end_date: end_date
+            };
+          }
+        }).then(function(result) {
+          if (result.isConfirmed) {
+            var start_date = result.value.start_date;
+            var end_date = result.value.end_date;
 
-                        // Construct the data object
-                        var data = {
-                            operatorId: operatorId,
-                            startHour: startHour,
-                            endHour: endHour
-                        };
+            var data = {
+              operatorId: operatorId,
+              start_date: start_date,
+              end_date: end_date
+            };
 
-                        // Send the request to the server
-                        const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-                        fetch("teams2", {
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json",
-                                "X-CSRF-TOKEN": csrfToken,
-                            },
-                            body: JSON.stringify(data),
-                        }).then(function(response) {
-                            if (response.ok) {
-                                // Redirect to the "team.create" route
-                                window.location.href = "/team/create";
-                            } else {
-                                // Handle the error if needed
-                                console.error("An error occurred during form submission.");
-                            }
-                        }).catch(function(error) {
-                            console.error("An error occurred during form submission:", error);
-                        });
-                    }
-                });
+            const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+            axios.post("teamshours", data, {
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": csrfToken,
+              }
+            }).then(function(response) {
+              if (response.status === 200) {
+              } else {
+                console.error("An error occurred during form submission.");
+              }
+            }).catch(function(error) {
+              console.error("An error occurred during form submission:", error);
             });
+          }
         });
+      });
     });
+  });
+</script> --}}
 
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var updateHoursBtns = document.querySelectorAll(".add-hours-btn");
+
+    updateHoursBtns.forEach(function(btn) {
+      btn.addEventListener("click", function(event) {
+        event.preventDefault();
+
+        var operatorId = btn.getAttribute("data-user-id");
+
+        Swal.fire({
+          title: "Update Hours",
+          html: `
+          <div class="form-group">
+            <label for="start_date">Start Hour</label>
+            <input type="datetime-local" name="start_date" id="start_date" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label for="end_date">End Hour</label>
+            <input type="datetime-local" name="end_date" id="end_date" class="form-control" required>
+          </div>`,
+          showCancelButton: true,
+          cancelButtonText: "Cancel",
+          confirmButtonText: "Update",
+          focusConfirm: false,
+          preConfirm: function() {
+            var start_date = document.getElementById("start_date").value;
+            var end_date = document.getElementById("end_date").value;
+
+            return {
+              start_date: start_date,
+              end_date: end_date
+            };
+          }
+        }).then(function(result) {
+          if (result.isConfirmed) {
+            var start_date = result.value.start_date;
+            var end_date = result.value.end_date;
+
+            var data = {
+              operatorId: operatorId,
+              start_date: start_date,
+              end_date: end_date
+            };
+
+            const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+            axios.put("teamshours", data, {
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": csrfToken,
+              }
+            }).then(function(response) {
+              if (response.status === 200) {
+                Swal.fire("Success", "Hours updated successfully.", "success");
+              } else {
+                console.error("An error occurred during form submission.");
+              }
+            }).catch(function(error) {
+              console.error("An error occurred during form submission:", error);
+            });
+          }
+        });
+      });
+    });
+  });
 </script>
+
+
 
 
 @endsection

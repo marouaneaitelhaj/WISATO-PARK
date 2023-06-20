@@ -2410,6 +2410,8 @@ var Ziggy = {
         "user": "id"
       }
     },
+
+    
     "category.index": {
       "uri": "category",
       "methods": ["GET", "HEAD"]
@@ -2470,6 +2472,12 @@ var Ziggy = {
       "bindings": {
         "category": "id"
       }
+    },
+    
+      "teamshours.store2": {
+        "uri": "teamshours",
+        "methods": ["POST"],
+
     },
     "tariff.index": {
       "uri": "tariff",
