@@ -128,11 +128,13 @@
                           
 
 
-                          <script>
+                          {{-- <script>
                             const morningRadio = document.getElementById('morning');
                             const eveningRadio = document.getElementById('evening');
                             const startDateInput = document.getElementById('start_date');
                             const endDateInput = document.getElementById('end_date');
+                            const validate_end_date = document.getElementById('validate_end_date');
+                            const validate_start_date = document.getElementById('validate_start_date');
                           
                             morningRadio.addEventListener('change', function() {
                               if (morningRadio.checked) {
@@ -169,7 +171,7 @@
                               return `${year}-${month}-${day}T${hours}:${minutes}`;
                             }
                           </script>
-                          
+                           --}}
                           
                         
 
@@ -219,27 +221,92 @@
  
                         <div class="d-flex flex-row">
                             <div class="form-group w-100 d-flex align-items-center">
-                                <label class="col-md-6 col-form-label text-md-right" for="validate_start_date">{{ __('Validate Start Date') }}<span class="tcr i-req">*</span></label>
-                                <input id="validate_start_date" type="text" class="mx-2 form-control dateTimePicker{{ $errors->has('validate_start_date') ? ' is-invalid' : '' }}" name="validate_start_date" value="{{ old('validate_start_date') }}" autocomplete="off" required>
-                                @if ($errors->has('validate_start_date'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('validate_start_date') }}</strong>
-                                    </span>
-                                @endif
+                              <label class="col-md-6 col-form-label text-md-right" for="validate_start_date">{{ __('Validate Start Date') }}<span class="tcr i-req">*</span></label>
+                              <input id="validate_start_date" type="datetime-local" class="mx-2 form-control dateTimePicker{{ $errors->has('validate_start_date') ? ' is-invalid' : '' }}" name="validate_start_date" value="{{ old('validate_start_date') }}" autocomplete="off" required>
+                              @if ($errors->has('validate_start_date'))
+                                <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('validate_start_date') }}</strong>
+                                </span>
+                              @endif
                             </div>
-                        
+                          
                             <div class="form-group w-50 d-flex align-items-center">
-                                <label class="mx-2" for="validate_end_date">{{ __('Validate End Date') }}<span class="tcr i-req">*</span></label>
-                                <input id="validate_end_date" type="text" class="form-control dateTimePicker{{ $errors->has('validate_end_date') ? ' is-invalid' : '' }}" name="validate_end_date" value="{{ old('validate_end_date') }}" autocomplete="off" required>
-                                @if ($errors->has('validate_end_date'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('validate_end_date') }}</strong>
-                                    </span>
-                                @endif
+                              <label class="mx-2" for="validate_end_date">{{ __('Validate End Date') }}<span class="tcr i-req">*</span></label>
+                              <input id="validate_end_date" type="datetime-local" class="form-control dateTimePicker{{ $errors->has('validate_end_date') ? ' is-invalid' : '' }}" name="validate_end_date" value="{{ old('validate_end_date') }}" autocomplete="off" required>
+                              @if ($errors->has('validate_end_date'))
+                                <span class="invalid-feedback" role="alert">
+                                  <strong>{{ $errors->first('validate_end_date') }}</strong>
+                                </span>
+                              @endif
                             </div>
-                        </div>
-                        
-
+                          </div>
+                          
+                          <script>
+                            const morningRadio = document.getElementById('morning');
+                            const eveningRadio = document.getElementById('evening');
+                            const startDateInput = document.getElementById('start_date');
+                            const endDateInput = document.getElementById('end_date');
+                            const validate_end_date = document.getElementById('validate_end_date');
+                            const validate_start_date = document.getElementById('validate_start_date');
+                          
+                            morningRadio.addEventListener('change', function() {
+                              if (morningRadio.checked) {
+                                const currentDate = new Date();
+                                currentDate.setHours(8, 0);
+                                startDateInput.value = getFormattedDate(currentDate);
+                          
+                                const endDate = new Date(currentDate);
+                                endDate.setDate(endDate.getDate());
+                                endDate.setHours(18, 0);
+                                endDateInput.value = getFormattedDate(endDate);
+                          
+                                const validateStartDate = new Date(currentDate);
+                                validateStartDate.setHours(8, 0);
+                                validate_start_date.value = getFormattedDate(validateStartDate);
+                          
+                                const validateEndDate = new Date(endDate);
+                                validateEndDate.setFullYear(validateEndDate.getFullYear() + 1); // Add one year
+                                validateEndDate.setHours(18, 0);
+                                validate_end_date.value = getFormattedDate(validateEndDate);
+                              }
+                            });
+                          
+                            eveningRadio.addEventListener('change', function() {
+                              if (eveningRadio.checked) {
+                                const currentDate = new Date();
+                                currentDate.setHours(18, 0);
+                                startDateInput.value = getFormattedDate(currentDate);
+                          
+                                const endDate = new Date(currentDate);
+                                endDate.setDate(endDate.getDate() + 1);
+                                endDate.setHours(2, 0);
+                                endDateInput.value = getFormattedDate(endDate);
+                          
+                                const validateStartDate = new Date(currentDate);
+                                validateStartDate.setHours(18, 0);
+                                validate_start_date.value = getFormattedDate(validateStartDate);
+                          
+                                const validateEndDate = new Date(endDate);
+                                validateEndDate.setFullYear(validateEndDate.getFullYear() + 1); // Add one year
+                                validateEndDate.setDate(validateEndDate.getDate() + 1); // Add one more day
+                                validateEndDate.setHours(2, 0);
+                                validate_end_date.value = getFormattedDate(validateEndDate);
+                              }
+                            });
+                          
+                            function getFormattedDate(date) {
+                              const year = date.getFullYear();
+                              const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                              const day = date.getDate().toString().padStart(2, '0');
+                              const hours = date.getHours().toString().padStart(2, '0');
+                              const minutes = date.getMinutes().toString().padStart(2, '0');
+                          
+                              return `${year}-${month}-${day}T${hours}:${minutes}`;
+                            }
+                          </script>
+                          
+                          
+                  
                         <div class="form-group row">
                             <label for="status" class="col-md-4 col-form-label text-md-right">{{ __('Status') }}<span class="tcr i-req">*</span> </label>
                             <div class="col-md-8">
@@ -274,6 +341,7 @@
         </div>
     </div>
 </div> 
+      
 @livewireScripts
 
 @endsection
