@@ -128,51 +128,7 @@
                           
 
 
-                          {{-- <script>
-                            const morningRadio = document.getElementById('morning');
-                            const eveningRadio = document.getElementById('evening');
-                            const startDateInput = document.getElementById('start_date');
-                            const endDateInput = document.getElementById('end_date');
-                            const validate_end_date = document.getElementById('validate_end_date');
-                            const validate_start_date = document.getElementById('validate_start_date');
-                          
-                            morningRadio.addEventListener('change', function() {
-                              if (morningRadio.checked) {
-                                const currentDate = new Date();
-                                currentDate.setHours(8, 0);
-                                startDateInput.value = getFormattedDate(currentDate);
-                          
-                                const endDate = new Date(currentDate);
-                                endDate.setHours(18, 0);
-                                endDateInput.value = getFormattedDate(endDate);
-                              }
-                            });
-                          
-                            eveningRadio.addEventListener('change', function() {
-                              if (eveningRadio.checked) {
-                                const currentDate = new Date();
-                                currentDate.setHours(18, 0);
-                                startDateInput.value = getFormattedDate(currentDate);
-                          
-                                const endDate = new Date(currentDate);
-                                endDate.setDate(endDate.getDate() + 1);
-                                endDate.setHours(2, 0);
-                                endDateInput.value = getFormattedDate(endDate);
-                              }
-                            });
-                          
-                            function getFormattedDate(date) {
-                              const year = date.getFullYear();
-                              const month = (date.getMonth() + 1).toString().padStart(2, '0');
-                              const day = date.getDate().toString().padStart(2, '0');
-                              const hours = date.getHours().toString().padStart(2, '0');
-                              const minutes = date.getMinutes().toString().padStart(2, '0');
-                          
-                              return `${year}-${month}-${day}T${hours}:${minutes}`;
-                            }
-                          </script>
-                           --}}
-                          
+
                         
 
 
