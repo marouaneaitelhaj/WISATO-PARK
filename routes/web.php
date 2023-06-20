@@ -13,7 +13,13 @@
 // web.php
 
 
-Route::post('teams2', 'ControlOperatorController@store2')->name('teams.store2');
+
+// Route::post('teamshours', [ControlOperatorController::class, 'store2'])->name('teamshours.store2');
+
+// Route::post('team/teamshours', 'ControlOperatorController@store2')->name('teamshours');
+Route::put('team/teamshours', 'ControlOperatorController@update')->name('teamshours');
+
+
 Route::post('parking', 'ParkingController@storeapi');
 
 

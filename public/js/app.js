@@ -2473,10 +2473,12 @@ var Ziggy = {
         "category": "id"
       }
     },
-    // "parkzone.gallery.store": {
-    //   "uri": "parkzones/{parkzoneId}/gallery",
-    //   "methods": ["POST"]
-    // },
+    
+      "teamshours.store2": {
+        "uri": "teamshours",
+        "methods": ["POST"],
+
+    },
     "tariff.index": {
       "uri": "tariff",
       "methods": ["GET", "HEAD"]
