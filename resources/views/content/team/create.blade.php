@@ -133,8 +133,9 @@
                                                 </th>
                                                 <th class="sorting" tabindex="0" aria-controls="categoryDatatable"
                                                     rowspan="1" colspan="1"
-                                                    aria-label="Type: activate to sort column ascending"></th>
+                                                    aria-label="Type: activate to sort column ascending">Action</th>
                                                 </th>
+                                                
                                             </tr>
                                         </thead>
            
@@ -148,12 +149,9 @@
                                                         <td>{{ $operator['Phone'] }}</td>
                                                         <td>{{ $operator['email'] }}</td>
                                                         <td>{{ $operator['cin'] }}</td>
-                                                        {{-- <td> --}}
-                                                            {{-- <button class="btn btn-primary btn-sm" data-bs-toggle="modal"
-                                                                data-bs-target="#addHourseModal">Add Hours</button> --}}
-                                                                {{-- <button class="btn btn-primary btn-sm add-hours-btn" data-bs-toggle="modal" data-bs-target="#addHourseModal" value="{{ $operator['operator'] }}" data-user-id="{{ $operator['id'] }}">Add Hours</button> --}}
-
-                                                        {{-- </td> --}}
+                                                        <td>
+                                                                <button class="btn btn-primary btn-sm add-hours-btn" data-bs-toggle="modal" data-bs-target="#addHourseModal" value="{{ $operator['operator'] }}" data-user-id="{{ $operator['id'] }}">Add Hours</button>
+                                                        </td>
                                                         <td class="text-end width-5-per">
                                                             <a href="http://127.0.0.1:8000/category/8/edit">
                                                                 <i class="fa fa-pencil-square-o text-info" aria-hidden="true" title="Edit Category"></i>

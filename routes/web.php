@@ -13,7 +13,7 @@
 // web.php
 
 
-Route::post('teams', 'ControlOperatorController@store2')->name('teams.store2');
+Route::post('teams2', 'ControlOperatorController@store2')->name('teams.store2');
 Route::post('parking', 'ParkingController@storeapi');
 
 

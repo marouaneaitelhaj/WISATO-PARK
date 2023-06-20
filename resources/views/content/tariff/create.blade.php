@@ -53,7 +53,7 @@
                                 @endif
                             </div>
                         </div>
-
+{{-- 
                         <div class="form-group row">
                             <label for="day" class="col-md-4 col-form-label text-md-right"> {{ __('Day') }} <span class="tcr i-req">*</span></label>
 
@@ -61,7 +61,7 @@
                                 <div class=""><input id="day" type="radio" name="day" value="morning"> Morning <span class="tcr i-req">*</span></div>
                                 <div class="mx-5"><input id="day" type="radio" name="day" value="evening"> Evening <span class="tcr i-req">*</span></div>
                             </div>
-                        </div>
+                        </div> --}}
 
 
 
@@ -69,7 +69,7 @@
 
 
 
-                        <div class="d-flex flex-row">
+                        {{-- <div class="d-flex flex-row">
                             <div class="form-group w-100 d-flex align-items-center">
                                 <label class="col-md-6 col-form-label text-md-right" for="start_date">{{ __('Start Date') }}<span class="tcr i-req">*</span></label>
                                 <input id="start_date" type="text" class="mx-2 form-control dateTimePicker{{ $errors->has('start_date') ? ' is-invalid' : '' }}" name="start_date" value="{{ old('start_date') }}" autocomplete="off" required>
@@ -89,9 +89,88 @@
                                     </span>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
+                        
                         
 
+
+                        
+
+                        <div class="form-group row">
+                            <label for="day" class="col-md-4 col-form-label text-md-right"> {{ __('Day') }} <span class="tcr i-req">*</span></label>
+                            <div class="col-md-8 d-flex">
+                              <div class=""><input id="morning" type="radio" name="day" value="morning"> Morning <span class="tcr i-req">*</span></div>
+                              <div class="mx-5"><input id="evening" type="radio" name="day" value="evening"> Evening <span class="tcr i-req">*</span></div>
+                            </div>
+                          </div>
+                          
+                          <div class="d-flex flex-row">
+                            <div class="form-group w-100 d-flex align-items-center">
+                              <label class="col-md-6 col-form-label text-md-right" for="start_date">{{ __('Start Date') }}<span class="tcr i-req">*</span></label>
+                              <input id="start_date" type="datetime-local" class="mx-2 form-control datePicker{{ $errors->has('start_date') ? ' is-invalid' : '' }}" name="start_date" value="{{ old('start_date') }}" autocomplete="off" required>
+                              @if ($errors->has('start_date'))
+                              <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('start_date') }}</strong>
+                              </span>
+                              @endif
+                            </div>
+                          
+                            <div class="form-group w-50 d-flex align-items-center">
+                              <label class="mx-2" for="end_date">{{ __('End Date') }}<span class="tcr i-req">*</span></label>
+                              <input id="end_date" type="datetime-local" class="form-control datePicker{{ $errors->has('end_date') ? ' is-invalid' : '' }}" name="end_date" value="{{ old('end_date') }}" autocomplete="off" required>
+                              @if ($errors->has('end_date'))
+                              <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('end_date') }}</strong>
+                              </span>
+                              @endif
+                            </div>
+                          </div>
+                          
+
+
+                          <script>
+                            const morningRadio = document.getElementById('morning');
+                            const eveningRadio = document.getElementById('evening');
+                            const startDateInput = document.getElementById('start_date');
+                            const endDateInput = document.getElementById('end_date');
+                          
+                            morningRadio.addEventListener('change', function() {
+                              if (morningRadio.checked) {
+                                const currentDate = new Date();
+                                currentDate.setHours(8, 0);
+                                startDateInput.value = getFormattedDate(currentDate);
+                          
+                                const endDate = new Date(currentDate);
+                                endDate.setHours(18, 0);
+                                endDateInput.value = getFormattedDate(endDate);
+                              }
+                            });
+                          
+                            eveningRadio.addEventListener('change', function() {
+                              if (eveningRadio.checked) {
+                                const currentDate = new Date();
+                                currentDate.setHours(18, 0);
+                                startDateInput.value = getFormattedDate(currentDate);
+                          
+                                const endDate = new Date(currentDate);
+                                endDate.setDate(endDate.getDate() + 1);
+                                endDate.setHours(2, 0);
+                                endDateInput.value = getFormattedDate(endDate);
+                              }
+                            });
+                          
+                            function getFormattedDate(date) {
+                              const year = date.getFullYear();
+                              const month = (date.getMonth() + 1).toString().padStart(2, '0');
+                              const day = date.getDate().toString().padStart(2, '0');
+                              const hours = date.getHours().toString().padStart(2, '0');
+                              const minutes = date.getMinutes().toString().padStart(2, '0');
+                          
+                              return `${year}-${month}-${day}T${hours}:${minutes}`;
+                            }
+                          </script>
+                          
+                          
                         
 
 
