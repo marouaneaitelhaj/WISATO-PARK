@@ -398,6 +398,13 @@ class ParkzoneController extends Controller
                 }
             }
         }
+        foreach($data as $index => $da){
+            foreach($da["category"] as $inde => $d){
+                if($data[$index]["category"][$inde]["available"] == 0){
+                    unset($data[$index]["category"][$inde]);
+                }
+            }
+        }
         return response()->json($data);
     }
 
@@ -415,6 +422,7 @@ class ParkzoneController extends Controller
                 $query->where('parkzone_id', $parkzones->id);
             })->with('category')->get();
         }
-        return response()->json($data);
+        // dd($data);
+        return response()->json($data->groupBy('category.type'));
     }
 }
