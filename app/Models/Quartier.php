@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\cities;
 
 class Quartier extends Model
 {
@@ -13,7 +14,7 @@ class Quartier extends Model
 
     public function city()
     {
-        return $this->belongsTo(City::class, 'city_id');
+        return $this->belongsTo(cities::class, 'city_id');
     }
     public function parkzones()
     {

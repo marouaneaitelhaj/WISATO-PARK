@@ -30,7 +30,7 @@ class CreateTariffsTable extends Migration
             $table->dateTime('validate_start_date'); // Added validate_start_date column
             $table->dateTime('validate_end_date'); // Added validate_end_date column
             $table->foreignId('quartier_id')->nullable()->constrained('quartiers'); // Added quartier_id foreign key
-            $table->foreignId('parkzone_id')->nullable()->constrained('parkzones'); // Added parkzone_id foreign key
+            $table->foreignId('parkzone_id')->nullable()->constrained('parkzones')->onDelete('cascade'); // Added parkzone_id foreign key
             $table->decimal('shadow_amount', 8, 2)->nullable(); // Added shadow_amount column
         });
     }

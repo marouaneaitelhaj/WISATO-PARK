@@ -51,6 +51,19 @@ class Parkzone extends Model
         }
     }
 
+
+    public function slots_by_type_cat($type, $cat_id)
+    {
+        if ($type == 'standard') {
+            return $this->hasMany('App\Models\CategoryWiseParkzoneSlot')->where('category_id', $cat_id);
+        } elseif ($type == 'floor') {
+            return $this->floor();
+        } else {
+            return $this->sides()->where('category_id', $cat_id);
+        }
+    }
+    
+
     public function Quartier()
     {
         return $this->belongsTo('App\Models\Quartier');
@@ -79,5 +92,9 @@ class Parkzone extends Model
     public function tariff()
     {
         return $this->hasMany('App\Models\Tariff');
+    }
+    public function tariff_by_cat($cat_id)
+    {
+        return $this->hasMany('App\Models\Tariff')->where('category_id', $cat_id);
     }
 }
