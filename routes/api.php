@@ -26,6 +26,11 @@ Route::post('register', 'Auth\RegisterController@register');
 
 
 Route::get('readparkzones/{id}', 'ParkzoneController@readApiById');
+Route::get('readparkzones/{id}/{cat}', 'ParkzoneController@readApiByIdAndCat');
+Route::get('readparkzonestariff/{id}/{cat}', 'ParkzoneController@readTariffByIdAndCat');
+
+
+
 Route::get('checkiffloorsidestandarexist/{id}/{type}', 'ParkzoneController@checkiffloorsideexist');
 Route::get('parkingSlotapi/{parkzpne_id}/{category_id}/{type}/{side}/{floor}', 'ParkingController@parkingSlotapi');
 

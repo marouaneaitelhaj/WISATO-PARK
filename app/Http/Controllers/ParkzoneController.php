@@ -197,31 +197,31 @@ class ParkzoneController extends Controller
     public function createGallery(Request $request, $id)
     {
         $galleryImages = $request->file('galleryImages');
-    
+
         if (empty($galleryImages)) {
             return response()->json(['error' => 'Gallery images are required and must be an array']);
         }
-    
+
         $parkzone = Parkzone::findOrFail($id);
-    
+
         foreach ($galleryImages as $image) {
             if (!$image->isValid() || !in_array($image->getClientOriginalExtension(), ['jpeg', 'png', 'jpg', 'gif'])) {
                 return response()->json(['error' => 'Invalid image format']);
             }
-    
+
             $imageName = $image->store('gallery', 'public');
-    
+
             $gallery = new Gallery([
                 'parkzone_id' => $parkzone->id,
                 'image' => $imageName,
             ]);
-    
+
             $gallery->save();
         }
-    
+
         return response()->json(['success' => 'Gallery added successfully']);
     }
-    
+
 
 
 
@@ -260,6 +260,7 @@ class ParkzoneController extends Controller
      */
     public function update(Request $request, Parkzone $parkzone)
     {
+        
         // dd($request->all());
         $validated = $request->validate([
             'name' => 'bail|required|unique:parkzones,name,' . $parkzone->id,
@@ -274,16 +275,24 @@ class ParkzoneController extends Controller
         ]);
 
         $parkzone->agents()->sync($request->agent_id);
+        // $parkzone->update([
+        //     'name'     => $validated['name'],
+        //     'remarks'  => $validated['remarks'],
+        //     'mode'     => $validated['mode'],
+        //     'lat'      => $validated['lat'],
+        //     'lng'      => $validated['lng'],
+        //     'type'     => $validated['type'],
+        //     'quartier_id' => $validated['quartier_id'],
+        // ]);
 
-        $parkzone->update([
-            'name'     => $validated['name'],
-            'remarks'  => $validated['remarks'],
-            'mode'     => $validated['mode'],
-            'lat'      => $validated['lat'],
-            'lng'      => $validated['lng'],
-            'type'     => $validated['type'],
-            'quartier_id' => $validated['quartier_id'],
-        ]);
+        $parkzone->name = $request->name;
+        $parkzone->type = $request->type;
+        $parkzone->mode = $request->mode;
+        $parkzone->remarks = $request->remarks;
+        $parkzone->lat = $request->lat;
+        $parkzone->lng = $request->lng;
+        $parkzone->quartier_id = $request->quartier_id;
+        $parkzone->save();
 
         return redirect()
             ->route('parkzones.index')
@@ -398,6 +407,13 @@ class ParkzoneController extends Controller
                 }
             }
         }
+        foreach ($data as $index => $da) {
+            foreach ($da["category"] as $inde => $d) {
+                if ($data[$index]["category"][$inde]["available"] == 0) {
+                    unset($data[$index]["category"][$inde]);
+                }
+            }
+        }
         return response()->json($data);
     }
 
@@ -415,6 +431,46 @@ class ParkzoneController extends Controller
                 $query->where('parkzone_id', $parkzones->id);
             })->with('category')->get();
         }
-        return response()->json($data);
+        // dd($data);
+        return response()->json($data->groupBy('category.type'));
+    }
+    public function readApiByIdAndCat($id, $cat)
+    {
+        $parkzone = Parkzone::find($id);
+        $categorie = Category::where('type', $cat)->first();
+        if ($parkzone->type == 'standard') {
+            $data = CategoryWiseParkzoneSlot::where('parkzone_id', $id)->where('category_id', $categorie->id)->get();
+            return response()->json([
+                "slots" => $data->groupBy('floor.level'),
+                "type" => "standard"
+            ]);
+        } elseif ($parkzone->type == 'floor') {
+            $data = FloorSlot::whereHas('floor', function ($query) use ($parkzone) {
+                $query->where('parkzone_id', $parkzone->id);
+            })->where('categorie_id', $categorie->id)->with('floor')->get();
+            return response()->json([
+                "slots" => $data->groupBy('floor.level'),
+                "type" => "floor"
+            ]);
+        } elseif ($parkzone->type == 'side') {
+            $data = Side_slot::whereHas('side', function ($query) use ($parkzone) {
+                $query->where('parkzone_id', $parkzone->id);
+            })->where('category_id', $categorie->id)
+            ->with('side')
+            ->get();
+            return response()->json([
+                "slots" => $data->groupBy('side.side'),
+                "type" => "side"
+            ]);
+        }
+    }
+    public function readTariffByIdAndCat($id, $cat)
+    {
+        $parkzone = Parkzone::find($id)->with("Quartier", "Quartier.city")->first();
+        $categorie = Category::where('type', $cat)->first();
+        return response()->json([
+            "parkzone" => $parkzone,
+            "tariff" => $parkzone->tariff_by_cat($categorie->id)->orderBy('number_hour')->get(),
+        ]);
     }
 }
