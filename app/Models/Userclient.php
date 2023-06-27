@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Models\ModelCommonMethodTrait;
 use Illuminate\Notifications\Notifiable;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ControlOperator;
 
-class User extends Authenticatable implements MustVerifyEmail
+class Userclient extends Model
 {
     use HasFactory;
     use Notifiable, MustVerifyEmailTrait, ModelCommonMethodTrait;
@@ -22,7 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'Phone','cin','id_camera','serial_number','image_path','image'
+        'name', 'email', 'password', 'Phone','cin','image_path','image'
 
     ];
 
@@ -60,9 +60,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(ControlOperator::class, 'operator');
     }
     // User.php
-
-
-
-    
-    
 }
+
+

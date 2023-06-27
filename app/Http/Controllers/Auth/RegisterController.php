@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use App\Models\Role;
+use Illuminate\Http\Request;
+use App\Models\Userclient;
 
 class RegisterController extends Controller
 {
@@ -75,4 +77,21 @@ class RegisterController extends Controller
 
     return $user;
 }
+
+public function register(Request $request)
+{
+
+    $user = Userclient::create([
+        'name' => $request->input('name'),
+        'email' => $request->input('email'),
+        'password' => Hash::make($request->input('password')),
+    ]);
+
+    // Attach the "client" role to the user
+    $clientRole = Role::where('name', 'client')->first();
+    $user->roles()->attach($clientRole);
+
+    return response()->json(['message' => 'User registered successfully']);
+}
+
 }

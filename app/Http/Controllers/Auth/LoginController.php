@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Userclient;
+
 
 class LoginController extends Controller
 {
@@ -59,4 +62,42 @@ class LoginController extends Controller
                     ->with(['flashMsg' => ['msg' => 'Your account is deactivated.', 'type' => 'danger']]);
     }
 }
+
+// public function login(Request $request)
+// {
+//     $credentials = $request->only('email', 'password');
+
+//     if (Auth::attempt($credentials)) {
+//         $user = Auth::user();
+
+//         if ($user && $user->hasRole('client')) {
+//             return response()->json(['redirect' => '/maps', 'name' => $user->name]);
+//         } else {
+//             return response()->json(['error' => 'you don\'t have access in this app.']);
+//         }
+//     } else {
+//         return response()->json(['error' => 'email or password is incorrect.']);
+//     }
+// }
+
+
+public function login(Request $request)
+{
+    $credentials = $request->only('email', 'password');
+
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user();
+
+        if ($user instanceof Userclient ) {
+            return response()->json(['redirect' => '/maps', 'name' => $user->name]);
+        } else {
+            return response()->json(['error' => 'You don\'t have access to this app.']);
+        }
+    } else {
+        return response()->json(['error' => 'Email or password is incorrect.']);
+    }
+}
+
+
+
 }
